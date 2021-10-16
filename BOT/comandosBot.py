@@ -1,0 +1,183 @@
+from __future__ import absolute_import
+import BOT.funcoesBot as funcoesBot
+import BOT.listaHelp as listaHelp
+import BOT.funcoesGerais as funGeral
+import threading
+import BOT.AmigosEnimigos as AmigosEInimigos
+from BD.usuarioTS import usuarioTS
+def botBoasVindas(nomeUsuario, usuarioID, bot):
+    funcoesBot.enviarMensagem("\nBem vindo " + nomeUsuario + "\nPara ver comandos digite !help", usuarioID, bot)
+
+
+def botHelp(usuarioID, bot, settings):
+    funcoesBot.enviarMensagem(listaHelp.listaHelp(funcoesBot.pegarPermissoesCliente(usuarioID, bot), settings), usuarioID, bot)
+
+def botShared(mensagemRecebida,nomeUsuario, usuarioID,bot):
+    try:
+        level=int(mensagemRecebida.split()[1])
+        mensagem = funGeral.calculoShared(level, nomeUsuario)
+        funcoesBot.enviarMensagem(mensagem, usuarioID, bot)
+    except:
+        funcoesBot.enviarMensagem("\nErro de parametro favor informar como no exemplo !shared <100>",usuarioID,bot)
+
+
+def botMassPoke(mensagemRecebida,settings):
+    try:
+        mensagem=mensagemRecebida.replace("!mp ", "")
+        threading.Thread(name="Poke", target=funcoesBot.pokeTodosClientes, args=(mensagem,funcoesBot.botsSecundarios(settings, "Poke"),)).start()
+    except:
+        return None
+
+def botMvCh(stringCanais, idUsuario,bot):
+        try:
+            stringCanais = stringCanais.replace("!mvch ", "")
+            canalOrigem, canalDestino = funcoesBot.trataCanaisComEspaco(stringCanais,bot)
+            if(not canalOrigem is None):
+                if(not canalDestino is None):
+                    for cliente in funcoesBot.pegarListaClientes(bot):
+                        if int(cliente["client_type"]) != 1:
+                            if int(cliente["cid"]) == int(funcoesBot.pegarIdChannel(bot, canalOrigem)):
+                                bot.clientmove(cid=funcoesBot.pegarIdChannel(bot, canalDestino), clid=cliente["clid"])
+
+                else:
+                    funcoesBot.enviarMensagem("Canal de destino incorreto", idUsuario,bot)
+            else:
+                funcoesBot.enviarMensagem("Canal de origem incorreto", idUsuario, bot)
+
+        except:
+            funcoesBot.enviarMensagem("Erro nome dos canais favor verificar", idUsuario, bot)
+            return None
+
+def botAddFd(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!addfd ","")
+    amigos=AmigosEInimigos.AmigosEnimigos()
+    retorno =amigos.addCharacterAmigo(mensagemRecebida,con)
+    if(retorno==True):
+        funcoesBot.enviarMensagem(mensagemRecebida+" adicionado aos amigos", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+def botRmFd(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!rmfd ","")
+    amigos=AmigosEInimigos.AmigosEnimigos()
+    retorno =amigos.deleteCharacterAmigos(mensagemRecebida,con)
+    if(retorno==True):
+        funcoesBot.enviarMensagem(mensagemRecebida+" removido dos amigos", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+
+
+def botAddEm(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!addem ","")
+    inimigo=AmigosEInimigos.AmigosEnimigos()
+    retorno =inimigo.addCharacterInimigo(mensagemRecebida,con)
+    if(retorno==True):
+        funcoesBot.enviarMensagem(mensagemRecebida+" adicionado aos inimigos", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+
+def botRmEm(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!rmem ","")
+    inimigo=AmigosEInimigos.AmigosEnimigos()
+    retorno =inimigo.deleteCharacterInimigos(mensagemRecebida,con)
+    if(retorno==True):
+        funcoesBot.enviarMensagem(mensagemRecebida+" removido dos inimigos", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+
+def botAddFdgui(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!addfdgui ","")
+    amigos=AmigosEInimigos.AmigosEnimigos()
+    retorno =amigos.addGuildAmiga(mensagemRecebida,con)
+    if(retorno==True):
+        funcoesBot.enviarMensagem(mensagemRecebida+" adicionado aos amigos", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+def botRmFdgui(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!rmfdgui ","")
+    inimigo=AmigosEInimigos.AmigosEnimigos()
+    retorno =inimigo.deleteGuildAmigas(mensagemRecebida,con)
+    if(retorno==True):
+        funcoesBot.enviarMensagem(mensagemRecebida+" removido dos amigos", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+
+def botAddEmgui(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!addemgui ","")
+    inimigos=AmigosEInimigos.AmigosEnimigos()
+    retorno =inimigos.addGuildInimiga(mensagemRecebida,con)
+    if(retorno==True):
+        funcoesBot.enviarMensagem(mensagemRecebida+" adicionado aos inimigos", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+def botRmEmgui(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!rmemgui ","")
+    inimigo=AmigosEInimigos.AmigosEnimigos()
+    retorno =inimigo.deleteGuildInimigas(mensagemRecebida,con)
+    if(retorno==True):
+        funcoesBot.enviarMensagem(mensagemRecebida+" removido de inimigos", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+
+def botaddUserTS(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!adduser ","")
+    nomeMain,nomeTS,usuarioUID=funcoesBot.pegarNomeEUsuario(mensagemRecebida,bot)
+    if(usuarioUID is None):
+        funcoesBot.enviarMensagem("Usuario nao encontrado", idUsuario, bot)
+    else:
+        usuarioTSs=usuarioTS(nomeTS,nomeMain,usuarioUID,con)
+        retorno =usuarioTSs.insert()
+        if(retorno==True):
+            funcoesBot.enviarMensagem(nomeTS+" adicionado aos Usuarios personagem Main: "+nomeMain, idUsuario, bot)
+        else:
+            funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+def botrmUserTS(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida = mensagemRecebida.replace("!rmuser ", "")
+    retorno = usuarioTS.deletePorCharacterMain(mensagemRecebida,con)
+    if (retorno == True):
+            funcoesBot.enviarMensagem(mensagemRecebida + " removido de usuarios ", idUsuario, bot)
+    else:
+            funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+
+def botaddMakerUserTS(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!addmaker ","")
+    nomeMain,nomeMaker=funcoesBot.pegarNomeMainEMaker(mensagemRecebida,con)
+    if(nomeMain is None):
+        funcoesBot.enviarMensagem("main nao encontrado no banco tente adicionar como amigo primeiro para ele constar na lista ", idUsuario, bot)
+        return True
+    elif(nomeMaker is None):
+        funcoesBot.enviarMensagem("maker nao encontrado no banco tente adicionar como amigo primeiro para ele constar na lista ", idUsuario, bot)
+        return True
+    else:
+        retorno=usuarioTS.addMaker(nomeMain,nomeMaker,con)
+        if(retorno==True):
+            funcoesBot.enviarMensagem(nomeMaker+" maker adicionado ao main: "+nomeMain, idUsuario, bot)
+        else:
+            funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+
+def botrmMakerUserTS(mensagemRecebida,con,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!rmmaker ","")
+    nomeMain,nomeMaker=funcoesBot.pegarNomeMainEMaker(mensagemRecebida,con)
+    if(nomeMain is None):
+        funcoesBot.enviarMensagem("main nao encontrado no banco tente adicionar como amigo primeiro para ele constar na lista ", idUsuario, bot)
+        return True
+    elif(nomeMaker is None):
+        funcoesBot.enviarMensagem("maker nao encontrado no banco tente adicionar como amigo primeiro para ele constar na lista ", idUsuario, bot)
+        return True
+    else:
+        retorno=usuarioTS.rmMaker(nomeMain,nomeMaker,con)
+        if(retorno==True):
+            funcoesBot.enviarMensagem(nomeMaker+" maker removido da lista do main: "+nomeMain, idUsuario, bot)
+        else:
+            funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
