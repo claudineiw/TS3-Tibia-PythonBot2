@@ -352,6 +352,13 @@ def recebeComandos(event, bot, settings,con):
                                 comandosBot.botaddMakerUserTS(mensagemRecebida, con, usuarioID, bot)
                                 return True
 
+                            elif ("!ltem" in mensagemRecebida):
+                                comandosBot.botLtEm(con, usuarioID, bot)
+                                return True
+
+                            elif("ltfd"  in mensagemRecebida):
+                                comandosBot.botLtfd(con, usuarioID, bot)
+                                return True
                     # <---- FIM COMANDOS ADMIN ACIMA---->
 
 

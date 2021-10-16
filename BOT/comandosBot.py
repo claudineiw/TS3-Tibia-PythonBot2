@@ -10,7 +10,9 @@ def botBoasVindas(nomeUsuario, usuarioID, bot):
 
 
 def botHelp(usuarioID, bot, settings):
-    funcoesBot.enviarMensagem(listaHelp.listaHelp(funcoesBot.pegarPermissoesCliente(usuarioID, bot), settings), usuarioID, bot)
+    lista=listaHelp.listaHelp(funcoesBot.pegarPermissoesCliente(usuarioID, bot), settings)
+    for item in lista:
+        funcoesBot.enviarMensagem(item, usuarioID, bot)
 
 def botShared(mensagemRecebida,nomeUsuario, usuarioID,bot):
     try:
@@ -86,6 +88,53 @@ def botRmEm(mensagemRecebida,con,idUsuario,bot):
         funcoesBot.enviarMensagem(mensagemRecebida+" removido dos inimigos", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+def botLtEm(con,idUsuario,bot):
+    inimigo=AmigosEInimigos.AmigosEnimigos()
+    personagensInimigos =inimigo.selectCharacterInimigos(con)
+    guildasInimigas=inimigo.selectGuildInimigas(con)
+
+
+    if(len(personagensInimigos)!=0):
+        funcoesBot.enviarMensagem("<------Personagens Inimigos------->", idUsuario, bot)
+        for personagem in personagensInimigos:
+            funcoesBot.enviarMensagem(personagem, idUsuario, bot)
+
+        funcoesBot.enviarMensagem("<------Fim Personagens Inimigos------->", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem("Nao ha personagens inimigos adicionados", idUsuario, bot)
+
+    if(len(guildasInimigas)!=0):
+        funcoesBot.enviarMensagem("<------Guildas Inimigas------->", idUsuario, bot)
+        for guilda in guildasInimigas:
+            funcoesBot.enviarMensagem(guilda, idUsuario, bot)
+        funcoesBot.enviarMensagem("<------Fim Guildas Inimigas------->", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem("Nao ha guildas inimigas adicionadas", idUsuario, bot)
+
+
+def botLtfd(con,idUsuario,bot):
+    amigos=AmigosEInimigos.AmigosEnimigos()
+    personagensAmigos =amigos.selectCharacterAmigos(con)
+    guildasAmigas=amigos.selectGuildAmigas(con)
+
+
+    if(len(personagensAmigos)!=0):
+        funcoesBot.enviarMensagem("<------Personagens Amigos------->", idUsuario, bot)
+        for personagem in personagensAmigos:
+            funcoesBot.enviarMensagem(personagem, idUsuario, bot)
+
+        funcoesBot.enviarMensagem("<------Fim Personagens Amigos------->", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem("Nao ha personagens amigos adicionados", idUsuario, bot)
+
+    if(len(guildasAmigas)!=0):
+        funcoesBot.enviarMensagem("<------Guildas Amigas------->", idUsuario, bot)
+        for guilda in guildasAmigas:
+            funcoesBot.enviarMensagem(guilda, idUsuario, bot)
+        funcoesBot.enviarMensagem("<------Fim Guildas Amigas------->", idUsuario, bot)
+    else:
+        funcoesBot.enviarMensagem("Nao ha guildas amigas adicionadas", idUsuario, bot)
 
 
 def botAddFdgui(mensagemRecebida,con,idUsuario,bot):

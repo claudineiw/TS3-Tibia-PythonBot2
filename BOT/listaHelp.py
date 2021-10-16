@@ -1,5 +1,6 @@
 def listaHelp(clienteServerGroupsID, settings):
     try:
+
             if str(settings["grupoEditor"]) in  clienteServerGroupsID:
                 return ("\n Voce pode usar:"
                         "\n !shared level. Verificar level minimo e maximo para compartilhamento de exp"
@@ -12,6 +13,8 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !rmfdgui Nome guilda. Remover guilda na lista amigos"
                         "\n !addem Nome personagem. Adicionar personagem na lista inimigos"
                         "\n !rmem Nome personagem. Remover personagem na lista inimigos"
+                        "\n !ltfd mostra lista de amigos"
+                        "\n !ltem mostra lista de inimigos"),(
                         "\n !addemgui Nome da guilda. Adicionar guilda na lista inimigos"
                         "\n !rmemgui Nome guilda. Remover guilda na lista inimigos"
                         "\n !adduser <NomeUsuario> <Main> adicionar usuario ao banco de dados"
@@ -32,6 +35,8 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !rmfdgui Nome guilda. Remover guilda na lista amigos"
                         "\n !addem Nome personagem. Adicionar personagem na lista inimigos"
                         "\n !rmem Nome personagem. Remover personagem na lista inimigos"
+                        "\n !ltfd mostra lista de amigos"
+                        "\n !ltem mostra lista de inimigos"),(
                         "\n !addemgui Nome da guilda. Adicionar guilda na lista inimigos"
                         "\n !rmemgui Nome guilda. Remover guilda na lista inimigos"
                         "\n !adduser <NomeUsuario> <Main> adicionar usuario ao banco de dados"
@@ -47,21 +52,23 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !mvch origem destino. Mover usuarios de um canal para outro"
                         "\n !addfd Nome personagem. Adicionar personagem na lista amigos"
                         "\n !addem Nome personagem. Adicionar personagem na lista inimigos"   
+                        "\n !ltfd mostra lista de amigos"
+                        "\n !ltem mostra lista de inimigos"
                          "\n !adduser <NomeUsuario> <Main> adicionar usuario ao banco de dados"
                         "\n !addmaker <NomeMain> <NomeMaker> adicionar maker ao main no banco de dados"
-                        )
+                        ),()
 
             elif str(settings["grupoMovedor"])  in  clienteServerGroupsID:
                 return ("\n Voce pode usar:"
                         "\n !shared level. Verificar level minimo e maximo para compartilhamento de exp"
                         "\n !mp msg. Mandar um poke para todos os usuarios do TS3"
                         "\n !mvch origem destino. Mover usuarios de um canal para outro"
-                        )
+                        ),()
 
             elif str(settings["grupoUsuario"])   in  clienteServerGroupsID:
                 return ("\n Voce pode usar:"
                         "\n !shared level. Verificar level minimo e maximo para compartilhamento de exp"
-                        )
+                        ),()
             else:
                 return "Voce nao pode usar o bot"
     except Exception as e:
