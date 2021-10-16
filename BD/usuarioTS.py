@@ -129,7 +129,7 @@ class usuarioTS:
                 return True
         else:
             self.id = resultSelect[0][0]
-            sqlSelectUsuarioTS = "SELECT id FROM usuariots WHERE idcharactermain ={}".format(self.id)
+            sqlSelectUsuarioTS = "SELECT id FROM usuariots WHERE idcharactermain ={} and uidusuario='{}'".format(self.id,self.uIdUsuario)
             resultSelectInimigo = self.con.select(sqlSelectUsuarioTS)
             if (len(resultSelectInimigo) > 0):
                  return self.name + " Ja esta inserido em Usuario TS"
