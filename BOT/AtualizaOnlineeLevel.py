@@ -63,14 +63,14 @@ class AtualizaOnlineELevel:
                                     playerCh = CharacterTibia.getPlayer(playerOnlineWorld.name)
                                     if(not playerCh is None):
                                         if (len(playerCh.deaths) > 0):
-                                            dataMorteAtual = data.utc_to_local(playerCh.deaths[0].time)
-                                            if (playerCh.deaths[0].time.__str__() == player[7] and player[9]==1):
+                                            dataMorteAtual2 = data.utc_to_local(playerCh.deaths[0].time)
+                                            if (dataMorteAtual2 == player[7] and player[9]==1):
                                                 morteNotificada = 1
                                             else:
                                                 morteNotificada = 0
                                             Character.updatePorPlayer(playerOnlineWorld.name, playerOnlineWorld.level, True,
                                                                       playerOnlineWorld.vocation.name, "None", player[5],
-                                                                      self.con, dataMorteAtual,
+                                                                      self.con, dataMorteAtual2,
                                                                       playerCh.deaths[0].by_player, morteNotificada)
                                         else:
                                             Character.updatePorPlayer(playerOnlineWorld.name, playerOnlineWorld.level, True,
