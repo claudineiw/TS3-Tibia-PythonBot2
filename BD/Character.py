@@ -128,12 +128,12 @@ class Character:
                 return 0
             else:
                 wor = World(world, con)
-                world = wor.insert()
+                worldID = wor.insert()
                 guid = Guild(guild, world, con)
-                guild = guid.insert()
+                guildID = guid.insert()
                 voc = Vocation(vocation, con)
                 voca=voc.insert()
                 sqlUpdate = "UPDATE Character SET level = {} , online = {} ,vocationId = {}, guildId = {}, worldId = {}, ultimaMorte ='{}', ultimaMorteMobOuPlayer={}, ultimaMorteNotificada={} WHERE id = {}".format(
-                    level, online, voca, guild, world, ultimaMorte, ultimaMorteMobOuPlayer, ultimaMorteNotificada,
+                    level, online, voca, guildID, worldID, ultimaMorte, ultimaMorteMobOuPlayer, ultimaMorteNotificada,
                     result[0][0])
                 con.update(sqlUpdate)

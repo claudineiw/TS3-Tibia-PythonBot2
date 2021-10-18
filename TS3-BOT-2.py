@@ -42,6 +42,7 @@ def canalInimigoAmigo(settings):
     threading.Thread(name="BOTImigigos", target=canalInimigoseAmigos.iniciar, args=(settings,)).start()
 
 def iniciarAtualizaPermissoesUserTS(settings):
+    print("Inicia Atualiza Permissoes")
     threading.Thread(name="BotAtualizaPermissoes", target=AtualizaUsuariosTS.atualizaUsuariosTsChamada,args=(settings,)).start()
 
 if __name__ == '__main__':

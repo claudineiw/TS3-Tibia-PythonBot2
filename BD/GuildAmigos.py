@@ -6,8 +6,8 @@ class GuildAmigos:
             self.name="None"
         else:
             self.name = name
-        voc = World(world,con)
-        self.world = voc.insert()
+        word = World(world,con)
+        self.world = word.insert()
         self.id = 0
 
     def get(self):

@@ -24,6 +24,8 @@ class Guild:
 
 
     def insert(self):
+        if(type(self.name) == type(1)):
+            return self.name
         result=self.select()
         if(len(result) == 0):
            sqlInsert = "INSERT INTO Guild (nome,worldId) VALUES('{}',{})".format(self.name,self.world)

@@ -53,7 +53,6 @@ class CharacterInimigos:
         if (len(resultSelect) == 0):
             char = Character.getPlayer(self.name)
             if (char is None):
-                print(self.name + " personagem nao encontrado")
                 return self.name + " personagem nao encontrado"
             else:
                 if (len(char.deaths) > 0):

@@ -64,7 +64,10 @@ def amigosOnline(tsconn, settings,tsconMorte, BDcon):
         descricao = tsconn.channelinfo(cid=pegarIdChannel(tsconn, settings["canalAmigos"]))[0]["channel_description"]
         novaDescricao = "[table][tr][td]Nome[/td][td]Level[/td][/tr]"
         resposta = CharacterAmigos.selectTodosAmigos(BDcon)
-        guildid=Guild.selectGuildID(BDcon,settings["nomeGuilda"])[0][0]
+        try:
+            guildid=Guild.selectGuildID(BDcon,settings["nomeGuilda"])[0][0]
+        except:
+            guildid=99999
         totalAmigos = CharacterAmigos.selectQuantidadeAmigosMenosGuilda(BDcon,guildid)
         todos=totalAmigos[0][0]
         if not type(resposta) is type(None) and not type(totalAmigos) is type(None):
