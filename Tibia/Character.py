@@ -5,13 +5,14 @@ def getOnlinePlayer(name):
     if (name == ""):
         return None
     else:
-        url = tibiapy.Character.get_url(name)
-        r = requests.post(url)
-        content = r.text
         try:
+            url = tibiapy.Character.get_url(name)
+            r = requests.post(url)
+            content = r.text
             character = tibiapy.Character.from_content(content)
             return character.other_characters
-        except:
+        except Exception as e:
+            print("Class Tibia.Character.getOnlinePlayer: "+e.__str__())
             return None
 
 
@@ -19,11 +20,12 @@ def getPlayer(name):
         if(name ==""):
             return None
         else:
-            url = tibiapy.Character.get_url(name)
-            r = requests.get(url)
-            content = r.text
             try:
+                url = tibiapy.Character.get_url(name)
+                r = requests.get(url)
+                content = r.text
                 character = tibiapy.Character.from_content(content)
                 return character
-            except:
+            except Exception as e:
+                print("Class Tibia.Character.getPlayer: " + e.__str__())
                 return None

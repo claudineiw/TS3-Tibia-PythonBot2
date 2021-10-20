@@ -23,20 +23,23 @@ def botsSecundarios(settings, nome):
 
 
 def notificaMorte(character,mensagem,bot,BDcon):
-    if(character[8]==0):
-        morreuPara="Mob"
-    else:
-        morreuPara="Player"
+    try:
+        if(character[8]==0):
+            morreuPara="Mob"
+        else:
+            morreuPara="Player"
 
-    if(character[7]!="0"):
-        if(diferencaTempo(character)<10):
-            if(character[9]==0):
-                pokeTodosClientes(mensagem+" "+character[1]+" Morreu Para: "+morreuPara+" as "+character[7],bot)
-                Character.updateNotificacaoMorte(character[0],BDcon)
-            else:
-                Character.updateNotificacaoMorte(character[0], BDcon)
-    else:
-        Character.updateNotificacaoMorte(character[0], BDcon)
+        if(character[7]!="0"):
+            if(diferencaTempo(character)<10):
+                if(character[9]==0):
+                    pokeTodosClientes(mensagem+" "+character[1]+" Morreu Para: "+morreuPara+" as "+character[7],bot)
+                    Character.updateNotificacaoMorte(character[0],BDcon)
+                else:
+                    Character.updateNotificacaoMorte(character[0], BDcon)
+        else:
+            Character.updateNotificacaoMorte(character[0], BDcon)
+    except:
+        pass
 
 
 def pegaClid(nome, bot):
@@ -47,25 +50,28 @@ def pegaClid(nome, bot):
 
 
 def notificaMorteGuilda(character,mensagem,bot,BDcon):
-    if(character[8]==0):
-        morreuPara="Mob"
-    else:
-        deathPlayer=charTibia.getPlayer(character[1])
-        morreuPara = "Player: "
-        for players in deathPlayer.deaths[0]["killers"]:
-            if players["player"]:
-                morreuPara=morreuPara+players["name"]+" , "
+    try:
+        if(character[8]==0):
+            morreuPara="Mob"
+        else:
+            deathPlayer=charTibia.getPlayer(character[1])
+            morreuPara = "Player: "
+            for players in deathPlayer.deaths[0]["killers"]:
+                if players["player"]:
+                    morreuPara=morreuPara+players["name"]+" , "
 
 
-    if(character[7]!="0"):
-        if(diferencaTempo(character)<10):
-            if(character[9]==0):
-                pokeTodosClientes(mensagem+" "+character[1]+" Morreu Para: "+morreuPara+" as "+character[7],bot)
-                Character.updateNotificacaoMorte(character[0],BDcon)
-            else:
-                Character.updateNotificacaoMorte(character[0], BDcon)
-    else:
-        Character.updateNotificacaoMorte(character[0], BDcon)
+        if(character[7]!="0"):
+            if(diferencaTempo(character)<10):
+                if(character[9]==0):
+                    pokeTodosClientes(mensagem+" "+character[1]+" Morreu Para: "+morreuPara+" as "+character[7],bot)
+                    Character.updateNotificacaoMorte(character[0],BDcon)
+                else:
+                    Character.updateNotificacaoMorte(character[0], BDcon)
+        else:
+            Character.updateNotificacaoMorte(character[0], BDcon)
+    except:
+        pass
 
 
 def pegaClid(nome, bot):
