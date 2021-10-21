@@ -14,7 +14,7 @@ class usuarioTS:
 
     @staticmethod
     def select(con):
-        selecttodosUsuarios = "SELECT id, nomets, idcharactermain, idmakers, uidusuario	FROM usuariots;"
+        selecttodosUsuarios = "SELECT id, nomets, idcharactermain, idmakers, uidusuario	FROM usuariots order by nomets;"
         return con.select(selecttodosUsuarios)
 
     @staticmethod
@@ -23,8 +23,8 @@ class usuarioTS:
         return con.select(selecttodosUsuarios)
 
     @staticmethod
-    def selectMain(idmain,con):
-        selecttodosUsuarios = "SELECT 'Nome TS: ',nomets, 'Nome Main: ',character.nome, 'UidUsuario: ',uidusuario FROM usuariots inner join character on (character.id=usuariots.idcharactermain) where character.id={};".format(idmain)
+    def selectUsuario(idUsuario,con):
+        selecttodosUsuarios = "SELECT 'Nome TS: ',nomets, 'Nome Main: ',character.nome, 'UidUsuario: ',uidusuario FROM usuariots inner join character on (character.id=usuariots.idcharactermain) where usuariots.id={};".format(idUsuario)
         return con.select(selecttodosUsuarios)
 
     @staticmethod
