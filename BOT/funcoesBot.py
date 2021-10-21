@@ -295,8 +295,8 @@ def botAfk(settings):
                                 if int(tsconn.clientinfo(clid=cliente["clid"])[0][
                                            'client_idle_time']) >= int(settings["tempoAFK"]) * 60 * 1000:
                                     tsconn.clientmove(cid=pegarIdChannel(tsconn, settings["canalAfk"]), clid=cliente["clid"])
-            except:
-                print("Erro botAFK")
+            except Exception as e:
+                print("Class funcoesBots.BotAFK: "+e.__str__())
                 pass
 
 #<--------------Interacoes com clientes-------------->

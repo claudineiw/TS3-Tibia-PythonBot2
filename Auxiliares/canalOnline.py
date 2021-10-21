@@ -3,26 +3,45 @@ from BD.Character import Character
 from BD.usuarioTS import usuarioTS
 
 def onlineSr(player,con,tscon,listaClientesOnline):
-    usuarios=usuarioTS.selectUsuarioTSOnMain(player[0],con)
+    usuarios=usuarioTS.select(con)
+    encontrado=False
+    uid=""
     for usuario in usuarios:
         if(player[0]==usuario[2]):
+            encontrado=True
+            uid=usuario[4]
             dbIdUsuario = tscon.clientdbfind(pattern=usuario[4], uid=True)[0]['cldbid']
             for onlineTS in listaClientesOnline:
                 if (onlineTS["client_database_id"] == dbIdUsuario):
                     return "ON"
-            return "OFF"
-        else:
-            if(usuario[3] is None or len(usuario[3]) ==0):
-                return "SR"
-            else:
+
+
+
+    for usuario in usuarios:
+       if(uid!=usuario[4]):
+           if (player[0] == usuario[2]):
+                encontrado = True
                 dbIdUsuario = tscon.clientdbfind(pattern=usuario[4], uid=True)[0]['cldbid']
-                for maker in usuario[3]:
-                    if(player[0]==maker):
-                        for onlineTS in listaClientesOnline:
-                            if(onlineTS["client_database_id"]==dbIdUsuario):
-                                return "ON"
-                        return "OFF"
-    return "SR"
+                for onlineTS in listaClientesOnline:
+                    if (onlineTS["client_database_id"] == dbIdUsuario):
+                        return "ON"
+
+    if(encontrado==False):
+        for usuario in usuarios:
+            if (not usuario[3] is None):
+                if(len(usuario[3]) > 0):
+                    dbIdUsuario = tscon.clientdbfind(pattern=usuario[4], uid=True)[0]['cldbid']
+                    for maker in usuario[3]:
+                        if (player[0] == maker):
+                            encontrado=True
+                            for onlineTS in listaClientesOnline:
+                                if(onlineTS["client_database_id"]==dbIdUsuario):
+                                    return "ON"
+
+    if(encontrado):
+        return "OFF"
+    else:
+        return "SR"
 
 def CanalOnline(tsconn, settings, BDcon):
     try:
