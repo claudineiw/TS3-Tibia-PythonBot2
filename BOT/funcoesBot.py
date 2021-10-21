@@ -365,6 +365,10 @@ def recebeComandos(event, bot, settings,con):
                             elif("ltfd"  in mensagemRecebida):
                                 comandosBot.botLtfd(con, usuarioID, bot)
                                 return True
+
+                            elif("ltuser" in mensagemRecebida):
+                                comandosBot.botLtuser(con, usuarioID, bot)
+                                return True
                     # <---- FIM COMANDOS ADMIN ACIMA---->
 
 

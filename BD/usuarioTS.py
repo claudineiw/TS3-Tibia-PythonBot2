@@ -22,6 +22,16 @@ class usuarioTS:
         selecttodosUsuarios = "SELECT id, nomets, idcharactermain, idmakers, uidusuario	FROM usuariots where idcharactermain={};".format(idmain)
         return con.select(selecttodosUsuarios)
 
+    @staticmethod
+    def selectMain(idmain,con):
+        selecttodosUsuarios = "SELECT 'Nome TS: ',nomets, 'Nome Main: ',character.nome, 'UidUsuario: ',uidusuario FROM usuariots inner join character on (character.id=usuariots.idcharactermain) where character.id={};".format(idmain)
+        return con.select(selecttodosUsuarios)
+
+    @staticmethod
+    def selectMaker(idmaker,idmain, con):
+        selecttodosUsuarios = "select 'Maker: ', (select nome from character where character.id={}),'Main: ',(select nome from character where character.id={});".format(idmaker,idmain)
+        return con.select(selecttodosUsuarios)
+
 
     @staticmethod
     def deletePorCharacterMain(name, con):
