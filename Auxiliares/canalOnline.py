@@ -51,7 +51,7 @@ def CanalOnline(tsconn, settings, BDcon):
         novaDescricao = "[table][tr][td]Nome[/td][td]Level[/td][td]TS[/td][/tr]"
         todosPlayersOnlineGuilda = Character.selectAllFromGuilOnline(BDcon,settings["nomeGuilda"])
         totalGuilda = Character.selectTotalPlayersGuild(BDcon,settings["nomeGuilda"])
-        if not type(todosPlayersOnlineGuilda) is type(None) and not type(totalGuilda) is type(None):
+        if not todosPlayersOnlineGuilda is None and not totalGuilda is None:
             contGuildOnline = 0
             if todosPlayersOnlineGuilda != False:
                 for playerOnlineGuilda in todosPlayersOnlineGuilda:

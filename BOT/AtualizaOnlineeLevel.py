@@ -30,7 +30,7 @@ class AtualizaOnlineELevel:
     def comGuilda(self):
         try:
             self.todos = Character.selectAll(self.con)
-            if (not self.todos is type(None)):
+            if (not self.todos is None):
                 self.characterChecados = []
                 guildaChecados = []
                 morteNotificada = 1
@@ -75,7 +75,7 @@ class AtualizaOnlineELevel:
 
     def semGuildas(self):
         try:
-            if (not self.todos is type(None)):
+            if (not self.todos is None):
                 if (len(self.todos) > 0):
                     world = WorldTibia.getOnlinePlayer(self.todos[0][6])
                     for player in self.todos:
@@ -110,7 +110,7 @@ class AtualizaOnlineELevel:
 
     def offlines(self):
         try:
-            if (not self.todos is type(None)):
+            if (not self.todos is None):
                 for player in self.todos:
                     if (player[1] not in self.characterChecados):
                         Character.updatePorPlayer(player[1], player[2], False, player[4], player[5], player[6], self.con,

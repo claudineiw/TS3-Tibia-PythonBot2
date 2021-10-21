@@ -15,6 +15,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !rmem Nome personagem. Remover personagem na lista inimigos"
                         "\n !ltfd mostra lista de amigos"
                         "\n !ltem mostra lista de inimigos"),(
+                        "\n !ltuser mostra lista de usuarios"
                         "\n !addemgui Nome da guilda. Adicionar guilda na lista inimigos"
                         "\n !rmemgui Nome guilda. Remover guilda na lista inimigos"
                         "\n !adduser <NomeUsuario> <Main> adicionar usuario ao banco de dados"
@@ -37,6 +38,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !rmem Nome personagem. Remover personagem na lista inimigos"
                         "\n !ltfd mostra lista de amigos"
                         "\n !ltem mostra lista de inimigos"),(
+                        "\n !ltuser mostra lista de usuarios"
                         "\n !addemgui Nome da guilda. Adicionar guilda na lista inimigos"
                         "\n !rmemgui Nome guilda. Remover guilda na lista inimigos"
                         "\n !adduser <NomeUsuario> <Main> adicionar usuario ao banco de dados"
@@ -54,6 +56,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !addem Nome personagem. Adicionar personagem na lista inimigos"   
                         "\n !ltfd mostra lista de amigos"
                         "\n !ltem mostra lista de inimigos"
+                        "\n !ltuser mostra lista de usuarios"
                          "\n !adduser <NomeUsuario> <Main> adicionar usuario ao banco de dados"
                         "\n !addmaker <NomeMain> <NomeMaker> adicionar maker ao main no banco de dados"
                         ),()

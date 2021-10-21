@@ -142,22 +142,16 @@ def botLtuser(con,idUsuario,bot):
         funcoesBot.enviarMensagem("<------Lista Usuarios------->", idUsuario, bot)
         for userTS in usuariosTS:
             userMain=usuarioTS.selectMain(userTS[2],con)
-            funcoesBot.enviarMensagem("<------Main------>", idUsuario, bot)
             funcoesBot.enviarMensagem("{}{}\t{}{}\t{}{}".format(userMain[0][0],userMain[0][1],userMain[0][2],userMain[0][3],userMain[0][4],userMain[0][5]), idUsuario, bot)
             if(not userTS[3] is None):
                 if(len(userTS[3])>0):
-                    funcoesBot.enviarMensagem("<------Makers------>", idUsuario, bot)
                     for maker in userTS[3]:
                         makerDescricao=usuarioTS.selectMaker(maker,userTS[2],con)
-                        funcoesBot.enviarMensagem("{}{}\t{}{}".format(makerDescricao[0][0], makerDescricao[0][1], makerDescricao[0][2], makerDescricao[0][3]),idUsuario, bot)
-
-                    funcoesBot.enviarMensagem("<------Fim Makers------>", idUsuario, bot)
+                        funcoesBot.enviarMensagem("\t\t\t{}{}\t{}{}".format(makerDescricao[0][0], makerDescricao[0][1], makerDescricao[0][2], makerDescricao[0][3]),idUsuario, bot)
                 else:
                     funcoesBot.enviarMensagem("<------Nao tem Maker------>", idUsuario, bot)
             else:
                 funcoesBot.enviarMensagem("<------Nao tem Maker------>", idUsuario, bot)
-
-            funcoesBot.enviarMensagem("<------Fim Main------>", idUsuario, bot)
 
         funcoesBot.enviarMensagem("<------Fim Lista Usuarios------->", idUsuario, bot)
     else:

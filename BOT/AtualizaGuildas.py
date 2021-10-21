@@ -26,7 +26,7 @@ class AtualizaGuildas:
         try:
             for guilda in AmigosEnimigos.selectGuildInimigas(self.con):
                 guildaDados = GuildaTibia.getGuild(guilda)
-                if(not guildaDados is type(None)):
+                if(not guildaDados is None):
                     allPlayers=GuildaTibia.getAllPlayer(guilda)
                     for player in allPlayers:
                         char = Character(player.name, player.level, player.online, guildaDados.world, guildaDados.name,
@@ -36,7 +36,7 @@ class AtualizaGuildas:
 
             for guilda in AmigosEnimigos.selectGuildAmigas(self.con):
                 guildaDados = GuildaTibia.getGuild(guilda)
-                if(not guildaDados is type(None)):
+                if(not guildaDados is None):
                     allPlayers=GuildaTibia.getAllPlayer(guilda)
                     for player in allPlayers:
                         char = Character(player.name, player.level, player.online, guildaDados.world, guildaDados.name,
@@ -51,7 +51,7 @@ class AtualizaGuildas:
         try:
             for guilda in AmigosEnimigos.selectGuildAmigas(self.con):
                 guildaDados = GuildaTibia.getAllPlayer(guilda)
-                if(not guildaDados is type(None)):
+                if(not guildaDados is None):
                     todosDaGuilda = Character.selectAllFromGuild(self.con, guilda)
                     for players in todosDaGuilda:
                         achou = False
@@ -64,7 +64,7 @@ class AtualizaGuildas:
 
             for guilda in AmigosEnimigos.selectGuildInimigas(self.con):
                 guildaDados = GuildaTibia.getAllPlayer(guilda)
-                if(not guildaDados is type(None)):
+                if(not guildaDados is None):
                     todosDaGuilda = Character.selectAllFromGuild(self.con, guilda)
                     for players in todosDaGuilda:
                         achou = False
