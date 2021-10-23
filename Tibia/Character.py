@@ -27,5 +27,5 @@ def getPlayer(name):
                 character = tibiapy.Character.from_content(content)
                 return character
             except Exception as e:
-                print("Class Tibia.Character.getPlayer: " + e.__str__())
+                print(name+" Class Tibia.Character.getPlayer: " + e.__str__())
                 return None

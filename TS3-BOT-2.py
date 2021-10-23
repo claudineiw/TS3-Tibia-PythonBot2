@@ -2,10 +2,10 @@ from BOT import funcoesBot
 import json
 from BD.BD import BD
 from BOT.AtualizaGuildas import AtualizaGuildas
-from Auxiliares import tibiaBosses
 from Auxiliares import tibiaRashid
 from Auxiliares import tibiaYasir
 from Auxiliares import canalInimigoseAmigos
+from Auxiliares import tibiaBossesFromGuildaStats
 from BOT import AtualizaUsuariosTS
 import threading
 
@@ -26,7 +26,8 @@ def iniciaBotAFK(settings):
 
 def iniciarBotBosses(settings):
     print("Inicia Tibia Bosses")
-    threading.Thread(name="BOTBosses", target=tibiaBosses.tibiaBosses, args=(settings,)).start()
+    tibiaBosses = tibiaBossesFromGuildaStats.tibiaBosses(settings)
+    threading.Thread(name="BOTBosses", target=tibiaBosses.iniciarBotCanalBoss).start()
 
 
 def iniciarRashid(settings):
