@@ -340,7 +340,7 @@ def recebeComandos(event, bot, settings,con):
                     # <---- COMANDOS MOVEDOR ACIMA---->
                         if (int(itens) == settings["grupoEditor"] or int(itens) == settings["grupoServerAdmin"] or int(itens) == settings["grupoAdmin"] or int(itens) == settings["grupoMovedor"]):
                             if ("!mp " in mensagemRecebida):
-                                comandosBot.botMassPoke("[COLOR=red]"+nomeUsuario+"[/COLOR]: "+mensagemRecebida,settings)
+                                comandosBot.botMassPoke("[COLOR=#5500ff]"+nomeUsuario+"[/COLOR]: "+mensagemRecebida,settings)
                                 return True
                             elif("!mvch " in mensagemRecebida):
                                 comandosBot.botMvCh(mensagemRecebida, usuarioID,bot)

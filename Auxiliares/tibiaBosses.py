@@ -269,6 +269,6 @@ def tibiaBosses(settings):
 
             time.sleep(120)
         except:
-                print("erro login tibia bosses")
+                print("Relogando TibiaBosses")
                 s.post(urlLoginTibiaBosses, data=ck)
-        pass
+                pass

@@ -52,7 +52,7 @@ if __name__ == '__main__':
     print("Bot iniciado conectado ao servidor " + settings["host"] + ":" + settings["port"])
     botPrincipal = funcoesBot.botsSecundarios(settings, "Bot-Ts3")
     iniciaBotAFK(settings)
-  #  iniciarBotBosses(settings)
+    iniciarBotBosses(settings)
     iniciarRashid(settings)
     #iniciaYasir(settings) site fora do ar
     canalInimigoAmigo(settings)
