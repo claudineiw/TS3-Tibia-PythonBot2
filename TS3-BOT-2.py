@@ -7,12 +7,11 @@ from Auxiliares import canalInimigoseAmigos
 from Auxiliares import tibiaBossesFromGuildaStats
 from BOT import CanalEventos
 from BOT import AtualizaUsuariosTS
-from Tibia import Events
 import threading
 
 
 def lerSettings():
-    with open("settingsL.json", encoding="utf-8") as f:
+    with open("settings.json", encoding="utf-8") as f:
         settings = json.load(f)
     return settings
 
@@ -66,8 +65,15 @@ if __name__ == '__main__':
             try:
                 botPrincipal.send_keepalive()
                 event = botPrincipal.wait_for_event(timeout=30)
-                funcoesBot.enviarMensagemBoasVindas(event, botPrincipal)
-                funcoesBot.recebeComandos(event, botPrincipal,settings,Bd)
+                if "msg" in event[0]:
+                    if "invokeruid" in event[0]:
+                        if event[0]["invokeruid"].strip() != "serveradmin":
+                            funcoesBot.recebeComandos(event,botPrincipal,settings,Bd)
+                elif "reasonid" in event[0]:
+                    if(event[0]['reasonid'] == '0'):
+                        if event[0]["client_unique_identifier"].strip() != "serveradmin" :
+                            funcoesBot.enviarMensagemBoasVindas(event, botPrincipal)
+
             except Exception as e:
                 if(e.__str__()=="Could not receive data from the server within the timeout."):
                     pass
