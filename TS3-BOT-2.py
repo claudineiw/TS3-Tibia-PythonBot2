@@ -3,15 +3,16 @@ import json
 from BD.BD import BD
 from BOT.AtualizaGuildas import AtualizaGuildas
 from Auxiliares import tibiaRashid
-from Auxiliares import tibiaYasir
 from Auxiliares import canalInimigoseAmigos
 from Auxiliares import tibiaBossesFromGuildaStats
+from BOT import CanalEventos
 from BOT import AtualizaUsuariosTS
+from Tibia import Events
 import threading
 
 
 def lerSettings():
-    with open("settings.json", encoding="utf-8") as f:
+    with open("settingsL.json", encoding="utf-8") as f:
         settings = json.load(f)
     return settings
 
@@ -35,9 +36,10 @@ def iniciarRashid(settings):
     threading.Thread(name="BOTRashid", target=tibiaRashid.rashidCidade, args=(settings,)).start()
 
 
-def iniciaYasir(settings):
-    print("Inicia Tibia Yasir")
-    threading.Thread(name="BOTYasir", target=tibiaYasir.yasirOnline, args=(settings,)).start()
+def iniciaEventos(settings):
+    print("Inicia Tibia Eventos")
+    eventos=CanalEventos.canalEventos(settings)
+    threading.Thread(name="BOTEventos", target=eventos.iniciar).start()
 
 def canalInimigoAmigo(settings):
     print("Inicia Tibia Canal Inimigos")
@@ -55,10 +57,11 @@ if __name__ == '__main__':
     iniciaBotAFK(settings)
     iniciarBotBosses(settings)
     iniciarRashid(settings)
-    #iniciaYasir(settings) site fora do ar
+    iniciaEventos(settings)
     canalInimigoAmigo(settings)
     atualiza(BD(settings,settings["userBDUPDATE"]))
     iniciarAtualizaPermissoesUserTS(settings)
+
     while (True):
             try:
                 botPrincipal.send_keepalive()

@@ -28,13 +28,19 @@ class tibiaBosses:
                         monstro.append(name)
                         monstro.append(vistoPorUltimo)
                         monstro.append(possibilidade)
-                        monstro.append(esperadoEm)
+                        if(esperadoEm==""):
+                            monstro.append("-")
+                        else:
+                            monstro.append(esperadoEm)
                         data.append(monstro)
                     elif(possibilidade!="No" and esperadoEm==""):
                         monstro.append(name)
                         monstro.append(vistoPorUltimo)
                         monstro.append(possibilidade)
-                        monstro.append(esperadoEm)
+                        if (esperadoEm == ""):
+                            monstro.append("-")
+                        else:
+                            monstro.append(esperadoEm)
                         data.append(monstro)
 
             listaOrdenada = sorted(data, key=lambda x: x[0])
@@ -50,9 +56,9 @@ class tibiaBosses:
     def trocarDescricaoCanal(self):
         lista=self.getHtml()
         if(not lista is None):
-            novaDescricao = "[table][tr][td]Nome[/td][td]\tUltima Aparicao[/td][td]\tChance[/td][td]\tEsperando em[/td][/tr]"
+            novaDescricao = "[table][tr][td]Nome[/td][td]Ultima Aparicao      [/td][td]Chance                [/td][td]Esperando em[/td][/tr]"
             for itens in lista:
-                novaDescricao += "[tr][td]{}[/td][td]\t{}[/td][td]\t{}[/td][td]\t{}[/td][/tr]".format(itens[0],itens[1],itens[2],itens[3])
+                novaDescricao += "[tr][td]{}[/td][td]{}[/td][td]{}[/td][td]{}[/td][/tr]".format(itens[0],itens[1],itens[2],itens[3])
             novaDescricao += "[/table]"
             descricao = self.tsconn.channelinfo(cid=pegarIdChannel(self.tsconn, self.settings["canalBoss"]))[0]["channel_description"]
             if descricao != novaDescricao:
@@ -61,7 +67,7 @@ class tibiaBosses:
 
     def iniciarBotCanalBoss(self):
         try:
-            ultimo=time.time()
+            ultimo=0
             while(True):
                 self.tsconn.send_keepalive()
                 agora=time.time()

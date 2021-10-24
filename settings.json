@@ -1,14 +1,13 @@
 {
 	"name": "Ts3-BoT",
 	"username": "serveradmin",
-	"password": "fdzqo2RO",
-
-	"psslinux": "fIOnxL1X",
+	"password": "fIOnxL1X",
 	"host": "127.0.0.1",
 	"port": "10011",
   	"serverID": 1,
 	"nomeGuilda": "Goldden Gunner",
 	"mundo": "Ferobra",
+
 
 	"hostBD": "localhost",
 	"database": "golddengunner",
@@ -29,29 +28,29 @@
 	"canalAfk": "AFK",
 	"tempoAFK": 60,
     "canalBoss":"[cspacer]BOSSES",
-	"canalYasir":"[cspacer]Yasir",
+	"canalEventos":"[cspacer]Agenda Eventos",
 	"canalRashid":"╠═● Rashid",
 
-	"permissaoTemMaker": 24,
-	"permissaoMakerOnline": 35,
-    "permissaoOnline": 33,
-	"permissaoOffline": 34,
+	"permissaoTemMaker": 29,
+	"permissaoMakerOnline": 41,
+    "permissaoOnline": 39,
+	"permissaoOffline": 40,
 
 
-	"permissaoDruid": 12,
-	"permissaoSorcerer":13,
-	"permissaoKnight": 14,
-	"permissaoPaladin":15,
+	"permissaoDruid": 14,
+	"permissaoSorcerer":15,
+	"permissaoKnight": 16,
+	"permissaoPaladin":17,
 
-	"permissaoLevelInicio": 42,
-	"permissaoLevelFim": 62,
+	"permissaoLevelInicio": 50,
+	"permissaoLevelFim": 70,
 
 
-	"grupoEditor": 9,
-	"grupoServerAdmin": 30,
-	"grupoAdmin": 31,
-	"grupoMovedor": 37,
-	"grupoUsuario":10,
+	"grupoEditor": 6,
+	"grupoServerAdmin": 36,
+	"grupoAdmin": 37,
+	"grupoMovedor": 44,
+	"grupoUsuario":7,
 	"scripts":[
 
 	]
