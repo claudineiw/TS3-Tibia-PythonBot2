@@ -6,27 +6,34 @@ class canalEventos:
         self.tsconn = botsSecundarios(self.settings, "BotEventos")
         self.eventos=Events.eventos()
     def iniciar(self):
-        try:
             ultimo = 0
             while(True):
-                self.tsconn.send_keepalive()
-                tsEvent=self.tsconn.wait_for_event(60)
-                if(int(tsEvent.parsed[0]["reasonid"])==0):
-                    if(int(tsEvent.parsed[0]["client_type"])==0):
-                        retorno = self.eventos.getEventsXPRespaw()
-                        if(not retorno is None):
-                            pokeCliente(retorno,int(tsEvent.parsed[0]["clid"]),self.tsconn)
-                            enviarMensagem(retorno,int(tsEvent.parsed[0]["clid"]),self.tsconn)
+                try:
+                    if(self.tsconn.is_connected()==False):
+                        self.tsconn = botsSecundarios(self.settings, "BotEventos")
 
-                agora = time.time()
-                if (agora - ultimo > 3600):
-                    self.eventos.atualizaData()
-                    self.AtualizaDescricaoCanal()
-                    ultimo = time.time()
+                    self.tsconn.send_keepalive()
+                    tsEvent=self.tsconn.wait_for_event(60)
+                    if("reasonid" in tsEvent[0]):
+                        if(int(tsEvent.parsed[0]["reasonid"])==0):
+                                if(int(tsEvent.parsed[0]["client_type"])==0):
+                                    retorno = self.eventos.getEventsXPRespaw()
+                                    if(not retorno is None):
+                                        pokeCliente(retorno,int(tsEvent.parsed[0]["clid"]),self.tsconn)
+                                        enviarMensagem(retorno,int(tsEvent.parsed[0]["clid"]),self.tsconn)
 
+                    agora = time.time()
+                    if (agora - ultimo > 3600):
+                        self.eventos.atualizaData()
+                        self.AtualizaDescricaoCanal()
+                        ultimo = time.time()
 
-        except:
-            pass
+                except Exception as e:
+                    if(not "Could not receive data from the server within the timeout" in e.__str__()):
+                        print("Class CanalEventos.iniciar: "+e.__str__())
+                        self.tsconn.close()
+
+                    pass
 
     def AtualizaDescricaoCanal(self):
         try:

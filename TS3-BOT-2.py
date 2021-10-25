@@ -7,11 +7,12 @@ from Auxiliares import canalInimigoseAmigos
 from Auxiliares import tibiaBossesFromGuildaStats
 from BOT import CanalEventos
 from BOT import AtualizaUsuariosTS
+
 import threading
 
 
 def lerSettings():
-    with open("settings.json", encoding="utf-8") as f:
+    with open("settingsL.json", encoding="utf-8") as f:
         settings = json.load(f)
     return settings
 
