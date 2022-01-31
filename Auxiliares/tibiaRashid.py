@@ -4,6 +4,7 @@ import time
 from datetime import datetime
 def rashidCidade(settings):
     while True:
+
         try:
             tz = timezone('Europe/Berlin')
             diaDaSemana = int(datetime.now(tz).isoweekday())
@@ -37,10 +38,10 @@ def rashidCidade(settings):
                 else:
                     novaDescricao += linhas + "\n"
 
-            nomeCanal = "╠═● Rashid (" + local + ")"
-            nomeAtual = tsconn.channelinfo(cid=pegarIdChannel(tsconn, "╠═● Rashid"))[0]["channel_name"]
+            nomeCanal = settings["canalRashid"]+" (" + local + ")"
+            nomeAtual = tsconn.channelinfo(cid=pegarIdChannel(tsconn, settings["canalRashid"]))[0]["channel_name"]
             if nomeCanal != nomeAtual:
-                tsconn.channeledit(cid=pegarIdChannel(tsconn, "╠═● Rashid"), channel_name=nomeCanal, channel_description=novaDescricao)
+                tsconn.channeledit(cid=pegarIdChannel(tsconn,settings["canalRashid"]), channel_name=nomeCanal, channel_description=novaDescricao)
             tsconn.close()
             time.sleep(1800)
 

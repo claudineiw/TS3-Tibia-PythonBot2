@@ -28,13 +28,13 @@ def notificaMorte(character, mensagem, bot, BDcon):
         if (character[8] == 0):
             morreuPara = "Mob"
         else:
-            morreuPara = "Player"
+            morreuPara = "[COLOR=red]Player[/COLOR]"
 
         if (character[7] != "0"):
             if (diferencaTempo(character) < 10):
                 if (character[9] == 0):
                     pokeTodosClientes(
-                        mensagem + " " + character[1] + " Morreu Para: " + morreuPara + " as " + character[7], bot)
+                        mensagem + " " + character[1] + " Foi morto: " + morreuPara, bot)
                     Character.updateNotificacaoMorte(character[0], BDcon)
                 else:
                     Character.updateNotificacaoMorte(character[0], BDcon)
@@ -54,19 +54,19 @@ def pegaClid(nome, bot):
 def notificaMorteGuilda(character, mensagem, bot, BDcon):
     try:
         if (character[8] == 0):
-            morreuPara = "Mob"
+            morreuPara = "[COLOR=blue]Mob[/color]"
         else:
             deathPlayer = charTibia.getPlayer(character[1])
-            morreuPara = "Player: "
+            morreuPara = "[COLOR=red]"
             for players in deathPlayer.deaths[0]["killers"]:
                 if players["player"]:
                     morreuPara = morreuPara + players["name"] + " , "
+            morreuPara = morreuPara+"[/color]"
 
         if (character[7] != "0"):
             if (diferencaTempo(character) < 10):
                 if (character[9] == 0):
-                    pokeTodosClientes(
-                        mensagem + " " + character[1] + " Morreu Para: " + morreuPara + " as " + character[7], bot)
+                    pokeTodosClientes(mensagem + " " + character[1] + " Morto por: " + morreuPara, bot)
                     Character.updateNotificacaoMorte(character[0], BDcon)
                 else:
                     Character.updateNotificacaoMorte(character[0], BDcon)
