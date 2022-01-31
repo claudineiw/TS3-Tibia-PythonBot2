@@ -17,13 +17,20 @@ class AtualizaUsuariosTS:
             self.dadosUsuario = self.TScon.clientdbinfo(cldbid=self.dbIdUsuario)[0]
             self.permissoesUsuario = self.TScon.servergroupsbyclientid(cldbid=self.dbIdUsuario)
             self.ListaDePermissoes = ListaDePermissoes
+
+            self.darPermissaoRegistrado()
             self.atualizaPermissoesLevel()
             self.atualizaOnlineOffline()
             self.atualizaVocacao()
             self.atualizaTemMakereMakerOnline()
+
         except Exception as e:
             print("Usuario nao encontrado no server TS")
             pass
+
+
+    def darPermissaoRegistrado(self):
+        self.adicionarPermissao(int(self.settings["grupoUsuario"]))
 
     def selectCharMain(self):
         char = Character.selectPorID(self.usuarioTS[2], self.bdCon)
