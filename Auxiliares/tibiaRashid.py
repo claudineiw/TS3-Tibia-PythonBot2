@@ -10,6 +10,7 @@ def rashidCidade(settings):
             diaDaSemana = int(datetime.now(tz).isoweekday())
             tsconn = botsSecundarios(settings,"Rashid")
             descricaoAtual = tsconn.channelinfo(cid=pegarIdChannel(tsconn, settings["canalRashid"]))[0]["channel_description"]
+            ondeFica=""
             if diaDaSemana == 1:
                 local = "Svargrond"
                 ondeFica = "[b]Local[/b]: Nas segundas você pode encontrá-lo em Svargrond, na taverna de Dankwart, ao sul do templo"
@@ -31,17 +32,17 @@ def rashidCidade(settings):
             elif diaDaSemana == 7:
                 local = "Carlin"
                 ondeFica = "[b]Local[/b]: Nos domingos você pode encontrá-lo no primeiro andar do depot de Carlin"
-            novaDescricao = ""
-            for linhas in descricaoAtual.split("\n"):
-                if linhas.find("Local") != -1:
-                    novaDescricao += ondeFica + "\n"
-                else:
-                    novaDescricao += linhas + "\n"
+          #  novaDescricao = ""
+           # for linhas in descricaoAtual.split("\n"):
+            #    if linhas.find("Local") != -1:
+             #       novaDescricao += ondeFica + "\n"
+              #  else:
+               #     novaDescricao += linhas + "\n"
 
             nomeCanal = settings["canalRashid"]+" (" + local + ")"
             nomeAtual = tsconn.channelinfo(cid=pegarIdChannel(tsconn, settings["canalRashid"]))[0]["channel_name"]
             if nomeCanal != nomeAtual:
-                tsconn.channeledit(cid=pegarIdChannel(tsconn,settings["canalRashid"]), channel_name=nomeCanal, channel_description=novaDescricao)
+                tsconn.channeledit(cid=pegarIdChannel(tsconn,settings["canalRashid"]), channel_name=nomeCanal, channel_description=ondeFica)
             tsconn.close()
             time.sleep(1800)
 

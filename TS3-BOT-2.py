@@ -3,6 +3,7 @@ import json
 from BD.BD import BD
 from BOT.AtualizaGuildas import AtualizaGuildas
 from Auxiliares import tibiaRashid
+from Auxiliares import tibiaBossesDreamCourts
 from Auxiliares import canalInimigoseAmigos
 from Auxiliares import tibiaBossesFromGuildaStats
 from BOT import CanalEventos
@@ -12,7 +13,7 @@ import threading
 
 
 def lerSettings():
-    with open("settingsL.json", encoding="utf-8") as f:
+    with open("settings.json", encoding="utf-8") as f:
         settings = json.load(f)
     return settings
 
@@ -36,6 +37,11 @@ def iniciarRashid(settings):
     threading.Thread(name="BOTRashid", target=tibiaRashid.rashidCidade, args=(settings,)).start()
 
 
+def iniciarDreamCourts(settings):
+    print("Inicia Tibia DreamCorts")
+    threading.Thread(name="DreamCorts", target=tibiaBossesDreamCourts.dreamCourts, args=(settings,)).start()
+
+
 def iniciaEventos(settings):
     print("Inicia Tibia Eventos")
     eventos=CanalEventos.canalEventos(settings)
@@ -57,6 +63,7 @@ if __name__ == '__main__':
     iniciaBotAFK(settings)
     iniciarBotBosses(settings)
     iniciarRashid(settings)
+    iniciarDreamCourts(settings)
     iniciaEventos(settings)
     canalInimigoAmigo(settings)
     atualiza(BD(settings,settings["userBDUPDATE"]))
