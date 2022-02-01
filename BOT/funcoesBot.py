@@ -294,8 +294,7 @@ def botAfk(settings):
                 if int(cliente["client_type"]) != 1:
                     if int(pegarIdChannel(tsconn, settings["canalAfk"])) != int(cliente["cid"]):
                         if (tsconn.servergroupsbyclientid(cldbid=cliente['client_database_id'])[0]['name'] != 'Guest'):
-                            if int(tsconn.clientinfo(clid=cliente["clid"])[0][
-                                       'client_idle_time']) >= int(settings["tempoAFK"]) * 60 * 1000:
+                            if int(tsconn.clientinfo(clid=cliente["clid"])[0][ 'client_idle_time']) >= int(settings["tempoAFK"]) * 60 * 1000:
                                 tsconn.clientmove(cid=pegarIdChannel(tsconn, settings["canalAfk"]),
                                                   clid=cliente["clid"])
         except Exception as e:
