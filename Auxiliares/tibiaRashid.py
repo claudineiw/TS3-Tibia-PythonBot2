@@ -11,6 +11,7 @@ def rashidCidade(settings):
             tsconn = botsSecundarios(settings,"Rashid")
             descricaoAtual = tsconn.channelinfo(cid=pegarIdChannel(tsconn, settings["canalRashid"]))[0]["channel_description"]
             ondeFica=""
+            local=""
             if diaDaSemana == 1:
                 local = "Svargrond"
                 ondeFica = "[b]Local[/b]: Nas segundas você pode encontrá-lo em Svargrond, na taverna de Dankwart, ao sul do templo"

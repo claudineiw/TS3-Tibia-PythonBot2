@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 def dreamCourts(settings):
-    listaBosses=["Plagueroot","Malofur","Maxxenius","Alptramun","Izcandar"]
+    listaBosses=["Malofur","Maxxenius","Alptramun","Izcandar","Plagueroot"]
     contador=0
     diaDaSemanaAtual=0
     local=""

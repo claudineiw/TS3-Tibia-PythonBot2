@@ -6,6 +6,7 @@ from Auxiliares import tibiaRashid
 from Auxiliares import tibiaBossesDreamCourts
 from Auxiliares import canalInimigoseAmigos
 from Auxiliares import tibiaBossesFromGuildaStats
+from Auxiliares import tempoAFK
 from BOT import CanalEventos
 from BOT import AtualizaUsuariosTS
 
@@ -21,9 +22,9 @@ def atualiza(con):
     atuali=AtualizaGuildas(con)
     threading.Thread(name="Atualiza", target=atuali.iniciar).start()
 
-def iniciaBotAFK(settings):
+def iniciaBotAFK(settings,tempo):
     print("Inicia AFK")
-    threading.Thread(name="BotAFK", target=funcoesBot.botAfk, args=(settings,)).start()
+    threading.Thread(name="BotAFK", target=funcoesBot.botAfk, args=(settings,tempo,)).start()
 
 
 def iniciarBotBosses(settings):
@@ -60,7 +61,8 @@ if __name__ == '__main__':
     Bd = BD(settings,settings["userBDMAIN"])
     print("Bot iniciado conectado ao servidor " + settings["host"] + ":" + settings["port"])
     botPrincipal = funcoesBot.botsSecundarios(settings, "Bot-Ts3")
-    iniciaBotAFK(settings)
+    tempo=tempoAFK.tempoAFK(settings)
+    iniciaBotAFK(settings,tempo)
     iniciarBotBosses(settings)
     iniciarRashid(settings)
     iniciarDreamCourts(settings)
@@ -76,7 +78,7 @@ if __name__ == '__main__':
                 if "msg" in event[0]:
                     if "invokeruid" in event[0]:
                         if event[0]["invokeruid"].strip() != "serveradmin":
-                            funcoesBot.recebeComandos(event,botPrincipal,settings,Bd)
+                            funcoesBot.recebeComandos(event,botPrincipal,settings,Bd,tempo)
                 elif "reasonid" in event[0]:
                     if(event[0]['reasonid'] == '0'):
                         if event[0]["client_unique_identifier"].strip() != "serveradmin" :

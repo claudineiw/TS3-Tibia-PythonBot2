@@ -6,6 +6,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !shared level. Verificar level minimo e maximo para compartilhamento de exp"
                         "\n !mp msg. Mandar um poke para todos os usuarios do TS3"
                         "\n !mv canal. Mover todos os usuarios do TS3 para um canal"
+                        "\n !afk tempo. Altera o tempo de mover do AFK deve ser passado o tempo em minutos"
                         "\n !mvch origem destino. Mover usuarios de um canal para outro"
                         "\n !addfd Nome personagem. Adicionar personagem na lista amigos"
                         "\n !rmfd Nome personagem. Remover personagem na lista amigos"

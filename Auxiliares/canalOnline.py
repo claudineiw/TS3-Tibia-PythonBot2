@@ -40,10 +40,7 @@ def onlineSr(player,con,tscon,listaClientesOnline):
                                     return "ON"
 
     if(encontrado):
-        if int(tscon.clientinfo(clid=dbIdUsuario)[0]['client_idle_time']) >= 7*24*60*60*1000: #uma semana
-            return "[color=red]OFF[/color]"
-        else:
-            return "OFF"
+         return "OFF"
     else:
         return "SR"
 

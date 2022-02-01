@@ -6,6 +6,7 @@ import BOT.comandosBot as comandosBot
 from BD.Character import Character
 from BOT.funcoesGerais import diferencaTempo
 from Tibia import Character as charTibia
+from Auxiliares import tempoAFK
 
 
 def botsSecundarios(settings, nome):
@@ -284,18 +285,18 @@ def trataCanaisComEspaco(stringCanais, bot):
             return None, None
 
 
-def botAfk(settings):
-    tsconn = botsSecundarios(settings, settings["canalAfk"])
+def botAfk(settings,tempo):
+    tsconn = botsSecundarios(settings, tempo.canalAFK)
     while True:
         time.sleep(60)
         try:
             tsconn.send_keepalive()
             for cliente in tsconn.clientlist():
                 if int(cliente["client_type"]) != 1:
-                    if int(pegarIdChannel(tsconn, settings["canalAfk"])) != int(cliente["cid"]):
+                    if int(pegarIdChannel(tsconn, tempo.canalAFK)) != int(cliente["cid"]):
                         if (tsconn.servergroupsbyclientid(cldbid=cliente['client_database_id'])[0]['name'] != 'Guest'):
-                            if int(tsconn.clientinfo(clid=cliente["clid"])[0][ 'client_idle_time']) >= int(settings["tempoAFK"]) * 60 * 1000:
-                                tsconn.clientmove(cid=pegarIdChannel(tsconn, settings["canalAfk"]),
+                            if int(tsconn.clientinfo(clid=cliente["clid"])[0][ 'client_idle_time']) >= int(tempo.tempoAFK) * 60 * 1000:
+                                tsconn.clientmove(cid=pegarIdChannel(tsconn, tempo.canalAFK),
                                                   clid=cliente["clid"])
         except Exception as e:
             print("Class funcoesBots.BotAFK: " + e.__str__())
@@ -315,7 +316,7 @@ def enviarMensagemBoasVindas(event, bot):
         return None
 
 
-def recebeComandos(event, bot, settings, con):
+def recebeComandos(event, bot, settings, con,tempo):
     try:
         mensagemRecebida = event[0]["msg"].lower()
         nomeUsuario = event[0]["invokername"]
@@ -347,6 +348,7 @@ def recebeComandos(event, bot, settings, con):
                 elif ("!mvch " in mensagemRecebida):
                     comandosBot.botMvCh(mensagemRecebida, usuarioID, bot)
                     return True
+
 
             # <---- FIM COMANDOS MOVEDOR ACIMA---->
 
@@ -404,6 +406,13 @@ def recebeComandos(event, bot, settings, con):
                     return True
                 elif ("!rmmaker " in mensagemRecebida):
                     comandosBot.botrmMakerUserTS(mensagemRecebida, con, usuarioID, bot)
+                    return True
+                elif ("!mv" in mensagemRecebida):
+                    comandosBot.botMvTodosParaMim(usuarioID, bot)
+                    return True
+
+                elif ("!afk " in mensagemRecebida):
+                    comandosBot.botAfkTrocaTempo(mensagemRecebida,tempo,usuarioID, bot)
                     return True
 
         # <---- FIM COMANDOS SERVER ADMIN ACIMA---->

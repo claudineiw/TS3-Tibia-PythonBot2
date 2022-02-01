@@ -50,6 +50,24 @@ def botMvCh(stringCanais, idUsuario,bot):
             funcoesBot.enviarMensagem("Erro nome dos canais favor verificar", idUsuario, bot)
             return None
 
+
+def botMvTodosParaMim(idUsuario, bot):
+    try:
+        canalDestino =""
+        for cliente in funcoesBot.pegarListaClientes(bot):
+            if(int(cliente["clid"])==int(idUsuario)):
+                canalDestino=cliente["cid"]
+                break
+        for cliente in funcoesBot.pegarListaClientes(bot):
+                if int(cliente["client_type"]) != 1:
+                    if int(cliente["cid"]) != int(canalDestino):
+                           bot.clientmove(cid=canalDestino, clid=cliente["clid"])
+
+
+    except:
+        funcoesBot.enviarMensagem("Erro nome dos canais favor verificar", idUsuario, bot)
+        return None
+
 def botAddFd(mensagemRecebida,con,idUsuario,bot):
     mensagemRecebida=mensagemRecebida.replace("!addfd ","")
     amigos=AmigosEInimigos.AmigosEnimigos()
@@ -67,6 +85,15 @@ def botRmFd(mensagemRecebida,con,idUsuario,bot):
         funcoesBot.enviarMensagem(mensagemRecebida+" removido dos amigos", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
+
+
+def botAfkTrocaTempo(mensagemRecebida,tempo,idUsuario,bot):
+    mensagemRecebida=mensagemRecebida.replace("!afk ","")
+    try:
+        tempo.setTempo(int(mensagemRecebida))
+        funcoesBot.enviarMensagem("Tempo do AFK foi alterado", idUsuario, bot)
+    except:
+        funcoesBot.enviarMensagem("Erro no parametro", idUsuario, bot)
 
 
 
