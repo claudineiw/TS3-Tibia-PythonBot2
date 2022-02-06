@@ -209,6 +209,75 @@ def pokeTodosClientes(msg, bot):
         return None
 
 
+def pokerTodosClientesBoss(settings,msg, bot):
+    try:
+        enviouTudo = False
+
+        permBosses=settings["grupoBosses"]
+        for cliente in pegarListaClientes(bot):
+            temBoss = 0
+            listaPermissoes=pegarPermissoesCliente(cliente["clid"],bot)
+            for perm in listaPermissoes.split(','):
+                if(int(permBosses)== int(perm)):
+                    temBoss=1
+                    break
+
+            if(temBoss):
+                msgPartida = ""
+                if (len(msg) > 100):
+                    for caracter in msg:
+                        enviouTudo = False
+                        msgPartida += caracter
+                        if (len(msgPartida) == 100):
+                            pokeCliente(msgPartida, cliente["clid"], bot)
+                            msgPartida = ""
+                            enviouTudo = True
+                    if (not enviouTudo):
+                        pokeCliente(msgPartida, cliente["clid"], bot)
+                else:
+                    pokeCliente(msg, cliente["clid"], bot)
+
+        return True
+    except Exception as e:
+        print(e)
+        return None
+
+
+
+def pokerTodosClientesVendas(settings,msg, bot):
+    try:
+        enviouTudo = False
+
+        permBosses=settings["grupoVendas"]
+        for cliente in pegarListaClientes(bot):
+            temBoss = 0
+            listaPermissoes=pegarPermissoesCliente(cliente["clid"],bot)
+            for perm in listaPermissoes.split(','):
+                if(int(permBosses)== int(perm)):
+                    temBoss=1
+                    break
+
+            if(temBoss):
+                msgPartida = ""
+                if (len(msg) > 100):
+                    for caracter in msg:
+                        enviouTudo = False
+                        msgPartida += caracter
+                        if (len(msgPartida) == 100):
+                            pokeCliente(msgPartida, cliente["clid"], bot)
+                            msgPartida = ""
+                            enviouTudo = True
+                    if (not enviouTudo):
+                        pokeCliente(msgPartida, cliente["clid"], bot)
+                else:
+                    pokeCliente(msg, cliente["clid"], bot)
+
+        return True
+    except Exception as e:
+        print(e)
+        return None
+
+
 def enviarMensagem(msg, usuario, bot):
     try:
         bot.sendtextmessage(targetmode=1, target=usuario, msg=msg)
@@ -339,6 +408,15 @@ def recebeComandos(event, bot, settings, con,tempo):
                 elif ("!shared " in mensagemRecebida):
                     comandosBot.botShared(mensagemRecebida, nomeUsuario, usuarioID, bot)
                     return True
+
+                elif("!boss " in mensagemRecebida):
+                    comandosBot.botMassPokeBoss("[COLOR=red]" + nomeUsuario + "[/COLOR]: " + mensagemRecebida, settings)
+                    return True
+
+                elif ("!sell " in mensagemRecebida):
+                    comandosBot.botMassPokeVendas("[COLOR=blue]" + nomeUsuario + "[/COLOR]: " + mensagemRecebida,settings)
+                    return True
+
             # <---- FIM COMANDOS TODOS USUARIOS REGISTRADOS ---->
 
             # <---- COMANDOS MOVEDOR ACIMA---->

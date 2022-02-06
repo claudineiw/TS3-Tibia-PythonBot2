@@ -23,6 +23,23 @@ def botShared(mensagemRecebida,nomeUsuario, usuarioID,bot):
         funcoesBot.enviarMensagem("\nErro de parametro favor informar como no exemplo !shared <100>",usuarioID,bot)
 
 
+def botMassPokeBoss(mensagemRecebida,settings):
+    try:
+        mensagem=mensagemRecebida.replace("!boss ", "")
+        threading.Thread(name="PokeBoss", target=funcoesBot.pokerTodosClientesBoss, args=(settings,mensagem,funcoesBot.botsSecundarios(settings, "PokeBoss"),)).start()
+    except:
+        return None
+
+
+
+def botMassPokeVendas(mensagemRecebida,settings):
+    try:
+        mensagem=mensagemRecebida.replace("!sell ", "")
+        threading.Thread(name="PokeVendas", target=funcoesBot.pokerTodosClientesVendas, args=(settings,mensagem,funcoesBot.botsSecundarios(settings, "PokeVendas"),)).start()
+    except:
+        return None
+
+
 def botMassPoke(mensagemRecebida,settings):
     try:
         mensagem=mensagemRecebida.replace("!mp ", "")

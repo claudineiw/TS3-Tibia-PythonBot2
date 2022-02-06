@@ -23,6 +23,8 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !rmuser <Main> remover usuario ao banco de dados"
                         "\n !addmaker <NomeMain> <NomeMaker> adicionar maker ao main no banco de dados"
                         "\n !rmmmaker <NomeMain> <NomeMaker> remover maker do main no banco de dados"
+                        "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
+                        "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
                         )
 
 
@@ -46,6 +48,8 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !rmuser <Main> remover usuario ao banco de dados"
                         "\n !addmaker <NomeMain> <NomeMaker> adicionar maker ao main no banco de dados"
                         "\n !rmmmaker <NomeMain> <NomeMaker> remover maker do main no banco de dados"
+                        "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
+                        "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
                         )
 
             elif str(settings["grupoAdmin"])  in  clienteServerGroupsID:
@@ -60,6 +64,8 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !ltuser mostra lista de usuarios"
                          "\n !adduser <NomeUsuario> <Main> adicionar usuario ao banco de dados"
                         "\n !addmaker <NomeMain> <NomeMaker> adicionar maker ao main no banco de dados"
+                        "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
+                        "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
                         ),()
 
             elif str(settings["grupoMovedor"])  in  clienteServerGroupsID:
@@ -67,11 +73,15 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !shared level. Verificar level minimo e maximo para compartilhamento de exp"
                         "\n !mp msg. Mandar um poke para todos os usuarios do TS3"
                         "\n !mvch origem destino. Mover usuarios de um canal para outro"
+                        "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
+                        "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
                         ),()
 
             elif str(settings["grupoUsuario"])   in  clienteServerGroupsID:
                 return ("\n Voce pode usar:"
                         "\n !shared level. Verificar level minimo e maximo para compartilhamento de exp"
+                        "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
+                        "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
                         ),()
             else:
                 return "Voce nao pode usar o bot"
