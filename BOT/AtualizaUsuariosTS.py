@@ -18,7 +18,7 @@ class AtualizaUsuariosTS:
             self.permissoesUsuario = self.TScon.servergroupsbyclientid(cldbid=self.dbIdUsuario)
             self.ListaDePermissoes = ListaDePermissoes
 
-          #  self.darPermissaoRegistrado()
+            self.darPermissaoRegistrado()
             self.atualizaPermissoesLevel()
             self.atualizaOnlineOffline()
             self.atualizaVocacao()
@@ -32,7 +32,17 @@ class AtualizaUsuariosTS:
 
 
     def darPermissaoRegistrado(self):
-        self.adicionarPermissao(int(self.settings["grupoUsuario"]))
+        temMaior=0
+        for itens in self.permissoesUsuario:
+            perm=int(itens["sgid"])
+            if(perm==int(self.settings["grupoConvidado"]) or perm==int(self.settings["grupoMestre"]) or perm==int(self.settings["grupoEditor"]) or perm==int(self.settings["grupoServerAdmin"]) or perm==int(self.settings["grupoAdmin"]) or perm==int(self.settings["grupoMovedor"])):
+                temMaior=1
+                break
+
+        if(temMaior):
+            self.removerPermissao(int(self.settings["grupoUsuario"]))
+        else:
+            self.adicionarPermissao(int(self.settings["grupoUsuario"]))
 
     def selectCharMain(self):
         char = Character.selectPorID(self.usuarioTS[2], self.bdCon)
@@ -117,13 +127,13 @@ def atualizaUsuariosTsChamada(settings,semaforo):
     listaPermissoes = TScon.servergrouplist()
     try:
         while (True):
-            semaforo.acquire()
+           # semaforo.acquire()
             TScon.send_keepalive()
             for usuario in usuarioTS.select(Bd):
                 AtualizaUsuariosTS(TScon, Bd, usuario, settings, listaPermissoes)
 
             canalOnline.CanalOnline(TScon, settings, Bd)
-            semaforo.release()
+            #semaforo.release()
             time.sleep(30)
     except Exception as e:
         print("Error Atualiza Usuarios TS: "+e.__str__())

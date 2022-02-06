@@ -34,7 +34,7 @@ class AtualizaOnlineELevel:
                 self.characterChecados = []
                 guildaChecados = []
                 morteNotificada = 1
-                for player in self.todos :
+                for player in self.todos:
                     if (player[5] != "None"):
                         guilda = player[5]
                         if (guilda not in guildaChecados):

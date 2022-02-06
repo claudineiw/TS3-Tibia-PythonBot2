@@ -13,14 +13,14 @@ class AtualizaGuildas:
         self.semaforo=semaforo
 
     def iniciar(self):
-        AtualizalevelEon = AtualizaOnlineELevel(self.con)
+        AtualizaOnlineELevel1 = AtualizaOnlineELevel(self.con)
         while (True):
             try:
-                self.semaforo.acquire()
+                #self.semaforo.acquire()
                 self.update()
                 self.removerPlayersGuilda()
-                AtualizalevelEon.iniciar()
-                self.semaforo.release()
+                AtualizaOnlineELevel1.iniciar()
+                #self.semaforo.release()
                 time.sleep(30)
             except:
                 pass
@@ -44,8 +44,7 @@ class AtualizaGuildas:
                     allPlayers=GuildaTibia.getAllPlayer(guilda)
                     if (not allPlayers is None):
                         for player in allPlayers:
-                            char = Character(player.name, player.level, player.online, guildaDados.world, guildaDados.name,
-                                             player.vocation.name, "0", 0, 1, self.con)
+                            char = Character(player.name, player.level, player.online, guildaDados.world, guildaDados.name, player.vocation.name, "0", 0, 1, self.con)
                             char.insert()
 
         except Exception as e:
