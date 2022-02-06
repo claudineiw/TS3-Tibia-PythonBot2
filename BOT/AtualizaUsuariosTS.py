@@ -123,16 +123,16 @@ class AtualizaUsuariosTS:
 
 def atualizaUsuariosTsChamada(settings,semaforo):
     Bd = BD(settings, settings["userBDUpdateUserTS"])
-    TScon = funcoesBot.botsSecundarios(settings, "Bot-UserTS")
-    listaPermissoes = TScon.servergrouplist()
     try:
         while (True):
            # semaforo.acquire()
-            TScon.send_keepalive()
+            TScon = funcoesBot.botsSecundarios(settings, "Bot-UserTS")
+            listaPermissoes = TScon.servergrouplist()
             for usuario in usuarioTS.select(Bd):
                 AtualizaUsuariosTS(TScon, Bd, usuario, settings, listaPermissoes)
 
             canalOnline.CanalOnline(TScon, settings, Bd)
+            TScon.close()
             #semaforo.release()
             time.sleep(30)
     except Exception as e:

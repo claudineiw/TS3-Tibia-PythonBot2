@@ -355,23 +355,25 @@ def trataCanaisComEspaco(stringCanais, bot):
 
 
 def botAfk(settings,tempo,semaforo):
-    tsconn = botsSecundarios(settings, tempo.canalAFK)
+
     while True:
-        time.sleep(60)
+        semaforo.acquire()
+        tsconn = botsSecundarios(settings, tempo.canalAFK)
         try:
-            semaforo.acquire()
-            tsconn.send_keepalive()
             for cliente in tsconn.clientlist():
                 if int(cliente["client_type"]) != 1:
                     if int(pegarIdChannel(tsconn, tempo.canalAFK)) != int(cliente["cid"]):
                         if (tsconn.servergroupsbyclientid(cldbid=cliente['client_database_id'])[0]['name'] != 'Guest'):
                             if int(tsconn.clientinfo(clid=cliente["clid"])[0][ 'client_idle_time']) >= int(tempo.tempoAFK) * 60 * 1000:
-                                tsconn.clientmove(cid=pegarIdChannel(tsconn, tempo.canalAFK),
-                                                  clid=cliente["clid"])
-            semaforo.release()
+                                tsconn.clientmove(cid=pegarIdChannel(tsconn, tempo.canalAFK),clid=cliente["clid"])
+            tsconn.close()
+
         except Exception as e:
             print("Class funcoesBots.BotAFK: " + e.__str__())
             pass
+
+        semaforo.release()
+        time.sleep(60)
 
 
 # <--------------Interacoes com clientes-------------->

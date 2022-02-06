@@ -6,7 +6,6 @@ class tibiaBosses:
         self.semaforo=semaforo
         self.settings=settings
         self.url="https://guildstats.eu/bosses?world={}&monsterName=&rook=0".format(self.settings["mundo"])
-        self.tsconn = botsSecundarios(settings, "Bot-boss")
 
     def getHtml(self):
         try:
@@ -71,13 +70,14 @@ class tibiaBosses:
             ultimo=0
             while(True):
                 self.semaforo.acquire()
-                self.tsconn.send_keepalive()
+                self.tsconn = botsSecundarios(self.settings, "Bot-boss")
                 agora=time.time()
                 if(agora-ultimo>3600):
                     self.trocarDescricaoCanal()
                     ultimo=time.time()
+                self.tsconn.close()
                 self.semaforo.release()
-                time.sleep(30)
+                time.sleep(60)
         except:
             print("Erro bot canal boss")
             pass

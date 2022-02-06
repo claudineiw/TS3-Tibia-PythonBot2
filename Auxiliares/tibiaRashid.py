@@ -43,7 +43,7 @@ def rashidCidade(settings,semaforo):
 
             tsconn.close()
             semaforo.release()
-            time.sleep(1800)
+            time.sleep(3600)
 
         except (ts3.query.TS3QueryError, ts3.query.TS3TimeoutError, ts3.query.TS3RecvError, IndexError, ValueError,
                 KeyError, TypeError):

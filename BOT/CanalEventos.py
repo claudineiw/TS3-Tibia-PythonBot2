@@ -4,8 +4,8 @@ class canalEventos:
     def __init__(self,settings,semaforo):
         self.settings=settings
         self.semaforo=semaforo
-        self.tsconn = botsSecundarios(self.settings, "BotEventos")
         self.eventos=Events.eventos()
+        self.tsconn = botsSecundarios(self.settings, "BotEventos")
     def iniciar(self):
             ultimo = 0
             while(True):
@@ -29,13 +29,13 @@ class canalEventos:
                         self.eventos.atualizaData()
                         self.AtualizaDescricaoCanal()
                         ultimo = time.time()
+
                     self.semaforo.release()
 
                 except Exception as e:
                     if(not "Could not receive data from the server within the timeout" in e.__str__()):
                         print("Class CanalEventos.iniciar: "+e.__str__())
                         self.tsconn.close()
-
                     pass
 
     def AtualizaDescricaoCanal(self):
