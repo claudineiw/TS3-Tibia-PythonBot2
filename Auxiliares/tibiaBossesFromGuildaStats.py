@@ -2,7 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 from BOT.funcoesBot import *
 class tibiaBosses:
-    def __init__(self,settings):
+    def __init__(self,settings,semaforo):
+        self.semaforo=semaforo
         self.settings=settings
         self.url="https://guildstats.eu/bosses?world={}&monsterName=&rook=0".format(self.settings["mundo"])
         self.tsconn = botsSecundarios(settings, "Bot-boss")
@@ -69,11 +70,13 @@ class tibiaBosses:
         try:
             ultimo=0
             while(True):
+                self.semaforo.acquire()
                 self.tsconn.send_keepalive()
                 agora=time.time()
                 if(agora-ultimo>3600):
                     self.trocarDescricaoCanal()
                     ultimo=time.time()
+                self.semaforo.release()
                 time.sleep(30)
         except:
             print("Erro bot canal boss")

@@ -3,17 +3,19 @@ from BD.BD import BD
 from BD.CharacterInimigos import CharacterInimigos
 from BD.CharacterAmigos import CharacterAmigos
 from BD.Guild import Guild
-def iniciar(settings):
+def iniciar(settings,semaforo):
     tsconnEM = botsSecundarios(settings, "BotInimigos")
     tsconnFD = botsSecundarios(settings, "BotAmigos")
     tsconMorte=botsSecundarios(settings, "Mortes")
     BDcon = BD(settings,settings["userBDAmigosInimigos"])
     while(True):
+        semaforo.acquire()
         tsconMorte.send_keepalive()
         tsconnEM.send_keepalive()
         tsconnFD.send_keepalive()
         inimigosOnline(tsconnEM,settings,tsconMorte,BDcon)
         amigosOnline(tsconnFD,settings,tsconMorte,BDcon)
+        semaforo.release()
         time.sleep(30)
 
 

@@ -1,14 +1,16 @@
 from BOT.funcoesBot import *
 from Tibia import Events
 class canalEventos:
-    def __init__(self,settings):
+    def __init__(self,settings,semaforo):
         self.settings=settings
+        self.semaforo=semaforo
         self.tsconn = botsSecundarios(self.settings, "BotEventos")
         self.eventos=Events.eventos()
     def iniciar(self):
             ultimo = 0
             while(True):
                 try:
+                    self.semaforo.acquire()
                     if(self.tsconn.is_connected()==False):
                         self.tsconn = botsSecundarios(self.settings, "BotEventos")
 
@@ -27,6 +29,7 @@ class canalEventos:
                         self.eventos.atualizaData()
                         self.AtualizaDescricaoCanal()
                         ultimo = time.time()
+                    self.semaforo.release()
 
                 except Exception as e:
                     if(not "Could not receive data from the server within the timeout" in e.__str__()):

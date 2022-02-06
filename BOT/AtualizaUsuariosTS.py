@@ -18,14 +18,16 @@ class AtualizaUsuariosTS:
             self.permissoesUsuario = self.TScon.servergroupsbyclientid(cldbid=self.dbIdUsuario)
             self.ListaDePermissoes = ListaDePermissoes
 
-            self.darPermissaoRegistrado()
+          #  self.darPermissaoRegistrado()
             self.atualizaPermissoesLevel()
             self.atualizaOnlineOffline()
             self.atualizaVocacao()
             self.atualizaTemMakereMakerOnline()
 
         except Exception as e:
-            print("Usuario nao encontrado no server TS")
+            print("Usuario nao encontrado no server TS: ")
+            print("AtualizaUsuariosTS: " + e.__str__())
+            print(usuarioTSs)
             pass
 
 
@@ -109,17 +111,19 @@ class AtualizaUsuariosTS:
             pass
 
 
-def atualizaUsuariosTsChamada(settings):
+def atualizaUsuariosTsChamada(settings,semaforo):
     Bd = BD(settings, settings["userBDUpdateUserTS"])
     TScon = funcoesBot.botsSecundarios(settings, "Bot-UserTS")
     listaPermissoes = TScon.servergrouplist()
     try:
         while (True):
+            semaforo.acquire()
             TScon.send_keepalive()
             for usuario in usuarioTS.select(Bd):
                 AtualizaUsuariosTS(TScon, Bd, usuario, settings, listaPermissoes)
 
             canalOnline.CanalOnline(TScon, settings, Bd)
+            semaforo.release()
             time.sleep(30)
     except Exception as e:
         print("Error Atualiza Usuarios TS: "+e.__str__())

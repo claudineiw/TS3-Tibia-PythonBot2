@@ -7,17 +7,20 @@ from BOT.AtualizaOnlineeLevel import AtualizaOnlineELevel
 
 
 class AtualizaGuildas:
-    def __init__(self, con):
+    def __init__(self, con,semaforo):
         print("Iniciou AtualizaGuildas")
         self.con = con
+        self.semaforo=semaforo
 
     def iniciar(self):
         AtualizalevelEon = AtualizaOnlineELevel(self.con)
         while (True):
             try:
+                self.semaforo.acquire()
                 self.update()
                 self.removerPlayersGuilda()
                 AtualizalevelEon.iniciar()
+                self.semaforo.release()
                 time.sleep(30)
             except:
                 pass

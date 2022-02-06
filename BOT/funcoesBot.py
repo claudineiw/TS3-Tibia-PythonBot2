@@ -285,11 +285,12 @@ def trataCanaisComEspaco(stringCanais, bot):
             return None, None
 
 
-def botAfk(settings,tempo):
+def botAfk(settings,tempo,semaforo):
     tsconn = botsSecundarios(settings, tempo.canalAFK)
     while True:
         time.sleep(60)
         try:
+            semaforo.acquire()
             tsconn.send_keepalive()
             for cliente in tsconn.clientlist():
                 if int(cliente["client_type"]) != 1:
@@ -298,6 +299,7 @@ def botAfk(settings,tempo):
                             if int(tsconn.clientinfo(clid=cliente["clid"])[0][ 'client_idle_time']) >= int(tempo.tempoAFK) * 60 * 1000:
                                 tsconn.clientmove(cid=pegarIdChannel(tsconn, tempo.canalAFK),
                                                   clid=cliente["clid"])
+            semaforo.release()
         except Exception as e:
             print("Class funcoesBots.BotAFK: " + e.__str__())
             pass
@@ -327,7 +329,7 @@ def recebeComandos(event, bot, settings, con,tempo):
             # <---- COMANDOS TODOS USUARIOS REGISTRADOS ---->
             if (int(itens) == settings["grupoEditor"] or int(itens) == settings["grupoServerAdmin"] or int(itens) ==
                     settings["grupoAdmin"] or int(itens) == settings["grupoMovedor"] or int(itens) == settings[
-                        "grupoUsuario"]):
+                        "grupoUsuario"] or int(itens) == settings["grupoMestre"]):
                 if ("!bot" in mensagemRecebida):
                     comandosBot.botBoasVindas(nomeUsuario, usuarioID, bot)
                     return True
@@ -341,7 +343,7 @@ def recebeComandos(event, bot, settings, con,tempo):
 
             # <---- COMANDOS MOVEDOR ACIMA---->
             if (int(itens) == settings["grupoEditor"] or int(itens) == settings["grupoServerAdmin"] or int(itens) ==
-                    settings["grupoAdmin"] or int(itens) == settings["grupoMovedor"]):
+                    settings["grupoAdmin"] or int(itens) == settings["grupoMovedor"] or int(itens) == settings["grupoMestre"]):
                 if ("!mp " in mensagemRecebida):
                     comandosBot.botMassPoke("[COLOR=#5500ff]" + nomeUsuario + "[/COLOR]: " + mensagemRecebida, settings)
                     return True
@@ -354,7 +356,7 @@ def recebeComandos(event, bot, settings, con,tempo):
 
             # <---- COMANDOS ADMIN ACIMA---->
             if (int(itens) == settings["grupoEditor"] or int(itens) == settings["grupoServerAdmin"] or int(itens) ==
-                    settings["grupoAdmin"]):
+                    settings["grupoAdmin"] or int(itens) == settings["grupoMestre"]):
                 if ("!adduser " in mensagemRecebida):
                     comandosBot.botaddUserTS(mensagemRecebida, con, usuarioID, bot)
                     return True
@@ -376,7 +378,7 @@ def recebeComandos(event, bot, settings, con,tempo):
             # <---- FIM COMANDOS ADMIN ACIMA---->
 
             # <---- COMANDOS SERVER ADMIN ACIMA---->
-            if (int(itens) == settings["grupoEditor"] or int(itens) == settings["grupoServerAdmin"]):
+            if (int(itens) == settings["grupoEditor"] or int(itens) == settings["grupoServerAdmin"] or int(itens) == settings["grupoMestre"]):
                 if ("!addfd " in mensagemRecebida):
                     comandosBot.botAddFd(mensagemRecebida, con, usuarioID, bot)
                     return True
@@ -428,5 +430,5 @@ def recebeComandos(event, bot, settings, con,tempo):
 
 
     except Exception as e:
-        print("Comandos Bot: " + e.__str__())
+        print("Funcoes Bot: " + e.__str__())
         return None
