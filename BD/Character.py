@@ -93,7 +93,7 @@ class Character:
             return self.id
         else:
             self.id =result[0][0]
-            sqlUpdate = "UPDATE Character SET level = {} , online = {} ,vocationId = {}, guildId = {}, worldId = {}, ultimaMorte ='{}', ultimaMorteMobOuPlayer={}, ultimaMorteNotificada={} WHERE id = {}".format(self.level, self.online, self.vocation, self.guild, self.world, self.ultimaMorte, self.ultimaMorteMobOuPlayer, self.ultimaMorteNotificada, self.id)
+            sqlUpdate = "UPDATE Character SET level = {} , online = {} ,vocationId = {}, guildId = {}, worldId = {} WHERE id = {}".format(self.level, self.online, self.vocation, self.guild, self.world,self.id)
             self.con.update(sqlUpdate)
             return self.id
 

@@ -9,12 +9,14 @@ def iniciar(settings,semaforo):
         semaforo.acquire()
         tsconnEM = botsSecundarios(settings, "BotInimigos")
         tsconMorte = botsSecundarios(settings, "Mortes")
+
         inimigosOnline(tsconnEM,settings,tsconMorte,BDcon)
         tsconnEM.close()
         tsconnFD = botsSecundarios(settings, "BotAmigos")
         amigosOnline(tsconnFD,settings,tsconMorte,BDcon)
         tsconnFD.close()
         tsconMorte.close()
+
 
         semaforo.release()
         time.sleep(30)
