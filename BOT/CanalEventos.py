@@ -36,6 +36,7 @@ class canalEventos:
                     if(not "Could not receive data from the server within the timeout" in e.__str__()):
                         print("Class CanalEventos.iniciar: "+e.__str__())
                         self.tsconn.close()
+                        self.semaforo.release()
                     pass
 
     def AtualizaDescricaoCanal(self):

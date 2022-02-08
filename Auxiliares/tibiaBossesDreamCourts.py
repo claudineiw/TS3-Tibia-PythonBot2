@@ -58,4 +58,5 @@ def dreamCourts(settings,semaforo):
 
         except (ts3.query.TS3QueryError, ts3.query.TS3TimeoutError, ts3.query.TS3RecvError, IndexError, ValueError,
                 KeyError, TypeError):
+            semaforo.release()
             pass

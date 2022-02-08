@@ -80,6 +80,8 @@ class tibiaBosses:
                 time.sleep(60)
         except:
             print("Erro bot canal boss")
+            self.tsconn.close()
+            self.semaforo.release()
             pass
 
 

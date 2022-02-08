@@ -4,11 +4,11 @@ import time
 from datetime import datetime
 def rashidCidade(settings,semaforo):
     while True:
+        semaforo.acquire()
+        tsconn = botsSecundarios(settings, "Rashid")
         try:
-            semaforo.acquire()
             tz = timezone('Europe/Berlin')
             diaDaSemana = int(datetime.now(tz).isoweekday())
-            tsconn = botsSecundarios(settings,"Rashid")
             ondeFica=""
             local=""
             hora = int(datetime.now(tz).time().hour)
@@ -47,4 +47,6 @@ def rashidCidade(settings,semaforo):
 
         except (ts3.query.TS3QueryError, ts3.query.TS3TimeoutError, ts3.query.TS3RecvError, IndexError, ValueError,
                 KeyError, TypeError):
+            tsconn.close()
+            semaforo.release()
             pass

@@ -370,6 +370,8 @@ def botAfk(settings,tempo,semaforo):
 
         except Exception as e:
             print("Class funcoesBots.BotAFK: " + e.__str__())
+            tsconn.close()
+            semaforo.release()
             pass
 
         semaforo.release()
