@@ -109,7 +109,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
                         ),()
             else:
-                return "Voce nao pode usar o bot"
+                return ("Voce nao pode usar o bot"),()
     except Exception as e:
         print("Lista Help: "+e.__str__())
         return None
