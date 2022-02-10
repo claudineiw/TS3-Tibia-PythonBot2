@@ -391,7 +391,7 @@ def enviarMensagemBoasVindas(event, bot):
         return None
 
 
-def recebeComandos(event, bot, settings, con,tempo):
+def recebeComandos(event, bot, settings, con,tempo,listaBossesDreamCourts):
     try:
         mensagemRecebida = event[0]["msg"].lower()
         nomeUsuario = event[0]["invokername"]
@@ -414,11 +414,11 @@ def recebeComandos(event, bot, settings, con,tempo):
                     return True
 
                 elif("!boss " in mensagemRecebida):
-                    comandosBot.botMassPokeBoss("[COLOR=red]" + nomeUsuario + "[/COLOR]: " + mensagemRecebida, settings)
+                    comandosBot.botMassPokeBoss(nomeUsuario,mensagemRecebida, settings)
                     return True
 
                 elif ("!sell " in mensagemRecebida):
-                    comandosBot.botMassPokeVendas("[COLOR=blue]" + nomeUsuario + "[/COLOR]: " + mensagemRecebida,settings)
+                    comandosBot.botMassPokeVendas(nomeUsuario,mensagemRecebida,settings)
                     return True
 
             # <---- FIM COMANDOS TODOS USUARIOS REGISTRADOS ---->
@@ -427,10 +427,14 @@ def recebeComandos(event, bot, settings, con,tempo):
             if (int(itens) == settings["grupoEditor"] or int(itens) == settings["grupoServerAdmin"] or int(itens) ==
                     settings["grupoAdmin"] or int(itens) == settings["grupoMovedor"] or int(itens) == settings["grupoMestre"]):
                 if ("!mp " in mensagemRecebida):
-                    comandosBot.botMassPoke("[COLOR=#5500ff]" + nomeUsuario + "[/COLOR]: " + mensagemRecebida, settings)
+                    comandosBot.botMassPoke(nomeUsuario,mensagemRecebida, settings)
                     return True
                 elif ("!mvch " in mensagemRecebida):
                     comandosBot.botMvCh(mensagemRecebida, usuarioID, bot)
+                    return True
+
+                elif ("!next" in mensagemRecebida):
+                    comandosBot.botBossDreamCourtsNext(usuarioID, bot,listaBossesDreamCourts)
                     return True
 
 

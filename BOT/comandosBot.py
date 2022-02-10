@@ -23,27 +23,27 @@ def botShared(mensagemRecebida,nomeUsuario, usuarioID,bot):
         funcoesBot.enviarMensagem("\nErro de parametro favor informar como no exemplo !shared <100>",usuarioID,bot)
 
 
-def botMassPokeBoss(mensagemRecebida,settings):
+def botMassPokeBoss(nome,mensagemRecebida,settings):
     try:
         mensagem=mensagemRecebida.replace("!boss ", "")
-        threading.Thread(name="PokeBoss", target=funcoesBot.pokerTodosClientesBoss, args=(settings,mensagem,funcoesBot.botsSecundarios(settings, "PokeBoss"),)).start()
+        threading.Thread(name="PokeBoss", target=funcoesBot.pokerTodosClientesBoss, args=(settings,mensagem,funcoesBot.botsSecundarios(settings, "Boss-"+nome),)).start()
     except:
         return None
 
 
 
-def botMassPokeVendas(mensagemRecebida,settings):
+def botMassPokeVendas(nome,mensagemRecebida,settings):
     try:
         mensagem=mensagemRecebida.replace("!sell ", "")
-        threading.Thread(name="PokeVendas", target=funcoesBot.pokerTodosClientesVendas, args=(settings,mensagem,funcoesBot.botsSecundarios(settings, "PokeVendas"),)).start()
+        threading.Thread(name="PokeVendas", target=funcoesBot.pokerTodosClientesVendas, args=(settings,mensagem,funcoesBot.botsSecundarios(settings, "Vendas-"+nome),)).start()
     except:
         return None
 
 
-def botMassPoke(mensagemRecebida,settings):
+def botMassPoke(nome,mensagemRecebida,settings):
     try:
         mensagem=mensagemRecebida.replace("!mp ", "")
-        threading.Thread(name="Poke", target=funcoesBot.pokeTodosClientes, args=(mensagem,funcoesBot.botsSecundarios(settings, "Poke"),)).start()
+        threading.Thread(name="Poke", target=funcoesBot.pokeTodosClientes, args=(mensagem,funcoesBot.botsSecundarios(settings, "BOT-"+nome),)).start()
     except:
         return None
 
@@ -66,6 +66,15 @@ def botMvCh(stringCanais, idUsuario,bot):
         except:
             funcoesBot.enviarMensagem("Erro nome dos canais favor verificar", idUsuario, bot)
             return None
+
+
+def botBossDreamCourtsNext(idUsuario, bot,listaBossesDreamCourts):
+    try:
+        listaBossesDreamCourts.next()
+        funcoesBot.enviarMensagem("Proximo Boss", idUsuario, bot)
+    except:
+        funcoesBot.enviarMensagem("Erro ao trocar boss", idUsuario, bot)
+        return None
 
 
 def botMvTodosParaMim(idUsuario, bot):

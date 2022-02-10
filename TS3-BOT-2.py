@@ -3,13 +3,14 @@ import json
 from BD.BD import BD
 from BOT.AtualizaGuildas import AtualizaGuildas
 from Auxiliares import tibiaRashid
-from Auxiliares import tibiaBossesDreamCourts
+from Auxiliares import tibiaBossesDreamCourts as DC
 from Auxiliares import canalInimigoseAmigos
 from Auxiliares import tibiaBossesFromGuildaStats
 from Auxiliares import tempoAFK
 from BOT import CanalEventos
 from BOT import AtualizaUsuariosTS
 from ThreadControle import Semaforo
+
 import threading
 
 
@@ -38,9 +39,9 @@ def iniciarRashid(settings,semaforo):
     threading.Thread(name="BOTRashid", target=tibiaRashid.rashidCidade, args=(settings,semaforo,)).start()
 
 
-def iniciarDreamCourts(settings,semaforo):
+def iniciarDreamCourts(settings,semaforo,listaBoss):
     print("Inicia Tibia DreamCorts")
-    threading.Thread(name="DreamCorts", target=tibiaBossesDreamCourts.dreamCourts, args=(settings,semaforo,)).start()
+    threading.Thread(name="DreamCorts", target=DC.dreamCourts, args=(settings,semaforo,listaBoss,)).start()
 
 
 def iniciarEventos(settings,semaforo):
@@ -68,11 +69,17 @@ if __name__ == '__main__':
     iniciaBotAFK(settings,tempo,semaforo)
     iniciarBotBosses(settings,semaforo)
     iniciarRashid(settings,semaforo)
-    iniciarDreamCourts(settings,semaforo)
+    listaBoss=DC.ListaDreamCourtsCircular()
+    iniciarDreamCourts(settings,semaforo,listaBoss)
+
     iniciarEventos(settings,semaforo)
     iniciarCanalInimigoAmigo(settings,semaforo)
     IniciarAtualizaGuildas(BD(settings,settings["userBDUPDATE"]),semaforo)
     iniciarAtualizaPermissoesUserTS(settings,semaforo)
+
+
+
+
 
     while (True):
             try:
@@ -81,7 +88,7 @@ if __name__ == '__main__':
                 if "msg" in event[0]:
                     if "invokeruid" in event[0]:
                         if event[0]["invokeruid"].strip() != "serveradmin":
-                            funcoesBot.recebeComandos(event,botPrincipal,settings,Bd,tempo)
+                            funcoesBot.recebeComandos(event,botPrincipal,settings,Bd,tempo,listaBoss)
                 elif "reasonid" in event[0]:
                     if(event[0]['reasonid'] == '0'):
                         if event[0]["client_unique_identifier"].strip() != "serveradmin" :
