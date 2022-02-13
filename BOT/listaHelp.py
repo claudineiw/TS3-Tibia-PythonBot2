@@ -21,9 +21,11 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !adduser <NomeUsuario> <Main> adicionar usuario ao banco de dados"
                         "\n !rmuser <Main> remover usuario ao banco de dados"
                         "\n !addmaker <NomeMain> <NomeMaker> adicionar maker ao main no banco de dados"
-                        "\n !rmmmaker <NomeMain> <NomeMaker> remover maker do main no banco de dados"
+                        "\n !rmmaker <NomeMain> <NomeMaker> remover maker do main no banco de dados"
                         "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
                         "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
+                        ),(
+                        "\n !next troca para o proximo boss de DreamCourts"
                         )
 
             elif str(settings["grupoEditor"]) in  clienteServerGroupsID:
@@ -47,10 +49,13 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !adduser <NomeUsuario> <Main> adicionar usuario ao banco de dados"
                         "\n !rmuser <Main> remover usuario ao banco de dados"
                         "\n !addmaker <NomeMain> <NomeMaker> adicionar maker ao main no banco de dados"
-                        "\n !rmmmaker <NomeMain> <NomeMaker> remover maker do main no banco de dados"
+                        "\n !rmmaker <NomeMain> <NomeMaker> remover maker do main no banco de dados"
                         "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
                         "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
-                        )
+                        ),(
+                        "\n !next troca para o proximo boss de DreamCourts"
+
+                )
 
 
             elif str(settings["grupoServerAdmin"]) in  clienteServerGroupsID:
@@ -72,10 +77,13 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !adduser <NomeUsuario> <Main> adicionar usuario ao banco de dados"
                         "\n !rmuser <Main> remover usuario ao banco de dados"
                         "\n !addmaker <NomeMain> <NomeMaker> adicionar maker ao main no banco de dados"
-                        "\n !rmmmaker <NomeMain> <NomeMaker> remover maker do main no banco de dados"
+                        "\n !rmmaker <NomeMain> <NomeMaker> remover maker do main no banco de dados"
                         "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
                         "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
-                        )
+                        ),(
+                        "\n !next troca para o proximo boss de DreamCourts"
+
+                )
 
             elif str(settings["grupoAdmin"])  in  clienteServerGroupsID:
                 return ("\n Voce pode usar:"

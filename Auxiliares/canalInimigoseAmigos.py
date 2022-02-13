@@ -48,6 +48,8 @@ def inimigosOnline(tsconn,settings,tsconMorte,BDcon):
                         else:
                             tsconn.channeledit(cid=pegarIdChannel(tsconn,settings["canalInimigos"]),
                                                channel_description=novaDescricao.strip())
+
+
                         novaDescricao = novaDescricao.replace("[table][td]Nome[/td][td]Level[/td][/tr]",
                                                               "").replace("[/table]", "")
                         descricao = descricao.replace("[table][td]Nome[/td][td]Level[/td][/tr]", "").replace(
@@ -59,6 +61,8 @@ def inimigosOnline(tsconn,settings,tsconMorte,BDcon):
                             atual = itens[itens.find("[td]") + 4:itens.find("[/td]")].strip().rstrip()
                             if atual != "":
                                 pokeTodosClientes("[COLOR=red]Inimigo online: " + atual,tsconn)
+
+
         except (ts3.query.TS3QueryError, ts3.query.TS3TimeoutError, ts3.query.TS3RecvError):
             pass
 
@@ -95,7 +99,10 @@ def amigosOnline(tsconn, settings,tsconMorte, BDcon):
                         else:
                             tsconn.channeledit(cid=pegarIdChannel(tsconn, settings["canalAmigos"]),
                                                channel_description=novaDescricao.strip())
-                        novaDescricao = novaDescricao.replace("[table][td]Nome[/td][td]Level[/td][/tr]",
+
+
+                        #desativado poke amigos onlines
+                        '''novaDescricao = novaDescricao.replace("[table][td]Nome[/td][td]Level[/td][/tr]",
                                                               "").replace("[/table]", "")
                         descricao = descricao.replace("[table][td]Nome[/td][td]Level[/td][/tr]", "").replace(
                             "[/table]", "")
@@ -105,6 +112,7 @@ def amigosOnline(tsconn, settings,tsconMorte, BDcon):
                         for itens in novaDescricao.split("[tr]"):
                             atual = itens[itens.find("[td]") + 4:itens.find("[/td]")].strip().rstrip()
                             if atual != "":
-                                pokeTodosClientes("[COLOR=blue]Amigo online: " + atual, tsconn)
+                                pokeTodosClientes("[COLOR=blue]Amigo online: " + atual, tsconn)'''
+
     except (ts3.query.TS3QueryError, ts3.query.TS3TimeoutError, ts3.query.TS3RecvError):
         pass

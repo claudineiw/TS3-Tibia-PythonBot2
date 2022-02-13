@@ -97,7 +97,7 @@ def pegarNomeMainEMaker(mensagemRecebida, con):
     for player in Character.selectAll(con):
         name = player[1].lower()
         name = name + " "
-        if (name in mensagemRecebida.lower()):
+        if (name.lower() in mensagemRecebida.lower()):
             mainName = player[1]
             break
 
@@ -106,10 +106,11 @@ def pegarNomeMainEMaker(mensagemRecebida, con):
 
     mensagemRecebida = mensagemRecebida.lower().replace(mainName.lower(), "")
     mensagemRecebida = mensagemRecebida + " "
+
     for player in Character.selectAll(con):
         name = player[1].lower()
         name = name + " "
-        if (name in mensagemRecebida.lower()):
+        if (name.lower() in mensagemRecebida.lower()):
             makerName = player[1]
             break
 
@@ -433,10 +434,6 @@ def recebeComandos(event, bot, settings, con,tempo,listaBossesDreamCourts):
                     comandosBot.botMvCh(mensagemRecebida, usuarioID, bot)
                     return True
 
-                elif ("!next" in mensagemRecebida):
-                    comandosBot.botBossDreamCourtsNext(usuarioID, bot,listaBossesDreamCourts)
-                    return True
-
 
             # <---- FIM COMANDOS MOVEDOR ACIMA---->
 
@@ -501,6 +498,10 @@ def recebeComandos(event, bot, settings, con,tempo,listaBossesDreamCourts):
 
                 elif ("!afk " in mensagemRecebida):
                     comandosBot.botAfkTrocaTempo(mensagemRecebida,tempo,usuarioID, bot)
+                    return True
+
+                elif ("!next" in mensagemRecebida):
+                    comandosBot.botBossDreamCourtsNext(usuarioID, bot,listaBossesDreamCourts)
                     return True
 
         # <---- FIM COMANDOS SERVER ADMIN ACIMA---->
