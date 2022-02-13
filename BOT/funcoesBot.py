@@ -365,8 +365,15 @@ def botAfk(settings,tempo,semaforo):
                 if int(cliente["client_type"]) != 1:
                     if int(pegarIdChannel(tsconn, tempo.canalAFK)) != int(cliente["cid"]):
                         if (tsconn.servergroupsbyclientid(cldbid=cliente['client_database_id'])[0]['name'] != 'Guest'):
-                            if int(tsconn.clientinfo(clid=cliente["clid"])[0][ 'client_idle_time']) >= int(tempo.tempoAFK) * 60 * 1000:
-                                tsconn.clientmove(cid=pegarIdChannel(tsconn, tempo.canalAFK),clid=cliente["clid"])
+                            if int(tsconn.clientinfo(clid=cliente["clid"])[0]['client_idle_time']) >= int(tempo.tempoAFK) * 60 * 1000:
+                                listaPermissoes=tsconn.servergroupsbyclientid(cldbid=cliente['client_database_id'])
+                                naoMover=True
+                                for perm in listaPermissoes:
+                                    if(int(settings["grupoNaoMoverAFK"])==int(perm["sgid"])):
+                                        naoMover=False
+
+                                if(naoMover):
+                                    tsconn.clientmove(cid=pegarIdChannel(tsconn, tempo.canalAFK),clid=cliente["clid"])
             tsconn.close()
 
         except Exception as e:
