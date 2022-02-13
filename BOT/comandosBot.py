@@ -5,6 +5,7 @@ import BOT.funcoesGerais as funGeral
 import threading
 import BOT.AmigosEnimigos as AmigosEInimigos
 from BD.usuarioTS import usuarioTS
+from datetime import timedelta,datetime
 def botBoasVindas(nomeUsuario, usuarioID, bot):
     funcoesBot.enviarMensagem("\nBem vindo " + nomeUsuario + "\nPara ver comandos digite !help", usuarioID, bot)
 
@@ -195,7 +196,14 @@ def botLtuser(con,idUsuario,bot):
         funcoesBot.enviarMensagem("<------Lista Usuarios------->", idUsuario, bot)
         for userTS in usuariosTS:
             userMain=usuarioTS.selectUsuario(userTS[0],con)
-            funcoesBot.enviarMensagem("{}{}\t{}{}\t{}{}".format(userMain[0][0],userMain[0][1],userMain[0][2],userMain[0][3],userMain[0][4],userMain[0][5]), idUsuario, bot)
+            uid=userMain[0][5]
+            dbID=funcoesBot.pegarDBIDfromUID(uid,bot)["cldbid"]
+            ultimoLogin = datetime.fromtimestamp(int(bot.clientdbinfo(cldbid=dbID)[0]["client_lastconnected"]))
+            seteDiasAtras=datetime.now()-timedelta(7)
+            if(ultimoLogin<seteDiasAtras):
+                funcoesBot.enviarMensagem( "[color=red]{}{}\t{}{}\t{}{}\tUltimo Login: {}[/color]".format(userMain[0][0], userMain[0][1], userMain[0][2], userMain[0][3], userMain[0][4], userMain[0][5],ultimoLogin),idUsuario, bot)
+            else:
+                funcoesBot.enviarMensagem( "{}{}\t{}{}\t{}{}\tUltimo Login: {}".format(userMain[0][0], userMain[0][1], userMain[0][2], userMain[0][3], userMain[0][4], userMain[0][5],ultimoLogin),idUsuario, bot)
             if(not userTS[3] is None):
                 if(len(userTS[3])>0):
                     for maker in userTS[3]:

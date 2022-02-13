@@ -293,6 +293,12 @@ def pegarPermissoesCliente(idcliente, bot):
     except:
         return None
 
+def pegarDBIDfromUID(uid,bot):
+    try:
+        return bot.clientgetdbidfromuid(cluid=uid)[0]
+    except:
+        print("error pegar clid pelo uida")
+        return None
 
 def canalExiste(nomeCanal, bot):
     try:
