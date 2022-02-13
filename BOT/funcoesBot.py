@@ -29,7 +29,12 @@ def notificaMorte(character, mensagem, bot, BDcon):
         if (character[8] == 0):
             morreuPara = "Mob"
         else:
-            morreuPara = "[COLOR=red]Player[/COLOR]"
+            deathPlayer = charTibia.getPlayer(character[1])
+            morreuPara = "[COLOR=red]"
+            for players in deathPlayer.deaths[0]["killers"]:
+                if players["player"]:
+                    morreuPara = morreuPara + players["name"] + " , "
+            morreuPara = morreuPara + "[/color]"
 
         if (character[7] != "0"):
             if (diferencaTempo(character) < 10):

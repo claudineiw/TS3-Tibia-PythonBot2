@@ -49,8 +49,8 @@ def inimigosOnline(tsconn,settings,tsconMorte,BDcon):
                             tsconn.channeledit(cid=pegarIdChannel(tsconn,settings["canalInimigos"]),
                                                channel_description=novaDescricao.strip())
 
-
-                        novaDescricao = novaDescricao.replace("[table][td]Nome[/td][td]Level[/td][/tr]",
+                        #desativado poke inimigos
+                        ''' novaDescricao = novaDescricao.replace("[table][td]Nome[/td][td]Level[/td][/tr]",
                                                               "").replace("[/table]", "")
                         descricao = descricao.replace("[table][td]Nome[/td][td]Level[/td][/tr]", "").replace(
                             "[/table]", "")
@@ -60,7 +60,7 @@ def inimigosOnline(tsconn,settings,tsconMorte,BDcon):
                         for itens in novaDescricao.split("[tr]"):
                             atual = itens[itens.find("[td]") + 4:itens.find("[/td]")].strip().rstrip()
                             if atual != "":
-                                pokeTodosClientes("[COLOR=red]Inimigo online: " + atual,tsconn)
+                                pokeTodosClientes("[COLOR=red]Inimigo online: " + atual,tsconn)'''
 
 
         except (ts3.query.TS3QueryError, ts3.query.TS3TimeoutError, ts3.query.TS3RecvError):
