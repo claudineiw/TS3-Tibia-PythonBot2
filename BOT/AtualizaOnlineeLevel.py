@@ -33,7 +33,7 @@ class AtualizaOnlineELevel:
             if (not self.todos is None):
                 self.characterChecados = []
                 guildaChecados = []
-                morteNotificada = 1
+                #self.morteNotificada = 1
                 for player in self.todos:
                     if (player[5] != "None"):
                         guilda = player[5]
@@ -49,15 +49,28 @@ class AtualizaOnlineELevel:
                                                     if (not playerCh is None):
                                                         if (len(playerCh.deaths) > 0):
                                                             dataMorteAtual = data.utc_to_local(playerCh.deaths[0].time)
-                                                            if (dataMorteAtual == playerGuilda[7] and playerGuilda[9] == 1):
-                                                                morteNotificada = 1
+                                                            if (dataMorteAtual == playerGuilda[7]):
+                                                                Character.updatePorPlayer(playerOnline.name,
+                                                                                          playerOnline.level,
+                                                                                          playerOnline.online,
+                                                                                          playerOnline.vocation.name,
+                                                                                          guilda,
+                                                                                          playerGuilda[6], self.con,
+                                                                                          playerGuilda[7],
+                                                                                          playerGuilda[8],
+                                                                                          playerGuilda[9])
                                                             else:
-                                                                morteNotificada = 0
-                                                            Character.updatePorPlayer(playerOnline.name, playerOnline.level,
-                                                                                      playerOnline.online,
-                                                                                      playerOnline.vocation.name, guilda,
-                                                                                      playerGuilda[6], self.con, dataMorteAtual,
-                                                                                      playerCh.deaths[0].by_player, morteNotificada)
+                                                                Character.updatePorPlayer(playerOnline.name,
+                                                                                          playerOnline.level,
+                                                                                          playerOnline.online,
+                                                                                          playerOnline.vocation.name,
+                                                                                          guilda,
+                                                                                          playerGuilda[6], self.con,
+                                                                                          dataMorteAtual,
+                                                                                          playerCh.deaths[0].by_player,
+                                                                                          0)
+
+
                                                         else:
                                                             Character.updatePorPlayer(playerOnline.name, playerOnline.level,
                                                                                       playerOnline.online,
@@ -77,6 +90,7 @@ class AtualizaOnlineELevel:
     def semGuildas(self):
         try:
             if (not self.todos is None):
+                #self.morteNotificada=1
                 if (len(self.todos) > 0):
                     world = WorldTibia.getOnlinePlayer(self.todos[0][6])
                     for player in self.todos:
@@ -91,14 +105,21 @@ class AtualizaOnlineELevel:
                                                 if (len(playerCh.deaths) > 0):
                                                     dataMorteAtual2 = data.utc_to_local(playerCh.deaths[0].time)
                                                     if (dataMorteAtual2 == player[7] and player[9] == 1):
-                                                        morteNotificada = 1
+                                                        Character.updatePorPlayer(playerOnlineWorld.name,
+                                                                                  playerOnlineWorld.level, True,
+                                                                                  playerOnlineWorld.vocation.name,
+                                                                                  "None", player[6],
+                                                                                  self.con, player[7], player[8],
+                                                                                  player[9])
                                                     else:
-                                                        morteNotificada = 0
+                                                        Character.updatePorPlayer(playerOnlineWorld.name,
+                                                                                  playerOnlineWorld.level, True,
+                                                                                  playerOnlineWorld.vocation.name,
+                                                                                  "None", player[6],
+                                                                                  self.con, dataMorteAtual2,
+                                                                                  playerCh.deaths[0].by_player,
+                                                                                  0)
 
-                                                    Character.updatePorPlayer(playerOnlineWorld.name, playerOnlineWorld.level, True,
-                                                                              playerOnlineWorld.vocation.name, "None", player[6],
-                                                                              self.con, dataMorteAtual2,
-                                                                              playerCh.deaths[0].by_player, morteNotificada)
                                                 else:
 
                                                     Character.updatePorPlayer(playerOnlineWorld.name, playerOnlineWorld.level, True,
