@@ -88,7 +88,7 @@ def amigosOnline(tsconn, settings,tsconMorte, BDcon):
                         contInimigosOnline += 1
                         novaDescricao += "[tr][td]" + resp[1] + "[/td][td]" + str(resp[2]) + "[/td][/tr]"
                     else:
-                        notificaMorteGuilda(resp, "Membro Guilda Morreu: ", tsconMorte, BDcon)
+                        notificaMorte(resp, "Membro Guilda Morreu: ", tsconMorte, BDcon)
                 novaDescricao += "[/table]"
                 if descricao != novaDescricao:
                         nomeAtual = (tsconn.channelinfo(cid=int(pegarIdChannel(tsconn, settings["canalAmigos"])))[0]["channel_name"])
