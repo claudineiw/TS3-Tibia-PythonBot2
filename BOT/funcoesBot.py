@@ -1,6 +1,8 @@
 from __future__ import absolute_import
 
 import time
+from datetime import datetime
+
 import ts3
 import BOT.comandosBot as comandosBot
 from BD.Character import Character
@@ -33,23 +35,22 @@ def notificaMorte(character, mensagem, bot, BDcon):
     try:
         if (character[9] == 0 and character[7] != "0"):
             if(diferencaTempo(character) < 10):
-                if (character[8] == 0):
-                    deathPlayer = charTibia.getPlayer(character[1])
-                    morreuPara = "[COLOR=blue]"
-                    for players in deathPlayer.deaths[0]["killers"]:
-                        if not players["player"]:
-                            morreuPara = morreuPara + players["name"] + ", "
-                    morreuPara = morreuPara + "[/color]"
-                    morreuPara = morreuPara.replace(", [/color]", "")
-                    pokeTodosClientes(mensagem + " " + character[1] + " Morto por: " + morreuPara, bot)
-                else:
-                    deathPlayer = charTibia.getPlayer(character[1])
-                    morreuPara = "[COLOR=red]"
-                    for players in deathPlayer.deaths[0]["killers"]:
-                        if players["player"]:
-                            morreuPara = morreuPara + players["name"] + ", "
-                    morreuPara = morreuPara + "[/color]"
-                    morreuPara = morreuPara.replace(", [/color]", "")
+                deathPlayer = charTibia.getPlayer(character[1])
+                if ((datetime.now().astimezone() - deathPlayer.deaths[0].time.astimezone()).total_seconds() < 600):
+                    if (character[8] == 0):
+                        morreuPara = "[COLOR=blue]"
+                        for players in deathPlayer.deaths[0]["killers"]:
+                            if not players["player"]:
+                                morreuPara = morreuPara + players["name"] + ", "
+                        morreuPara = morreuPara + "[/color]"
+                        morreuPara = morreuPara.replace(", [/color]", "")
+                    else:
+                        morreuPara = "[COLOR=red]"
+                        for players in deathPlayer.deaths[0]["killers"]:
+                            if players["player"]:
+                                morreuPara = morreuPara + players["name"] + ", "
+                        morreuPara = morreuPara + "[/color]"
+                        morreuPara = morreuPara.replace(", [/color]", "")
                     pokeTodosClientes(mensagem + " " + character[1] + " Morto por: " + morreuPara, bot)
 
         Character.updateNotificacaoMorte(character[0], BDcon)

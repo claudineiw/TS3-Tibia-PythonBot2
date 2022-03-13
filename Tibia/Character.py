@@ -22,7 +22,7 @@ def getPlayer(name):
         else:
             try:
                 url = tibiapy.Character.get_url(name)
-                r = requests.get(url)
+                r = requests.post(url)
                 content = r.text
                 character = tibiapy.Character.from_content(content)
                 return character
