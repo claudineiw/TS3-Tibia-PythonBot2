@@ -4,14 +4,15 @@ from BD.usuarioTS import usuarioTS
 from BD.BD import BD
 from BOT import funcoesBot
 from Auxiliares import canalOnline
-
+from Tibia import Guild
 class AtualizaUsuariosTS:
-    def __init__(self, TScon, bdCon, usuarioTSs, settings, ListaDePermissoes):
+    def __init__(self, TScon, bdCon, usuarioTSs, settings, ListaDePermissoes,guildBankMes):
         self.TScon = TScon
         self.usuarioTS = usuarioTSs
         self.bdCon = bdCon
         self.selectCharMain()
         self.settings = settings
+        self.guildBankMes=guildBankMes
         try:
             self.dbIdUsuario = self.TScon.clientdbfind(pattern=usuarioTSs[4], uid=True)[0]["cldbid"]
             self.dadosUsuario = self.TScon.clientdbinfo(cldbid=self.dbIdUsuario)[0]
@@ -23,6 +24,7 @@ class AtualizaUsuariosTS:
             self.atualizaOnlineOffline()
             self.atualizaVocacao()
             self.atualizaTemMakereMakerOnline()
+            self.guildBankPago()
 
         except Exception as e:
             print("Usuario nao encontrado no server TS: ")
@@ -30,12 +32,34 @@ class AtualizaUsuariosTS:
             print(usuarioTSs)
             pass
 
+    def guildBankPago(self):
+        try:
+            if(self.guildBankMes!=None):
+                if(len(self.guildBankMes)>0):
+                    pagou=0
+                    for user in self.guildBankMes:
+                        if (self.nome == user[1]):
+                            pagou=1
+
+                    if(pagou):
+                        self.adicionarPermissao(int(self.settings["permissaoGuildBankPago"]))
+                    else:
+                        self.removerPermissao(int(self.settings["permissaoGuildBankPago"]))
+        except:
+            pass
 
     def darPermissaoRegistrado(self):
         temMaior=0
         for itens in self.permissoesUsuario:
             perm=int(itens["sgid"])
-            if(perm==int(self.settings["grupoConvidado"]) or perm==int(self.settings["grupoMestre"]) or perm==int(self.settings["grupoEditor"]) or perm==int(self.settings["grupoServerAdmin"]) or perm==int(self.settings["grupoAdmin"]) or perm==int(self.settings["grupoMovedor"])):
+            if(perm==int(self.settings["grupoConvidado"])
+                    or perm==int(self.settings["grupoMestre"])
+                    or perm==int(self.settings["grupoEditor"])
+                    or perm==int(self.settings["grupoServerAdmin"])
+                    or perm==int(self.settings["grupoAdmin"])
+                    or perm==int(self.settings["grupoMovedor"])
+                    or perm==int(self.settings["grupoLiderAliado"])
+            ):
                 temMaior=1
                 break
 
@@ -46,6 +70,7 @@ class AtualizaUsuariosTS:
 
     def selectCharMain(self):
         char = Character.selectPorID(self.usuarioTS[2], self.bdCon)
+        self.nome=char[0][1]
         self.level = char[0][2]
         self.vocacao = char[0][4]
         self.online = char[0][3]
@@ -128,8 +153,9 @@ def atualizaUsuariosTsChamada(settings,semaforo):
         try:
             semaforo.acquire()
             listaPermissoes = TScon.servergrouplist()
+            guildBankMes=Guild.getGuildBank(settings)
             for usuario in usuarioTS.select(Bd):
-                AtualizaUsuariosTS(TScon, Bd, usuario, settings, listaPermissoes)
+                AtualizaUsuariosTS(TScon, Bd, usuario, settings, listaPermissoes,guildBankMes)
 
             canalOnline.CanalOnline(TScon, settings, Bd)
             TScon.close()

@@ -101,10 +101,10 @@ def pegarNomeMainEMaker(mensagemRecebida, con):
 
 
 def pegarNomeEUsuario(mensagemRecebida, bot):
-    global clienteTS
-    global nomeMain
-    global usuarioUID
-    global nomeTS
+    clienteTS={}
+   # nomeMain=""
+   # usuarioUID=""
+    #nomeTS=""
     try:
         for cliente in pegarListaClientes(bot):
             if int(cliente["client_type"]) != 1:
