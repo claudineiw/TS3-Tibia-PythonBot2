@@ -33,7 +33,7 @@ def botloot(mensagemRecebida,usuarioID,bot):
         for x in range(len(result)):
             funcoesBot.enviarMensagem(result[x], usuarioID, bot)
     except:
-        funcoesBot.enviarMensagem("\nErro de parametro favor informar como no exemplo !hunt dados",usuarioID,bot)
+        funcoesBot.enviarMensagem("\nErro de parametro favor informar como no exemplo !loot dados",usuarioID,bot)
 
 
 def botMassPokeBoss(nome,mensagemRecebida,settings):
