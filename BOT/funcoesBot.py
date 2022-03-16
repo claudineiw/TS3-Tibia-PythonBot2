@@ -403,6 +403,9 @@ def recebeComandos(event, bot, settings, con,tempo,listaBossesDreamCourts):
                 elif ("!help" in mensagemRecebida):
                     comandosBot.botHelp(usuarioID, bot, settings)
                     return True
+                elif ("!loot " in mensagemRecebida):
+                    comandosBot.botloot(mensagemRecebida,usuarioID, bot)
+                    return True
                 elif ("!shared " in mensagemRecebida):
                     comandosBot.botShared(mensagemRecebida, nomeUsuario, usuarioID, bot)
                     return True

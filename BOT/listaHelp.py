@@ -26,6 +26,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
                         ),(
                         "\n !next troca para o proximo boss de DreamCourts"
+                        "\n !loot dados do hunt"
                         )
 
             elif str(settings["grupoEditor"]) in  clienteServerGroupsID:
@@ -54,6 +55,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
                         ),(
                         "\n !next troca para o proximo boss de DreamCourts"
+                        "\n !loot dados do hunt"
 
                 )
 
@@ -82,6 +84,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
                         ),(
                         "\n !next troca para o proximo boss de DreamCourts"
+                        "\n !loot dados do hunt"
 
                 )
 
@@ -99,6 +102,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !addmaker <NomeMain> <NomeMaker> adicionar maker ao main no banco de dados"
                         "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
                         "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
+                        "\n !loot dados do hunt"
                         ),()
 
             elif str(settings["grupoMovedor"])  in  clienteServerGroupsID:
@@ -108,6 +112,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !mvch origem destino. Mover usuarios de um canal para outro"
                         "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
                         "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
+                        "\n !loot dados do hunt"
                         ),()
 
             elif str(settings["grupoUsuario"])   in  clienteServerGroupsID:
@@ -115,6 +120,7 @@ def listaHelp(clienteServerGroupsID, settings):
                         "\n !shared level. Verificar level minimo e maximo para compartilhamento de exp"
                         "\n !boss <mensagem> Mass Poke para usuarios do grupoBoss"
                         "\n !sell <mensagem> Mass Poke para usuarios do grupoVendas"
+                        "\n !loot dados do hunt"
                         ),()
             else:
                 return ("Voce nao pode usar o bot"),()

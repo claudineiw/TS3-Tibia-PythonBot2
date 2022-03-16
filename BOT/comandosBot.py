@@ -6,6 +6,7 @@ import threading
 import BOT.AmigosEnimigos as AmigosEInimigos
 from BD.usuarioTS import usuarioTS
 from datetime import timedelta,datetime
+from Auxiliares import tibiaHunt
 def botBoasVindas(nomeUsuario, usuarioID, bot):
     funcoesBot.enviarMensagem("\nBem vindo " + nomeUsuario + "\nPara ver comandos digite !help", usuarioID, bot)
 
@@ -24,14 +25,23 @@ def botShared(mensagemRecebida,nomeUsuario, usuarioID,bot):
         funcoesBot.enviarMensagem("\nErro de parametro favor informar como no exemplo !shared <100>",usuarioID,bot)
 
 
+def botloot(mensagemRecebida,usuarioID,bot):
+    try:
+        mensagem=mensagemRecebida.replace("!hunt ", "")
+        hunt=tibiaHunt.tibiaHunt(mensagem)
+        result=hunt.getResult()
+        for x in range(len(result)):
+            funcoesBot.enviarMensagem(result[x], usuarioID, bot)
+    except:
+        funcoesBot.enviarMensagem("\nErro de parametro favor informar como no exemplo !hunt dados",usuarioID,bot)
+
+
 def botMassPokeBoss(nome,mensagemRecebida,settings):
     try:
         mensagem=mensagemRecebida.replace("!boss ", "")
         threading.Thread(name="PokeBoss", target=funcoesBot.pokerTodosClientesBoss, args=(settings,mensagem,funcoesBot.botsSecundarios(settings, "Boss-"+nome),)).start()
     except:
         return None
-
-
 
 def botMassPokeVendas(nome,mensagemRecebida,settings):
     try:
