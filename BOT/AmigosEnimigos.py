@@ -7,7 +7,8 @@ from Tibia import Guild
 
 
 class AmigosEnimigos:
-    def addGuildInimiga(self, name, con):
+    @staticmethod
+    def addGuildInimiga(name, con):
         guild = Guild.getGuild(name)
         if guild is None:
             return name + " Guild nao encontrada"
@@ -15,7 +16,8 @@ class AmigosEnimigos:
             addGuilda = GuildInimigos(guild.name, guild.world, con)
             return addGuilda.insert()
 
-    def addGuildAmiga(self, name, con):
+    @staticmethod
+    def addGuildAmiga(name, con):
         guild = Guild.getGuild(name)
         if guild is None:
             return name + " Guild nao encontrada"
@@ -23,11 +25,13 @@ class AmigosEnimigos:
             addGuilda = GuildAmigos(guild.name, guild.world, con)
             return addGuilda.insert()
 
-    def addCharacterInimigo(self, name, con):
+    @staticmethod
+    def addCharacterInimigo(name, con):
         addCharinimigos = CharacterInimigos(name, con)
         return addCharinimigos.insert()
 
-    def addCharacterAmigo(self, name, con):
+    @staticmethod
+    def addCharacterAmigo(name, con):
         addCharAmigos = CharacterAmigos(name, con)
         return addCharAmigos.insert()
 

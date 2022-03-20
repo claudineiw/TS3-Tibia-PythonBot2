@@ -73,7 +73,6 @@ class AtualizaOnlineELevel:
                                                                                           playerCh.deaths[0].by_player,
                                                                                           0)
 
-
                                                         else:
                                                             Character.updatePorPlayer(playerOnline.name,
                                                                                       playerOnline.level,

@@ -84,7 +84,6 @@ class AtualizaGuildas:
                                 Character.updatePorPlayer(players[1], players[2], players[3], players[4], None,
                                                           players[6], self.con, players[7], players[8], players[9])
 
-
         except Exception as e:
             print("Class  AtualizaGuildas.removerPlayersGuilda: " + e.__str__())
             return None
