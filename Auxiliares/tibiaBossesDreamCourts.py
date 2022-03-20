@@ -39,7 +39,7 @@ class ListaDreamCourtsCircular:
         self.irParaProximo = True
 
     def irParaParaFrente(self):
-        if self.irParaProximo == False:
+        if not self.irParaProximo:
             return False
         else:
             self.irParaProximo = False
@@ -50,7 +50,7 @@ def dreamCourts(settings, semaforo, classBoss):
     lista = classBoss.cabeca()
     tsconn = botsSecundarios(settings, "DreamCourts")
     nomeAtual = tsconn.channelinfo(cid=pegarIdChannel(tsconn, settings["canalDreamCourts"]))[0]["channel_name"]
-    if not lista.data in nomeAtual:
+    if lista.data not in nomeAtual:
         while True:
             lista = lista.next
             if lista.data in nomeAtual:

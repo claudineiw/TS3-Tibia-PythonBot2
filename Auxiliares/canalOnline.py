@@ -50,7 +50,7 @@ def CanalOnline(tsconn, settings, BDcon):
         novaDescricao = "[table][tr][td]Nome[/td][td]Level[/td][td]TS[/td][/tr]"
         todosPlayersOnlineGuilda = Character.selectAllFromGuilOnline(BDcon, settings["nomeGuilda"])
         totalGuilda = Character.selectTotalPlayersGuild(BDcon, settings["nomeGuilda"])
-        if not todosPlayersOnlineGuilda is None and not totalGuilda is None:
+        if None is not todosPlayersOnlineGuilda and None is not totalGuilda:
             contGuildOnline = 0
             if todosPlayersOnlineGuilda:
                 for playerOnlineGuilda in todosPlayersOnlineGuilda:
@@ -60,7 +60,7 @@ def CanalOnline(tsconn, settings, BDcon):
                                                                         listaClientesOnline) + "[/td][/tr]"
                 novaDescricao += "[/table]"
                 if descricao != novaDescricao:
-                    nomeAtual =tsconn.channelinfo(cid=int(pegarIdChannel(tsconn, settings["onlineTS"])))[0]["channel_name"]
+                    nomeAtual = tsconn.channelinfo(cid=int(pegarIdChannel(tsconn, settings["onlineTS"])))[0]["channel_name"]
                     novoNome = settings["onlineTS"] + " (" + str(contGuildOnline) + "/" + str(totalGuilda[0][0]) + ")"
                     if nomeAtual != novoNome:
                         tsconn.channeledit(cid=pegarIdChannel(tsconn, settings["onlineTS"]),

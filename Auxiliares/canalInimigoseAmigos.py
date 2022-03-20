@@ -30,7 +30,7 @@ def inimigosOnline(tsconn, settings, tsconMorte, BDcon):
         novaDescricao = "[table][tr][td]Nome[/td][td]Level[/td][/tr]"
         resposta = CharacterInimigos.selectTodosInimigos(BDcon)
         totalInimigos = CharacterInimigos.selectQuantidadeInimigos(BDcon)
-        if not type(resposta) is type(None) and not type(totalInimigos) is type(None):
+        if None is not resposta and None is not totalInimigos:
             contInimigosOnline = 0
             if resposta:
                 for resp in resposta:
@@ -81,7 +81,7 @@ def amigosOnline(tsconn, settings, tsconMorte, BDcon):
             guildid = 99999
         totalAmigos = CharacterAmigos.selectQuantidadeAmigosMenosGuilda(BDcon, guildid)
         todos = totalAmigos[0][0]
-        if not type(resposta) is type(None) and not type(totalAmigos) is type(None):
+        if None is not resposta and None is not totalAmigos:
             contInimigosOnline = 0
             if resposta:
                 for resp in resposta:

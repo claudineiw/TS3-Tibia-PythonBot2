@@ -23,7 +23,7 @@ class canalEventos:
                     if int(tsEvent.parsed[0]["reasonid"]) == 0:
                         if int(tsEvent.parsed[0]["client_type"]) == 0:
                             retorno = self.eventos.getEventsXPRespaw
-                            if not retorno is None:
+                            if None is not retorno:
                                 pokeCliente(retorno, int(tsEvent.parsed[0]["clid"]), self.tsconn)
                                 enviarMensagem(retorno, int(tsEvent.parsed[0]["clid"]), self.tsconn)
 
@@ -36,7 +36,7 @@ class canalEventos:
                 self.semaforo.release()
 
             except Exception as e:
-                if not "Could not receive data from the server within the timeout" in e.__str__():
+                if "Could not receive data from the server within the timeout" not in e.__str__():
                     print("Class CanalEventos.iniciar: " + e.__str__())
                     self.tsconn.close()
                     self.semaforo.release()

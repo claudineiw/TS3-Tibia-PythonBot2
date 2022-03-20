@@ -26,11 +26,7 @@ def botsSecundarios(settings, nome):
         pass
 
 
-def pegaClid(nome, bot):
-    try:
-        return bot.clientfind(pattern=nome)[0]
-    except:
-        return None
+
 
 
 def notificaMorte(character, mensagem, bot, BDcon):
@@ -58,7 +54,6 @@ def notificaMorte(character, mensagem, bot, BDcon):
         Character.updateNotificacaoMorte(character[0], BDcon)
     except:
         pass
-
 
 def pegaClid(nome, bot):
     try:

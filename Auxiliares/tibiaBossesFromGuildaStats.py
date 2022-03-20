@@ -57,7 +57,7 @@ class tibiaBosses:
 
     def trocarDescricaoCanal(self):
         lista = self.getHtml()
-        if not lista is None:
+        if None is not lista:
             novaDescricao = "[table][tr][td]Nome[/td][td]Ultima Aparicao      [/td][td]Chance                [/td][td]Esperando em[/td][/tr]"
             for itens in lista:
                 novaDescricao += "[tr][td]{}[/td][td]{}[/td][td]{}[/td][td]{}[/td][/tr]".format(itens[0], itens[1],

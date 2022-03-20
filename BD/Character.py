@@ -50,15 +50,15 @@ class Character:
 
     @staticmethod
     def select(name, con):
-        if not "\'" in name:
+        if "\'" not in name:
             name = name.replace("'", "\\'")
         sqlSelect = "SELECT id FROM Character WHERE nome ILIKE E'{}'".format(name)
         return con.select(sqlSelect)
 
     @staticmethod
-    def selectPorID(id, con):
+    def selectPorID(idSelect, con):
         sqlSelect = "SELECT Character.id,Character.nome,level,online,Vocations.nome FROM Character inner join world on(character.worldid=world.id) inner join Guild on Character.guildid=Guild.id   inner join vocations on (character.vocationid=vocations.id)	where Character.id={}".format(
-            id)
+            idSelect)
         return con.select(sqlSelect)
 
     @staticmethod
@@ -117,8 +117,8 @@ class Character:
             con.update(sqlUpdate)
 
     @staticmethod
-    def updateNotificacaoMorte(id, con):
-        sqlUpdate = "UPDATE Character set ultimamortenotificada={}  WHERE id = {}".format(1, id)
+    def updateNotificacaoMorte(idSelect, con):
+        sqlUpdate = "UPDATE Character set ultimamortenotificada={}  WHERE id = {}".format(1, idSelect)
         con.update(sqlUpdate)
 
     @staticmethod

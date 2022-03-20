@@ -12,7 +12,7 @@ class World:
         return self.con.select(sqlSelect)
 
     def insert(self):
-        if type(self.name) == type(1):
+        if type(self.name) is int:
             return self.name
         result = self.select()
         if len(result) == 0:

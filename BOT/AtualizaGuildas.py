@@ -29,9 +29,9 @@ class AtualizaGuildas:
         try:
             for guilda in AmigosEnimigos.selectGuildInimigas(self.con):
                 guildaDados = GuildaTibia.getGuild(guilda)
-                if not guildaDados is None:
+                if None is not guildaDados:
                     allPlayers = GuildaTibia.getAllPlayer(guilda)
-                    if not allPlayers is None:
+                    if None is not allPlayers:
                         for player in allPlayers:
                             char = Character(player.name, player.level, player.online, guildaDados.world,
                                              guildaDados.name,
@@ -40,9 +40,9 @@ class AtualizaGuildas:
 
             for guilda in AmigosEnimigos.selectGuildAmigas(self.con):
                 guildaDados = GuildaTibia.getGuild(guilda)
-                if not guildaDados is None:
+                if None is not guildaDados:
                     allPlayers = GuildaTibia.getAllPlayer(guilda)
-                    if not allPlayers is None:
+                    if None is not allPlayers:
                         for player in allPlayers:
                             char = Character(player.name, player.level, player.online, guildaDados.world,
                                              guildaDados.name, player.vocation.name, "0", 0, 1, self.con)
@@ -56,9 +56,9 @@ class AtualizaGuildas:
         try:
             for guilda in AmigosEnimigos.selectGuildAmigas(self.con):
                 guildaDados = GuildaTibia.getAllPlayer(guilda)
-                if not guildaDados is None:
+                if None is not guildaDados:
                     todosDaGuilda = Character.selectAllFromGuild(self.con, guilda)
-                    if not todosDaGuilda is None:
+                    if None is not todosDaGuilda:
                         for players in todosDaGuilda:
                             achou = False
                             for playerAtivo in guildaDados:
@@ -71,9 +71,9 @@ class AtualizaGuildas:
 
             for guilda in AmigosEnimigos.selectGuildInimigas(self.con):
                 guildaDados = GuildaTibia.getAllPlayer(guilda)
-                if not guildaDados is None:
+                if None is not guildaDados:
                     todosDaGuilda = Character.selectAllFromGuild(self.con, guilda)
-                    if not todosDaGuilda is None:
+                    if None is not todosDaGuilda:
                         for players in todosDaGuilda:
                             achou = False
                             for playerAtivo in guildaDados:

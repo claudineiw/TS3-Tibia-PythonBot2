@@ -107,11 +107,11 @@ class BD:
     def insert(self, sql):
         self.cursor().execute(sql + " RETURNING id")
         self.con.commit()
-        id = self.cursor().fetchone()
-        if id is None:
+        idSelect = self.cursor().fetchone()
+        if idSelect is None:
             return None
         else:
-            return id[0]
+            return idSelect[0]
 
     def select(self, sql):
         self.cursor().execute(sql)
@@ -125,11 +125,11 @@ class BD:
     def delete(self, sql):
         self.cursor().execute(sql + " RETURNING id")
         self.con.commit()
-        id = self.cursor().fetchone()
-        if id is None:
+        idSelect = self.cursor().fetchone()
+        if idSelect is None:
             return None
         else:
-            return id[0]
+            return idSelect[0]
 
     def create(self, sql):
         self.cursor().execute(sql)

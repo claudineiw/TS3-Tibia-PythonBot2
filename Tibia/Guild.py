@@ -33,8 +33,8 @@ def getGuildBank(settings):
                 data.append(col.get_text().replace('\xa0', ' '))
             if len(data) > 0:
                 if data[3] == "Deposit" and data[1] != '(deleted)':
-                    format = "%b %d %Y, %H:%M:%S CET"
-                    dataDepositoEmMinhaTimeZone = datetime.strptime(data[0], format).astimezone()
+                    formatDate = "%b %d %Y, %H:%M:%S CET"
+                    dataDepositoEmMinhaTimeZone = datetime.strptime(data[0], formatDate).astimezone()
                     if dataDepositoEmMinhaTimeZone.month == mesAtual:
                         data[0] = dataDepositoEmMinhaTimeZone.__str__()
                         datas.append(data)

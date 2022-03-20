@@ -66,7 +66,7 @@ class AtualizaUsuariosTS:
                     or perm == int(self.settings["grupoAdmin"])
                     or perm == int(self.settings["grupoMovedor"])
                     or perm == int(self.settings["grupoLiderAliado"])
-            ):
+               ):
                 temMaior = 1
                 break
 
