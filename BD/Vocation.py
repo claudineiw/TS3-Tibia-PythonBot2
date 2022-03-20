@@ -2,23 +2,23 @@ class Vocation:
     def __init__(self, name, con):
         self.con = con
         self.name = "None"
-        if (name is None):
+        if name is None:
             self.name = "None"
-        elif (name == "Elite Knight"):
+        elif name == "Elite Knight":
             self.name = "ELITE_KNIGHT"
-        elif (name == "Elder Druid"):
+        elif name == "Elder Druid":
             self.name = "ELDER_DRUID"
-        elif (name == "Master Sorcerer"):
+        elif name == "Master Sorcerer":
             self.name = "MASTER_SORCERER"
-        elif (name == "Royal Paladin"):
+        elif name == "Royal Paladin":
             self.name = "ROYAL_PALADIN"
-        elif (name == "Knight"):
+        elif name == "Knight":
             self.name = "KNIGHT"
-        elif (name == "Druid"):
+        elif name == "Druid":
             self.name = "DRUID"
-        elif (name == "Sorcerer"):
+        elif name == "Sorcerer":
             self.name = "SORCERER"
-        elif (name == "Paladin"):
+        elif name == "Paladin":
             self.name = "PALADIN"
         else:
             self.name = name
@@ -33,7 +33,7 @@ class Vocation:
 
     def insert(self):
         result = self.select()
-        if (len(result) == 0):
+        if len(result) == 0:
             sqlInsert = "INSERT INTO Vocations (nome) VALUES('{}')".format(self.name)
             self.id = self.con.insert(sqlInsert)
             return self.id

@@ -38,14 +38,14 @@ class agenda:
     def agendar(self, data, evento):
         dia = []
         igual = False
-        if (len(self.mes) == 0):
+        if len(self.mes) == 0:
             dia.append(diasDaSemana(data.weekday()))
             dia.append(data)
             dia.append(evento)
         else:
             ultimoDia = self.mes[len(self.mes) - 1][1].day
-            while (ultimoDia < data.day - 1):
-                if (self.mes[len(self.mes) - 1][1].day < data.day - 1):
+            while ultimoDia < data.day - 1:
+                if self.mes[len(self.mes) - 1][1].day < data.day - 1:
                     diavazio = []
                     diaAnterior = self.mes[len(self.mes) - 1][1] + timedelta(days=1)
                     diavazio.append(diasDaSemana(diaAnterior.weekday()))
@@ -55,19 +55,19 @@ class agenda:
                     ultimoDia = self.mes[len(self.mes) - 1][1].day
 
             for diaDoMes in self.mes:
-                if (diaDoMes[1].day == data.day):
+                if diaDoMes[1].day == data.day:
                     igual = True
                     self.index = self.mes.index(diaDoMes)
                     dia.append(diasDaSemana(data.weekday()))
                     dia.append(data)
                     dia.append(diaDoMes[2] + "\n" + evento)
 
-        if (not igual and len(self.mes) > 0):
+        if not igual and len(self.mes) > 0:
             dia.append(diasDaSemana(data.weekday()))
             dia.append(data)
             dia.append(evento)
 
-        if (igual):
+        if igual:
             self.mes[self.index] = dia
         else:
             self.mes.append(dia)

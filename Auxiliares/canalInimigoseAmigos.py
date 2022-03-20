@@ -7,7 +7,7 @@ from BOT.funcoesBot import *
 
 def iniciar(settings, semaforo):
     BDcon = BD(settings, settings["userBDAmigosInimigos"])
-    while (True):
+    while True:
         semaforo.acquire()
         tsconnEM = botsSecundarios(settings, "BotInimigos")
         tsconMorte = botsSecundarios(settings, "Mortes")
@@ -32,7 +32,7 @@ def inimigosOnline(tsconn, settings, tsconMorte, BDcon):
         totalInimigos = CharacterInimigos.selectQuantidadeInimigos(BDcon)
         if not type(resposta) is type(None) and not type(totalInimigos) is type(None):
             contInimigosOnline = 0
-            if resposta != False:
+            if resposta:
                 for resp in resposta:
                     notificaMorte(resp, "Inimigo Morreu: ", tsconMorte, BDcon)
                     contInimigosOnline += 1
@@ -83,9 +83,9 @@ def amigosOnline(tsconn, settings, tsconMorte, BDcon):
         todos = totalAmigos[0][0]
         if not type(resposta) is type(None) and not type(totalAmigos) is type(None):
             contInimigosOnline = 0
-            if resposta != False:
+            if resposta:
                 for resp in resposta:
-                    if (resp[5] != settings["nomeGuilda"]):
+                    if resp[5] != settings["nomeGuilda"]:
                         notificaMorte(resp, "Amigo Morreu: ", tsconMorte, BDcon)
                         contInimigosOnline += 1
                         novaDescricao += "[tr][td]" + resp[1] + "[/td][td]" + str(resp[2]) + "[/td][/tr]"

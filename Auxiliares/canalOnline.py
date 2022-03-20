@@ -6,38 +6,37 @@ def onlineSr(player, con, tscon, listaClientesOnline):
     usuarios = usuarioTS.select(con)
     encontrado = False
     uid = ""
-    dbIdUsuario = ""
     for usuario in usuarios:
-        if (player[0] == usuario[2]):
+        if player[0] == usuario[2]:
             encontrado = True
             uid = usuario[4]
             dbIdUsuario = tscon.clientdbfind(pattern=usuario[4], uid=True)[0]['cldbid']
             for onlineTS in listaClientesOnline:
-                if (onlineTS["client_database_id"] == dbIdUsuario):
+                if onlineTS["client_database_id"] == dbIdUsuario:
                     return "ON"
 
     for usuario in usuarios:
-        if (uid != usuario[4]):
-            if (player[0] == usuario[2]):
+        if uid != usuario[4]:
+            if player[0] == usuario[2]:
                 encontrado = True
                 dbIdUsuario = tscon.clientdbfind(pattern=usuario[4], uid=True)[0]['cldbid']
                 for onlineTS in listaClientesOnline:
-                    if (onlineTS["client_database_id"] == dbIdUsuario):
+                    if onlineTS["client_database_id"] == dbIdUsuario:
                         return "ON"
 
-    if (encontrado == False):
+    if encontrado == False:
         for usuario in usuarios:
-            if (not usuario[3] is None):
-                if (len(usuario[3]) > 0):
+            if not usuario[3] is None:
+                if len(usuario[3]) > 0:
                     dbIdUsuario = tscon.clientdbfind(pattern=usuario[4], uid=True)[0]['cldbid']
                     for maker in usuario[3]:
-                        if (player[0] == maker):
+                        if player[0] == maker:
                             encontrado = True
                             for onlineTS in listaClientesOnline:
-                                if (onlineTS["client_database_id"] == dbIdUsuario):
+                                if onlineTS["client_database_id"] == dbIdUsuario:
                                     return "ON"
 
-    if (encontrado):
+    if encontrado:
         return "OFF"
     else:
         return "SR"

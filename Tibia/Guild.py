@@ -28,14 +28,14 @@ def getGuildBank(settings):
             colunas = row.find_all("td")
             data = []
             for col in colunas:
-                if (col.string == "Date"):
+                if col.string == "Date":
                     break
                 data.append(col.get_text().replace('\xa0', ' '))
-            if (len(data) > 0):
-                if (data[3] == "Deposit" and data[1] != '(deleted)'):
+            if len(data) > 0:
+                if data[3] == "Deposit" and data[1] != '(deleted)':
                     format = "%b %d %Y, %H:%M:%S CET"
                     dataDepositoEmMinhaTimeZone = datetime.strptime(data[0], format).astimezone()
-                    if (dataDepositoEmMinhaTimeZone.month == mesAtual):
+                    if dataDepositoEmMinhaTimeZone.month == mesAtual:
                         data[0] = dataDepositoEmMinhaTimeZone.__str__()
                         datas.append(data)
 
@@ -46,7 +46,7 @@ def getGuildBank(settings):
 
 
 def getOnlinePlayer(name):
-    if (name == ""):
+    if name == "":
         return None
     else:
         try:
@@ -55,13 +55,13 @@ def getOnlinePlayer(name):
             content = r.text
             guild = tibiapy.Guild.from_content(content)
             return guild.online_members
-        except Exception as e:
+        except Exception:
             # print("Class Tibia.Guild.getOnlinePlayer: "+e.__str__()+" "+name)
             return None
 
 
 def getAllPlayer(name):
-    if (name == ""):
+    if name == "":
         return None
     else:
         try:
@@ -70,13 +70,13 @@ def getAllPlayer(name):
             content = r.text
             guild = tibiapy.Guild.from_content(content)
             return guild.members
-        except Exception as e:
+        except Exception:
             # print("Class Tibia.Guild.getAllPlayer: " + e.__str__()+" "+name)
             return None
 
 
 def getGuild(name):
-    if (name == ""):
+    if name == "":
         return None
     else:
         try:
@@ -85,6 +85,6 @@ def getGuild(name):
             content = r.text
             guild = tibiapy.Guild.from_content(content)
             return guild
-        except Exception as e:
+        except Exception:
             # print("Class Tibia.Guild.getGuild: " + e.__str__()+" "+name)
             return None

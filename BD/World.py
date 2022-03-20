@@ -12,10 +12,10 @@ class World:
         return self.con.select(sqlSelect)
 
     def insert(self):
-        if (type(self.name) == type(1)):
+        if type(self.name) == type(1):
             return self.name
         result = self.select()
-        if (len(result) == 0):
+        if len(result) == 0:
             sqlInsert = "INSERT INTO World (nome) VALUES('{}')".format(self.name)
             self.id = self.con.insert(sqlInsert)
             return self.id

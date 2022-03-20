@@ -26,21 +26,21 @@ class tibiaBosses:
                 esperadoEm = row.find_all('td')[10].text
 
                 monstro = []
-                if (possibilidade != "" or esperadoEm != ""):
-                    if (possibilidade == "No" and esperadoEm != ""):
+                if possibilidade != "" or esperadoEm != "":
+                    if possibilidade == "No" and esperadoEm != "":
                         monstro.append(name)
                         monstro.append(vistoPorUltimo)
                         monstro.append(possibilidade)
-                        if (esperadoEm == ""):
+                        if esperadoEm == "":
                             monstro.append("-")
                         else:
                             monstro.append(esperadoEm)
                         data.append(monstro)
-                    elif (possibilidade != "No" and esperadoEm == ""):
+                    elif possibilidade != "No" and esperadoEm == "":
                         monstro.append(name)
                         monstro.append(vistoPorUltimo)
                         monstro.append(possibilidade)
-                        if (esperadoEm == ""):
+                        if esperadoEm == "":
                             monstro.append("-")
                         else:
                             monstro.append(esperadoEm)
@@ -56,7 +56,7 @@ class tibiaBosses:
 
     def trocarDescricaoCanal(self):
         lista = self.getHtml()
-        if (not lista is None):
+        if not lista is None:
             novaDescricao = "[table][tr][td]Nome[/td][td]Ultima Aparicao      [/td][td]Chance                [/td][td]Esperando em[/td][/tr]"
             for itens in lista:
                 novaDescricao += "[tr][td]{}[/td][td]{}[/td][td]{}[/td][td]{}[/td][/tr]".format(itens[0], itens[1],
@@ -71,11 +71,11 @@ class tibiaBosses:
     def iniciarBotCanalBoss(self):
         try:
             ultimo = 0
-            while (True):
+            while True:
                 self.semaforo.acquire()
                 self.tsconn = botsSecundarios(self.settings, "Bot-boss")
                 agora = time.time()
-                if (agora - ultimo > 3600):
+                if agora - ultimo > 3600:
                     self.trocarDescricaoCanal()
                     ultimo = time.time()
                 self.tsconn.close()

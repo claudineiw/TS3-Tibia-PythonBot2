@@ -12,7 +12,7 @@ class Character:
         self.level = level
         self.online = online
 
-        if (online):
+        if online:
             self.online = 1
         else:
             self.online = 0
@@ -25,7 +25,7 @@ class Character:
         voc = Vocation(vocation, con)
         self.vocation = voc.insert()
 
-        if (ultimaMorteMobOuPlayer):
+        if ultimaMorteMobOuPlayer:
             self.ultimaMorteMobOuPlayer = 1
         else:
             self.ultimaMorteMobOuPlayer = 0
@@ -39,9 +39,9 @@ class Character:
     @staticmethod
     def insertPersonagem(name, con):
         resultSelect = Character.select(name, con)
-        if (len(resultSelect) == 0):
+        if len(resultSelect) == 0:
             char = getPlayer(name)
-            if (char is None):
+            if char is None:
                 return []
             else:
                 addCharBd = Character(char.name, char.level, 0, char.world, char.guild_name, char.vocation.name, "0", 0,
@@ -50,7 +50,7 @@ class Character:
 
     @staticmethod
     def select(name, con):
-        if (not "\'" in name):
+        if not "\'" in name:
             name = name.replace("'", "\\'")
         sqlSelect = "SELECT id FROM Character WHERE nome ILIKE E'{}'".format(name)
         return con.select(sqlSelect)
@@ -92,7 +92,7 @@ class Character:
 
     def insert(self):
         result = self.select(self.name, self.con)
-        if (len(result) == 0):
+        if len(result) == 0:
             sqlinsert = "INSERT INTO Character (nome, level,online,vocationId,guildId,worldId,ultimaMorte,ultimaMorteMobOuPlayer,ultimaMorteNotificada) VALUES(E'{}',{},{},{},{},{},'{}',{},{})".format(
                 self.name, self.level, self.online, self.vocation, self.guild, self.world, self.ultimaMorte,
                 self.ultimaMorteMobOuPlayer, self.ultimaMorteNotificada)
@@ -111,7 +111,7 @@ class Character:
         sqlUpdate = "UPDATE Character SET level = ? , online = ? ,vocationId = ? WHERE id = ?".format(level, online,
                                                                                                       vocation,
                                                                                                       result[0][0])
-        if (len(result) == 0):
+        if len(result) == 0:
             return 0
         else:
             con.update(sqlUpdate)
@@ -124,17 +124,17 @@ class Character:
     @staticmethod
     def updatePorPlayer(name, level, online, vocation, guild, world, con, ultimaMorte, ultimaMorteMobOuPlayer,
                         ultimaMorteNotificada):
-        if (online):
+        if online:
             online = 1
         else:
             online = 0
         name = name.replace("'", "\\'")
-        if (ultimaMorteMobOuPlayer):
+        if ultimaMorteMobOuPlayer:
             ultimaMorteMobOuPlayer = 1
         else:
             ultimaMorteMobOuPlayer = 0
         result = Character.select(name, con)
-        if (len(result) == 0):
+        if len(result) == 0:
             return 0
         else:
             wor = World(world, con)

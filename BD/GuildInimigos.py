@@ -4,7 +4,7 @@ from BD.World import World
 class GuildInimigos:
     def __init__(self, name, world, con):
         self.con = con
-        if (name is None):
+        if name is None:
             self.name = "None"
         else:
             self.name = name
@@ -33,7 +33,7 @@ class GuildInimigos:
     def insert(self):
         sqlInsertGuild = "INSERT INTO Guild (nome,worldId) VALUES('{}',{})".format(self.name, self.world)
         result = self.selectId(self.name, self.con)
-        if (len(result) == 0):
+        if len(result) == 0:
             self.id = self.con.insert(sqlInsertGuild)
             sqlInsertGuildInimiga = "INSERT INTO GuildInimiga (guildId) VALUES({})".format(self.id)
             self.con.insert(sqlInsertGuildInimiga)
@@ -44,7 +44,7 @@ class GuildInimigos:
             sqlSelectGuildInimiga = "select id from GuildInimiga where guildId={}".format(self.id)
             resultSelectGuilda = self.con.select(sqlSelectGuildInimiga)
 
-            if (len(resultSelectGuilda) != 0):
+            if len(resultSelectGuilda) != 0:
                 return self.name + " guild ja esta na lista de inimigos"
             else:
                 sqlInsertGuildInimiga = "INSERT INTO GuildInimiga (guildId) VALUES({})".format(self.id)

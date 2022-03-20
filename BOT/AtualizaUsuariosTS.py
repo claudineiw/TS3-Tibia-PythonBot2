@@ -37,14 +37,14 @@ class AtualizaUsuariosTS:
 
     def guildBankPago(self):
         try:
-            if (self.guildBankMes != None):
-                if (len(self.guildBankMes) > 0):
+            if self.guildBankMes is not None:
+                if len(self.guildBankMes) > 0:
                     pagou = 0
                     for user in self.guildBankMes:
-                        if (self.nome == user[1]):
+                        if self.nome == user[1]:
                             pagou = 1
 
-                    if (pagou):
+                    if pagou:
                         self.adicionarPermissao(int(self.settings["permissaoGuildBankPago"]))
                     else:
                         self.removerPermissao(int(self.settings["permissaoGuildBankPago"]))
@@ -66,7 +66,7 @@ class AtualizaUsuariosTS:
                 temMaior = 1
                 break
 
-        if (temMaior):
+        if temMaior:
             self.removerPermissao(int(self.settings["grupoUsuario"]))
         else:
             self.adicionarPermissao(int(self.settings["grupoUsuario"]))
@@ -80,16 +80,14 @@ class AtualizaUsuariosTS:
 
     def atualizaPermissoesLevel(self):
         for perm in self.ListaDePermissoes:
-            if (int(perm["sgid"]) >= int(self.settings["permissaoLevelInicio"]) and int(perm["sgid"]) <= int(
-                    self.settings["permissaoLevelFim"])):
-                if (self.level >= int(perm["name"].replace("+", "")) and int(
-                        perm["name"].replace("+", "")) > self.level - 50):
+            if int(self.settings["permissaoLevelInicio"]) <= int(perm["sgid"]) <= int(self.settings["permissaoLevelFim"]):
+                if self.level >= int(perm["name"].replace("+", "")) > self.level - 50:
                     self.adicionarPermissao(int(perm["sgid"]))
                 else:
                     self.removerPermissao(int(perm["sgid"]))
 
     def atualizaOnlineOffline(self):
-        if (self.online == 1):
+        if self.online == 1:
             self.adicionarPermissao(int(self.settings["permissaoOnline"]))
             self.removerPermissao(int(self.settings["permissaoOffline"]))
         else:
@@ -97,7 +95,7 @@ class AtualizaUsuariosTS:
             self.removerPermissao(int(self.settings["permissaoOnline"]))
 
     def atualizaTemMakereMakerOnline(self):
-        if (self.usuarioTS[3] is None or len(self.usuarioTS[3]) == 0):
+        if self.usuarioTS[3] is None or len(self.usuarioTS[3]) == 0:
             self.removerPermissao(int(self.settings["permissaoTemMaker"]))
             self.removerPermissao(int(self.settings["permissaoMakerOnline"]))
         else:
@@ -105,32 +103,32 @@ class AtualizaUsuariosTS:
             for maker in self.usuarioTS[3]:
                 char = Character.selectPorID(maker, self.bdCon)
                 onlineChar = char[0][3]
-                if (onlineChar == 1):
+                if onlineChar == 1:
                     self.adicionarPermissao(int(self.settings["permissaoMakerOnline"]))
                     return True
 
             self.removerPermissao(int(self.settings["permissaoMakerOnline"]))
 
     def atualizaVocacao(self):
-        if ("knight" in self.vocacao.lower()):
+        if "knight" in self.vocacao.lower():
             self.adicionarPermissao(int(self.settings["permissaoKnight"]))
             self.removerPermissao(int(self.settings["permissaoDruid"]))
             self.removerPermissao(int(self.settings["permissaoSorcerer"]))
             self.removerPermissao(int(self.settings["permissaoPaladin"]))
         else:
-            if ("druid" in self.vocacao.lower()):
+            if "druid" in self.vocacao.lower():
                 self.adicionarPermissao(int(self.settings["permissaoDruid"]))
                 self.removerPermissao(int(self.settings["permissaoKnight"]))
                 self.removerPermissao(int(self.settings["permissaoSorcerer"]))
                 self.removerPermissao(int(self.settings["permissaoPaladin"]))
             else:
-                if ("paladin" in self.vocacao.lower()):
+                if "paladin" in self.vocacao.lower():
                     self.adicionarPermissao(int(self.settings["permissaoPaladin"]))
                     self.removerPermissao(int(self.settings["permissaoDruid"]))
                     self.removerPermissao(int(self.settings["permissaoSorcerer"]))
                     self.removerPermissao(int(self.settings["permissaoKnight"]))
                 else:
-                    if ("sorcerer" in self.vocacao.lower()):
+                    if "sorcerer" in self.vocacao.lower():
                         self.adicionarPermissao(int(self.settings["permissaoSorcerer"]))
                         self.removerPermissao(int(self.settings["permissaoDruid"]))
                         self.removerPermissao(int(self.settings["permissaoKnight"]))
@@ -151,7 +149,7 @@ class AtualizaUsuariosTS:
 
 def atualizaUsuariosTsChamada(settings, semaforo):
     Bd = BD(settings, settings["userBDUpdateUserTS"])
-    while (True):
+    while True:
         TScon = funcoesBot.botsSecundarios(settings, "Bot-UserTS")
         try:
             semaforo.acquire()

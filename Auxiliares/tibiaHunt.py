@@ -66,10 +66,10 @@ class tibiaHunt:
         who_to_pay_and_how_much = []
 
         for i in range(self.number_of_players):
-            if (players_and_outstanding_payment[i]["balance"] < 0):
-                while (abs(players_and_outstanding_payment[i]["balance"]) > 5):
+            if players_and_outstanding_payment[i]["balance"] < 0:
+                while abs(players_and_outstanding_payment[i]["balance"]) > 5:
                     for j in range(self.number_of_players):
-                        if (players_and_outstanding_payment[j]["balance"] > 0):
+                        if players_and_outstanding_payment[j]["balance"] > 0:
                             if (players_and_outstanding_payment[j]["balance"] > abs(
                                     players_and_outstanding_payment[i]["balance"])):
                                 players_and_outstanding_payment[j]["balance"] = players_and_outstanding_payment[j][
@@ -102,8 +102,8 @@ class tibiaHunt:
             gp_amount = round(amount)
             payer_name = self.who_to_pay_and_how_much[i]["name"]
             payee_name = self.who_to_pay_and_how_much[i]["to_who"]
-            if (amount != 0):
-                if (amount > 1000):
+            if amount != 0:
+                if amount > 1000:
                     amount = round(amount / 1000)
                     transfer_message = '{} tem que pagar {}k para {} (Bank: transfer {} to {})'.format(payer_name,
                                                                                                        amount,

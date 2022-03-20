@@ -25,7 +25,7 @@ class ListaDreamCourtsCircular:
         ptr_1.next = self.head
 
         if self.head is not None:
-            while (temp.next != self.head):
+            while temp.next != self.head:
                 temp = temp.next
             temp.next = ptr_1
         else:
@@ -39,7 +39,7 @@ class ListaDreamCourtsCircular:
         self.irParaProximo = True
 
     def irParaParaFrente(self):
-        if (self.irParaProximo == False):
+        if self.irParaProximo == False:
             return False
         else:
             self.irParaProximo = False
@@ -50,10 +50,10 @@ def dreamCourts(settings, semaforo, classBoss):
     lista = classBoss.cabeca()
     tsconn = botsSecundarios(settings, "DreamCourts")
     nomeAtual = tsconn.channelinfo(cid=pegarIdChannel(tsconn, settings["canalDreamCourts"]))[0]["channel_name"]
-    if (not lista.data in nomeAtual):
+    if not lista.data in nomeAtual:
         while True:
             lista = lista.next
-            if (lista.data in nomeAtual):
+            if lista.data in nomeAtual:
                 break
     tsconn.close()
 
@@ -70,8 +70,8 @@ def dreamCourts(settings, semaforo, classBoss):
             hora = int(datetime.now(tz).time().hour)
             nomeAtual = tsconn.channelinfo(cid=pegarIdChannel(tsconn, settings["canalDreamCourts"]))[0]["channel_name"]
 
-            if (hora >= 10):
-                if (diaDaSemanaAtual != diaDaSemana):
+            if hora >= 10:
+                if diaDaSemanaAtual != diaDaSemana:
                     arquivo = open('dia.txt', 'w')
                     arquivo.write(str(diaDaSemana))
                     arquivo.close()
@@ -81,7 +81,7 @@ def dreamCourts(settings, semaforo, classBoss):
                         tsconn.channeledit(cid=pegarIdChannel(tsconn, settings["canalDreamCourts"]),
                                            channel_name=nomeCanal)
 
-            if (classBoss.irParaParaFrente()):
+            if classBoss.irParaParaFrente():
                 lista = lista.next
                 nomeCanal = settings["canalDreamCourts"] + " (" + lista.data + ")"
                 if nomeCanal != nomeAtual:

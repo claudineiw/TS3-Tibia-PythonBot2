@@ -3,7 +3,7 @@ import tibiapy
 
 
 def getOnlinePlayer(name):
-    if (name == ""):
+    if name == "":
         return None
     else:
         try:
@@ -18,7 +18,7 @@ def getOnlinePlayer(name):
 
 
 def getPlayer(name):
-    if (name == ""):
+    if name == "":
         return None
     else:
         try:

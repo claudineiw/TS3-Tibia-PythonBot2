@@ -108,7 +108,7 @@ class BD:
         self.cursor().execute(sql + " RETURNING id")
         self.con.commit()
         id = self.cursor().fetchone()
-        if (id is None):
+        if id is None:
             return None
         else:
             return id[0]
@@ -126,7 +126,7 @@ class BD:
         self.cursor().execute(sql + " RETURNING id")
         self.con.commit()
         id = self.cursor().fetchone()
-        if (id is None):
+        if id is None:
             return None
         else:
             return id[0]

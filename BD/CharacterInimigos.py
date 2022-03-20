@@ -6,7 +6,7 @@ from Tibia import Character
 class CharacterInimigos:
     def __init__(self, name, con):
         self.con = con
-        if (name is None):
+        if name is None:
             self.name = "None"
         else:
             self.name = name
@@ -50,12 +50,12 @@ class CharacterInimigos:
 
     def insert(self):
         resultSelect = charBd.select(self.name, self.con)
-        if (len(resultSelect) == 0):
+        if len(resultSelect) == 0:
             char = Character.getPlayer(self.name)
-            if (char is None):
+            if char is None:
                 return self.name + " personagem nao encontrado"
             else:
-                if (len(char.deaths) > 0):
+                if len(char.deaths) > 0:
                     dataMorteAtual = data.utc_to_local(char.deaths[0].time)
                     addCharBd = charBd(char.name, char.level, 0, char.world, char.guild_name, char.vocation.name,
                                        dataMorteAtual, char.deaths[0].by_player, 1, self.con)
@@ -71,7 +71,7 @@ class CharacterInimigos:
             self.id = resultSelect[0][0]
             sqlSelectInimigo = "SELECT id FROM CharacterInimigo WHERE characterId ={}".format(self.id)
             resultSelectInimigo = self.con.select(sqlSelectInimigo)
-            if (len(resultSelectInimigo) > 0):
+            if len(resultSelectInimigo) > 0:
                 return self.name + " Ja esta inserido em inimigos"
             else:
                 sqlInsertInimigo = "INSERT INTO CharacterInimigo (characterId) VALUES({})".format(self.id)

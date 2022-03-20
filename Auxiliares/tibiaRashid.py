@@ -13,8 +13,7 @@ def rashidCidade(settings, semaforo):
             ondeFica = ""
             local = ""
             hora = int(datetime.now(tz).time().hour)
-            minuto = int(datetime.now(tz).time().minute)
-            if (hora >= 10):
+            if hora >= 10:
                 if diaDaSemana == 1:
                     local = "Svargrond"
                     ondeFica = "[b]Local[/b]: Nas segundas você pode encontrá-lo em Svargrond, na taverna de Dankwart, ao sul do templo"

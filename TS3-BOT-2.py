@@ -16,8 +16,7 @@ from ThreadControle import Semaforo
 
 def lerSettings():
     with open("settings.json", encoding="utf-8") as f:
-        settings = json.load(f)
-    return settings
+        return json.load(f)
 
 
 def IniciarAtualizaGuildas(con, semaforo):
@@ -83,7 +82,7 @@ if __name__ == '__main__':
     IniciarAtualizaGuildas(BD(settings, settings["userBDUPDATE"]), semaforo)
     iniciarAtualizaPermissoesUserTS(settings, semaforo)
 
-    while (True):
+    while True:
         try:
             botPrincipal.send_keepalive()
             event = botPrincipal.wait_for_event(timeout=30)
@@ -92,12 +91,12 @@ if __name__ == '__main__':
                     if event[0]["invokeruid"].strip() != "serveradmin":
                         funcoesBot.recebeComandos(event, botPrincipal, settings, Bd, tempo, listaBoss)
             elif "reasonid" in event[0]:
-                if (event[0]['reasonid'] == '0'):
+                if event[0]['reasonid'] == '0':
                     if event[0]["client_unique_identifier"].strip() != "serveradmin":
                         funcoesBot.enviarMensagemBoasVindas(event, botPrincipal)
 
         except Exception as e:
-            if (e.__str__() == "Could not receive data from the server within the timeout."):
+            if e.__str__() == "Could not receive data from the server within the timeout.":
                 pass
             else:
                 print("Principal: " + e.__str__())

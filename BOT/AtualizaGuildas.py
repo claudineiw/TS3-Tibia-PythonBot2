@@ -14,7 +14,7 @@ class AtualizaGuildas:
 
     def iniciar(self):
         AtualizaOnlineELevel1 = AtualizaOnlineELevel(self.con)
-        while (True):
+        while  True:
             try:
                 # self.semaforo.acquire()
                 self.update()
@@ -22,16 +22,16 @@ class AtualizaGuildas:
                 AtualizaOnlineELevel1.iniciar()
                 # self.semaforo.release()
                 time.sleep(30)
-            except:
+            except Exception:
                 pass
 
     def update(self):
         try:
             for guilda in AmigosEnimigos.selectGuildInimigas(self.con):
                 guildaDados = GuildaTibia.getGuild(guilda)
-                if (not guildaDados is None):
+                if not guildaDados is None:
                     allPlayers = GuildaTibia.getAllPlayer(guilda)
-                    if (not allPlayers is None):
+                    if not allPlayers is None:
                         for player in allPlayers:
                             char = Character(player.name, player.level, player.online, guildaDados.world,
                                              guildaDados.name,
@@ -40,9 +40,9 @@ class AtualizaGuildas:
 
             for guilda in AmigosEnimigos.selectGuildAmigas(self.con):
                 guildaDados = GuildaTibia.getGuild(guilda)
-                if (not guildaDados is None):
+                if not guildaDados is None:
                     allPlayers = GuildaTibia.getAllPlayer(guilda)
-                    if (not allPlayers is None):
+                    if not allPlayers is None:
                         for player in allPlayers:
                             char = Character(player.name, player.level, player.online, guildaDados.world,
                                              guildaDados.name, player.vocation.name, "0", 0, 1, self.con)
@@ -56,31 +56,31 @@ class AtualizaGuildas:
         try:
             for guilda in AmigosEnimigos.selectGuildAmigas(self.con):
                 guildaDados = GuildaTibia.getAllPlayer(guilda)
-                if (not guildaDados is None):
+                if not guildaDados is None:
                     todosDaGuilda = Character.selectAllFromGuild(self.con, guilda)
-                    if (not todosDaGuilda is None):
+                    if not todosDaGuilda is None:
                         for players in todosDaGuilda:
                             achou = False
                             for playerAtivo in guildaDados:
-                                if (players[1] == playerAtivo.name):
+                                if players[1] == playerAtivo.name:
                                     achou = True
                                     break
-                            if (not achou):
+                            if not achou:
                                 Character.updatePorPlayer(players[1], players[2], players[3], players[4], None,
                                                           players[6], self.con, players[7], players[8], players[9])
 
             for guilda in AmigosEnimigos.selectGuildInimigas(self.con):
                 guildaDados = GuildaTibia.getAllPlayer(guilda)
-                if (not guildaDados is None):
+                if not guildaDados is None:
                     todosDaGuilda = Character.selectAllFromGuild(self.con, guilda)
-                    if (not todosDaGuilda is None):
+                    if not todosDaGuilda is None:
                         for players in todosDaGuilda:
                             achou = False
                             for playerAtivo in guildaDados:
-                                if (players[1] == playerAtivo.name):
+                                if players[1] == playerAtivo.name:
                                     achou = True
                                     break
-                            if (not achou):
+                            if not achou:
                                 Character.updatePorPlayer(players[1], players[2], players[3], players[4], None,
                                                           players[6], self.con, players[7], players[8], players[9])
 

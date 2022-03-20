@@ -23,34 +23,34 @@ class AtualizaOnlineELevel:
             self.comGuilda()
             self.semGuildas()
             self.offlines()
-        except Exception as e:
+        except Exception:
             self.todos = None
             return None
 
     def comGuilda(self):
         try:
             self.todos = Character.selectAll(self.con)
-            if (not self.todos is None):
+            if not self.todos is None:
                 self.characterChecados = []
                 guildaChecados = []
                 # self.morteNotificada = 1
                 for player in self.todos:
-                    if (player[5] != "None"):
+                    if player[5] != "None":
                         guilda = player[5]
-                        if (guilda not in guildaChecados):
+                        if guilda not in guildaChecados:
                             if (guilda in AmigosEnimigos.selectGuildInimigas(
                                     self.con) or guilda in AmigosEnimigos.selectGuildAmigas(self.con)):
                                 guildaOnline = GuildaTibia.getOnlinePlayer(guilda)
-                                if (not guildaOnline is None):
+                                if not guildaOnline is None:
                                     for playerGuilda in self.todos:
-                                        if (playerGuilda[5] == guilda):
+                                        if playerGuilda[5] == guilda:
                                             for playerOnline in guildaOnline:
-                                                if (playerOnline.name == playerGuilda[1]):
+                                                if playerOnline.name == playerGuilda[1]:
                                                     playerCh = CharacterTibia.getPlayer(playerOnline.name)
-                                                    if (not playerCh is None):
-                                                        if (len(playerCh.deaths) > 0):
+                                                    if not playerCh is None:
+                                                        if len(playerCh.deaths) > 0:
                                                             dataMorteAtual = data.utc_to_local(playerCh.deaths[0].time)
-                                                            if (dataMorteAtual == playerGuilda[7]):
+                                                            if dataMorteAtual == playerGuilda[7]:
                                                                 Character.updatePorPlayer(playerOnline.name,
                                                                                           playerOnline.level,
                                                                                           playerOnline.online,
@@ -91,22 +91,22 @@ class AtualizaOnlineELevel:
 
     def semGuildas(self):
         try:
-            if (not self.todos is None):
+            if not self.todos is None:
                 # self.morteNotificada=1
-                if (len(self.todos) > 0):
+                if len(self.todos) > 0:
                     world = WorldTibia.getOnlinePlayer(self.todos[0][6])
                     for player in self.todos:
                         if (player[1] in AmigosEnimigos.selectCharacterAmigos(self.con) or player[
                             1] in AmigosEnimigos.selectCharacterInimigos(self.con)):
-                            if (player[5] == "None"):
-                                if (not world is None):
+                            if player[5] == "None":
+                                if not world is None:
                                     for playerOnlineWorld in world:
-                                        if (playerOnlineWorld.name == player[1]):
+                                        if playerOnlineWorld.name == player[1]:
                                             playerCh = CharacterTibia.getPlayer(playerOnlineWorld.name)
-                                            if (not playerCh is None):
-                                                if (len(playerCh.deaths) > 0):
+                                            if not playerCh is None:
+                                                if len(playerCh.deaths) > 0:
                                                     dataMorteAtual2 = data.utc_to_local(playerCh.deaths[0].time)
-                                                    if (dataMorteAtual2 == player[7] and player[9] == 1):
+                                                    if dataMorteAtual2 == player[7] and player[9] == 1:
                                                         Character.updatePorPlayer(playerOnlineWorld.name,
                                                                                   playerOnlineWorld.level, True,
                                                                                   playerOnlineWorld.vocation.name,
@@ -137,9 +137,9 @@ class AtualizaOnlineELevel:
 
     def offlines(self):
         try:
-            if (not self.todos is None):
+            if not self.todos is None:
                 for player in self.todos:
-                    if (player[1] not in self.characterChecados):
+                    if player[1] not in self.characterChecados:
                         Character.updatePorPlayer(player[1], player[2], False, player[4], player[5], player[6],
                                                   self.con,
                                                   player[7], player[8], player[9])

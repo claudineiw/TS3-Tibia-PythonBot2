@@ -39,12 +39,12 @@ class usuarioTS:
     @staticmethod
     def deletePorCharacterMain(name, con):
         idMain = charBd.select(name, con)
-        if (len(idMain) == 0):
+        if len(idMain) == 0:
             return name + " personagem nao encontrado"
         else:
             sqldeleteInimigo = "delete FROM usuariots WHERE idcharactermain ={}".format(idMain[0][0])
             retorno = con.delete(sqldeleteInimigo)
-            if (retorno is None):
+            if retorno is None:
                 return name + " nao encontrado em usuarios ts"
             else:
                 return True
@@ -52,21 +52,21 @@ class usuarioTS:
     @staticmethod
     def addMaker(main, maker, con):
         idMain = charBd.select(main, con)
-        if (len(idMain) == 0):
+        if len(idMain) == 0:
             return main + " Personagem nao encontrado confira o nome. E se estiver correto e nao pertencer a nenhuma guilda adicione como amigo primeiro"
         else:
             idMaker = charBd.select(maker, con)
-            if (len(idMaker) == 0):
+            if len(idMaker) == 0:
                 idMaker = charBd.insertPersonagem(maker, con)
                 dadosMain = usuarioTS.selectUsuarioTSOnMain(idMain[0][0], con)
-                if (len(dadosMain) == 0):
+                if len(dadosMain) == 0:
                     return main + " Nao esta adicionado aos Usuarios do ts adicionar com !adduser"
-                elif (dadosMain[0][3] is None):
+                elif dadosMain[0][3] is None:
                     updateMakers = "UPDATE usuariots SET idmakers=array_append(idmakers,{}) WHERE idcharactermain={};".format(
                         idMaker[0][0], idMain[0][0])
                     con.update(updateMakers)
                     return True
-                elif (idMaker[0][0] in dadosMain[0][3]):
+                elif idMaker[0][0] in dadosMain[0][3]:
                     return maker + " ja esta adicionado a lista de makers de: " + main
                 else:
                     updateMakers = "UPDATE usuariots SET idmakers=array_append(idmakers,{}) WHERE idcharactermain={};".format(
@@ -75,14 +75,14 @@ class usuarioTS:
                     return True
             else:
                 dadosMain = usuarioTS.selectUsuarioTSOnMain(idMain[0][0], con)
-                if (len(dadosMain) == 0):
+                if len(dadosMain) == 0:
                     return main + " Nao esta adicionado aos Usuarios do ts adicionar com !adduser"
-                elif (dadosMain[0][3] is None):
+                elif dadosMain[0][3] is None:
                     updateMakers = "UPDATE usuariots SET idmakers=array_append(idmakers,{}) WHERE idcharactermain={};".format(
                         idMaker[0][0], idMain[0][0])
                     con.update(updateMakers)
                     return True
-                elif (idMaker[0][0] in dadosMain[0][3]):
+                elif idMaker[0][0] in dadosMain[0][3]:
                     return maker + " ja esta adicionado a lista de makers de: " + main
                 else:
                     updateMakers = "UPDATE usuariots SET idmakers=array_append(idmakers,{}) WHERE idcharactermain={};".format(
@@ -93,19 +93,19 @@ class usuarioTS:
     @staticmethod
     def rmMaker(main, maker, con):
         idMain = charBd.select(main, con)
-        if (len(idMain) == 0):
+        if len(idMain) == 0:
             return main + " Personagem nao encontrado confira o nome. E se estiver correto e nao pertencer a nenhuma guilda adicione como amigo primeiro"
         else:
             idMaker = charBd.select(maker, con)
-            if (len(idMaker) == 0):
+            if len(idMaker) == 0:
                 idMaker = charBd.insertPersonagem(maker, con)
                 dadosMain = usuarioTS.selectUsuarioTSOnMain(idMain[0][0], con)
-                if (len(dadosMain) == 0):
+                if len(dadosMain) == 0:
                     return main + " Nao esta adicionado aos Usuarios do ts adicionar com !adduser"
-                elif (dadosMain[0][3] is None):
+                elif dadosMain[0][3] is None:
                     return main + " nao possui makers"
 
-                elif (idMaker[0][0] in dadosMain[0][3]):
+                elif idMaker[0][0] in dadosMain[0][3]:
                     updateMakers = "UPDATE usuariots SET idmakers=array_remove(idmakers,{}) WHERE idcharactermain={};".format(
                         idMaker[0][0], idMain[0][0])
                     con.update(updateMakers)
@@ -114,12 +114,12 @@ class usuarioTS:
                     return maker + " nao esta na lista do main: " + main
             else:
                 dadosMain = usuarioTS.selectUsuarioTSOnMain(idMain[0][0], con)
-                if (len(dadosMain) == 0):
+                if len(dadosMain) == 0:
                     return main + " Nao esta adicionado aos Usuarios do ts adicionar com !adduser"
-                elif (dadosMain[0][3] is None):
+                elif dadosMain[0][3] is None:
                     return main + " nao possui makers"
 
-                elif (idMaker[0][0] in dadosMain[0][3]):
+                elif idMaker[0][0] in dadosMain[0][3]:
                     updateMakers = "UPDATE usuariots SET idmakers=array_remove(idmakers,{}) WHERE idcharactermain={};".format(
                         idMaker[0][0], idMain[0][0])
                     con.update(updateMakers)
@@ -130,9 +130,9 @@ class usuarioTS:
     def insert(self):
         sqlSelect = "SELECT id FROM Character WHERE nome ILIKE '{}'".format(self.name)
         resultSelect = self.con.select(sqlSelect)
-        if (len(resultSelect) == 0):
+        if len(resultSelect) == 0:
             char = Character.getPlayer(self.name)
-            if (char is None):
+            if char is None:
                 return self.name + " personagem nao encontrado"
             else:
                 addCharBd = charBd(char.name, char.level, 0, char.world, char.guild_name, char.vocation.name, "0", 0, 1,
@@ -148,7 +148,7 @@ class usuarioTS:
             sqlSelectUsuarioTS = "SELECT id FROM usuariots WHERE idcharactermain ={} and uidusuario='{}'".format(
                 self.id, self.uIdUsuario)
             resultSelectInimigo = self.con.select(sqlSelectUsuarioTS)
-            if (len(resultSelectInimigo) > 0):
+            if len(resultSelectInimigo) > 0:
                 return self.name + " Ja esta inserido em Usuario TS"
             else:
                 sqlInsertUsuarioTS = "INSERT INTO usuariots (nomets,idcharactermain,uidusuario)  VALUES('{}',{},'{}')".format(

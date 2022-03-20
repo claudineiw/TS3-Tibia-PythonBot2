@@ -123,7 +123,7 @@ def listaHelp(clienteServerGroupsID, settings):
                     "\n !loot dados do hunt"
                     ), ()
         else:
-            return ("Voce nao pode usar o bot"), ()
+            return "Voce nao pode usar o bot", ()
     except Exception as e:
         print("Lista Help: " + e.__str__())
         return None
