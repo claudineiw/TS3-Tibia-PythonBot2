@@ -9,6 +9,7 @@ from Auxiliares import agenda
 
 class eventos:
     def __init__(self):
+        self.now = None
         self.pegarDataAtual()
         self.eventos = self.__getEventos__()
 

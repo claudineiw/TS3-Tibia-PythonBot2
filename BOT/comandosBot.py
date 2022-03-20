@@ -72,8 +72,8 @@ def botMvCh(stringCanais, idUsuario, bot):
     try:
         stringCanais = stringCanais.replace("!mvch ", "")
         canalOrigem, canalDestino = funcoesBot.trataCanaisComEspaco(stringCanais, bot)
-        if not canalOrigem is None:
-            if not canalDestino is None:
+        if None is not canalOrigem:
+            if None is not canalDestino:
                 for cliente in funcoesBot.pegarListaClientes(bot):
                     if int(cliente["client_type"]) != 1:
                         if int(cliente["cid"]) == int(funcoesBot.pegarIdChannel(bot, canalOrigem)):
@@ -120,7 +120,7 @@ def botAddFd(mensagemRecebida, con, idUsuario, bot):
     mensagemRecebida = mensagemRecebida.replace("!addfd ", "")
     amigos = AmigosEInimigos.AmigosEnimigos()
     retorno = amigos.addCharacterAmigo(mensagemRecebida, con)
-    if retorno == True:
+    if retorno:
         funcoesBot.enviarMensagem(mensagemRecebida + " adicionado aos amigos", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -130,7 +130,7 @@ def botRmFd(mensagemRecebida, con, idUsuario, bot):
     mensagemRecebida = mensagemRecebida.replace("!rmfd ", "")
     amigos = AmigosEInimigos.AmigosEnimigos()
     retorno = amigos.deleteCharacterAmigos(mensagemRecebida, con)
-    if retorno == True:
+    if retorno:
         funcoesBot.enviarMensagem(mensagemRecebida + " removido dos amigos", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -149,7 +149,7 @@ def botAddEm(mensagemRecebida, con, idUsuario, bot):
     mensagemRecebida = mensagemRecebida.replace("!addem ", "")
     inimigo = AmigosEInimigos.AmigosEnimigos()
     retorno = inimigo.addCharacterInimigo(mensagemRecebida, con)
-    if retorno == True:
+    if retorno:
         funcoesBot.enviarMensagem(mensagemRecebida + " adicionado aos inimigos", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -159,7 +159,7 @@ def botRmEm(mensagemRecebida, con, idUsuario, bot):
     mensagemRecebida = mensagemRecebida.replace("!rmem ", "")
     inimigo = AmigosEInimigos.AmigosEnimigos()
     retorno = inimigo.deleteCharacterInimigos(mensagemRecebida, con)
-    if retorno == True:
+    if retorno:
         funcoesBot.enviarMensagem(mensagemRecebida + " removido dos inimigos", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -253,7 +253,7 @@ def botAddFdgui(mensagemRecebida, con, idUsuario, bot):
     mensagemRecebida = mensagemRecebida.replace("!addfdgui ", "")
     amigos = AmigosEInimigos.AmigosEnimigos()
     retorno = amigos.addGuildAmiga(mensagemRecebida, con)
-    if retorno == True:
+    if retorno:
         funcoesBot.enviarMensagem(mensagemRecebida + " adicionado aos amigos", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -263,7 +263,7 @@ def botRmFdgui(mensagemRecebida, con, idUsuario, bot):
     mensagemRecebida = mensagemRecebida.replace("!rmfdgui ", "")
     inimigo = AmigosEInimigos.AmigosEnimigos()
     retorno = inimigo.deleteGuildAmigas(mensagemRecebida, con)
-    if retorno == True:
+    if retorno:
         funcoesBot.enviarMensagem(mensagemRecebida + " removido dos amigos", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -273,7 +273,7 @@ def botAddEmgui(mensagemRecebida, con, idUsuario, bot):
     mensagemRecebida = mensagemRecebida.replace("!addemgui ", "")
     inimigos = AmigosEInimigos.AmigosEnimigos()
     retorno = inimigos.addGuildInimiga(mensagemRecebida, con)
-    if retorno == True:
+    if retorno:
         funcoesBot.enviarMensagem(mensagemRecebida + " adicionado aos inimigos", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -283,7 +283,7 @@ def botRmEmgui(mensagemRecebida, con, idUsuario, bot):
     mensagemRecebida = mensagemRecebida.replace("!rmemgui ", "")
     inimigo = AmigosEInimigos.AmigosEnimigos()
     retorno = inimigo.deleteGuildInimigas(mensagemRecebida, con)
-    if retorno == True:
+    if retorno:
         funcoesBot.enviarMensagem(mensagemRecebida + " removido de inimigos", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -297,7 +297,7 @@ def botaddUserTS(mensagemRecebida, con, idUsuario, bot):
     else:
         usuarioTSs = usuarioTS(nomeTS, nomeMain, usuarioUID, con)
         retorno = usuarioTSs.insert()
-        if retorno == True:
+        if retorno:
             funcoesBot.enviarMensagem(nomeTS + " adicionado aos Usuarios personagem Main: " + nomeMain, idUsuario, bot)
         else:
             funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -306,7 +306,7 @@ def botaddUserTS(mensagemRecebida, con, idUsuario, bot):
 def botrmUserTS(mensagemRecebida, con, idUsuario, bot):
     mensagemRecebida = mensagemRecebida.replace("!rmuser ", "")
     retorno = usuarioTS.deletePorCharacterMain(mensagemRecebida, con)
-    if retorno == True:
+    if retorno:
         funcoesBot.enviarMensagem(mensagemRecebida + " removido de usuarios ", idUsuario, bot)
     else:
         funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -327,7 +327,7 @@ def botaddMakerUserTS(mensagemRecebida, con, idUsuario, bot):
         return True
     else:
         retorno = usuarioTS.addMaker(nomeMain, nomeMaker, con)
-        if retorno == True:
+        if retorno:
             funcoesBot.enviarMensagem(nomeMaker + " maker adicionado ao main: " + nomeMain, idUsuario, bot)
         else:
             funcoesBot.enviarMensagem(retorno, idUsuario, bot)
@@ -348,7 +348,7 @@ def botrmMakerUserTS(mensagemRecebida, con, idUsuario, bot):
         return True
     else:
         retorno = usuarioTS.rmMaker(nomeMain, nomeMaker, con)
-        if retorno == True:
+        if retorno:
             funcoesBot.enviarMensagem(nomeMaker + " maker removido da lista do main: " + nomeMain, idUsuario, bot)
         else:
             funcoesBot.enviarMensagem(retorno, idUsuario, bot)

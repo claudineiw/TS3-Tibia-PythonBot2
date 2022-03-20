@@ -8,6 +8,8 @@ from BOT.AmigosEnimigos import AmigosEnimigos
 
 class AtualizaOnlineELevel:
     def __init__(self, con):
+        self.characterChecados = None
+        self.todos = None
         print("Iniciou AtualizaOnlineELevel")
         self.con = con
 
@@ -96,8 +98,7 @@ class AtualizaOnlineELevel:
                 if len(self.todos) > 0:
                     world = WorldTibia.getOnlinePlayer(self.todos[0][6])
                     for player in self.todos:
-                        if (player[1] in AmigosEnimigos.selectCharacterAmigos(self.con) or player[
-                            1] in AmigosEnimigos.selectCharacterInimigos(self.con)):
+                        if player[1] in AmigosEnimigos.selectCharacterAmigos(self.con) or player[1] in AmigosEnimigos.selectCharacterInimigos(self.con):
                             if player[5] == "None":
                                 if not world is None:
                                     for playerOnlineWorld in world:

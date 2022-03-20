@@ -14,7 +14,7 @@ class AtualizaGuildas:
 
     def iniciar(self):
         AtualizaOnlineELevel1 = AtualizaOnlineELevel(self.con)
-        while  True:
+        while True:
             try:
                 # self.semaforo.acquire()
                 self.update()

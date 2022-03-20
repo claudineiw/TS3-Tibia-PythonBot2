@@ -14,7 +14,7 @@ class canalEventos:
         while True:
             try:
                 self.semaforo.acquire()
-                if self.tsconn.is_connected() == False:
+                if not self.tsconn.is_connected():
                     self.tsconn = botsSecundarios(self.settings, "BotEventos")
 
                 self.tsconn.send_keepalive()
@@ -45,10 +45,11 @@ class canalEventos:
     def AtualizaDescricaoCanal(self):
         try:
             primeiro = False
-            novaDescricao = "[table][tr][td][center]{}[/td][td][center]{}[/td][td][center]{}[/td][td][center]{}[/td][td][center]{}[/td][td][center]{}[/td][td][center]{}[/td][/tr][tr][/tr][tr]".format(
+            novaDescricao = "[table][tr][td][center]{}[/td][td][center]{}[/td][td][center]{}[/td][td][center]{}[/td][" \
+                            "td][center]{}[/td][td][center]{}[/td][td][center]{}[/td][/tr][tr][/tr][tr]".format(
                 "Segunda", "Terca", "Quarta", "Quinta", "Sexta", "Sabado", "Domingo")
             for dia in self.eventos.getTodosEventos():
-                if primeiro == False:
+                if not primeiro:
                     for diasFaltantes in range(dia[0].value):
                         novaDescricao += "[td][/td]"
                     primeiro = True

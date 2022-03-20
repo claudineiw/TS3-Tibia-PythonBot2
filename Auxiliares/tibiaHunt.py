@@ -1,5 +1,10 @@
 class tibiaHunt:
     def __init__(self, dados):
+        self.who_to_pay_and_how_much = None
+        self.profit_per_person = None
+        self.total_profit = None
+        self.players_and_their_balance = None
+        self.number_of_players = None
         self.dados = dados
         self.sessionDate = self.find_session_date()
         self.duracaoSession = self.find_session_duration()

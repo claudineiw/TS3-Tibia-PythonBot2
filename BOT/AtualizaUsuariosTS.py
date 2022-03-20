@@ -10,6 +10,10 @@ from Tibia import Guild
 
 class AtualizaUsuariosTS:
     def __init__(self, TScon, bdCon, usuarioTSs, settings, ListaDePermissoes, guildBankMes):
+        self.online = None
+        self.vocacao = None
+        self.level = None
+        self.nome = None
         self.TScon = TScon
         self.usuarioTS = usuarioTSs
         self.bdCon = bdCon
@@ -80,7 +84,8 @@ class AtualizaUsuariosTS:
 
     def atualizaPermissoesLevel(self):
         for perm in self.ListaDePermissoes:
-            if int(self.settings["permissaoLevelInicio"]) <= int(perm["sgid"]) <= int(self.settings["permissaoLevelFim"]):
+            if int(self.settings["permissaoLevelInicio"]) <= int(perm["sgid"]) <= int(
+                    self.settings["permissaoLevelFim"]):
                 if self.level >= int(perm["name"].replace("+", "")) > self.level - 50:
                     self.adicionarPermissao(int(perm["sgid"]))
                 else:

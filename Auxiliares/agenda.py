@@ -15,6 +15,7 @@ class diasDaSemana(Enum):
 
 class agenda:
     def __init__(self, now):
+        self.index = None
         self.now = now
         self.mes = []
 

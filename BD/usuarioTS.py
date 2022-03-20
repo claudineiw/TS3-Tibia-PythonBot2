@@ -4,6 +4,7 @@ from Tibia import Character
 
 class usuarioTS:
     def __init__(self, nomeTs, name, uidusuario, con):
+        self.id = None
         self.con = con
         self.nomeTS = nomeTs
         self.name = name

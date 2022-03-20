@@ -94,7 +94,7 @@ def amigosOnline(tsconn, settings, tsconMorte, BDcon):
                 novaDescricao += "[/table]"
                 if descricao != novaDescricao:
                     nomeAtual = (
-                    tsconn.channelinfo(cid=int(pegarIdChannel(tsconn, settings["canalAmigos"])))[0]["channel_name"])
+                        tsconn.channelinfo(cid=int(pegarIdChannel(tsconn, settings["canalAmigos"])))[0]["channel_name"])
                     novoNome = settings["canalAmigos"] + " (" + str(contInimigosOnline) + "/" + str(todos) + ")"
                     if nomeAtual != novoNome:
                         tsconn.channeledit(cid=pegarIdChannel(tsconn, settings["canalAmigos"]),

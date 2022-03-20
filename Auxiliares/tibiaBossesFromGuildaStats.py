@@ -6,6 +6,7 @@ from BOT.funcoesBot import *
 
 class tibiaBosses:
     def __init__(self, settings, semaforo):
+        self.tsconn = None
         self.semaforo = semaforo
         self.settings = settings
         self.url = "https://guildstats.eu/bosses?world={}&monsterName=&rook=0".format(self.settings["mundo"])
