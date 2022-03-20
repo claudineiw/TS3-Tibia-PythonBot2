@@ -26,9 +26,6 @@ def botsSecundarios(settings, nome):
         pass
 
 
-
-
-
 def notificaMorte(character, mensagem, bot, BDcon):
     try:
         if character[9] == 0 and character[7] != "0":
@@ -54,6 +51,7 @@ def notificaMorte(character, mensagem, bot, BDcon):
         Character.updateNotificacaoMorte(character[0], BDcon)
     except:
         pass
+
 
 def pegaClid(nome, bot):
     try:

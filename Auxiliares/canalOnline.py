@@ -60,7 +60,8 @@ def CanalOnline(tsconn, settings, BDcon):
                                                                         listaClientesOnline) + "[/td][/tr]"
                 novaDescricao += "[/table]"
                 if descricao != novaDescricao:
-                    nomeAtual = tsconn.channelinfo(cid=int(pegarIdChannel(tsconn, settings["onlineTS"])))[0]["channel_name"]
+                    nomeAtual = tsconn.channelinfo(cid=int(pegarIdChannel(tsconn, settings["onlineTS"])))[0][
+                        "channel_name"]
                     novoNome = settings["onlineTS"] + " (" + str(contGuildOnline) + "/" + str(totalGuilda[0][0]) + ")"
                     if nomeAtual != novoNome:
                         tsconn.channeledit(cid=pegarIdChannel(tsconn, settings["onlineTS"]),

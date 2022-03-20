@@ -97,7 +97,8 @@ class AtualizaOnlineELevel:
                 if len(self.todos) > 0:
                     world = WorldTibia.getOnlinePlayer(self.todos[0][6])
                     for player in self.todos:
-                        if player[1] in AmigosEnimigos.selectCharacterAmigos(self.con) or player[1] in AmigosEnimigos.selectCharacterInimigos(self.con):
+                        if player[1] in AmigosEnimigos.selectCharacterAmigos(self.con) or player[
+                            1] in AmigosEnimigos.selectCharacterInimigos(self.con):
                             if player[5] == "None":
                                 if None is not world:
                                     for playerOnlineWorld in world:
