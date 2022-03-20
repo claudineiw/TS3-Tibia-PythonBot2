@@ -1,7 +1,7 @@
 from datetime import datetime
 
-import tibiapy
 import requests
+import tibiapy
 from bs4 import BeautifulSoup
 
 
@@ -15,23 +15,24 @@ def getGuildBank(settings):
         values = {'loginemail': settings["userTibia"],
                   'loginpassword': settings["senhaTibia"]}
 
-        urlGuilda = "https://www.tibia.com/community/?subtopic=guilds&page=activitylog&world="+guild.world+"&GuildName="+guild.name.replace(" ","+")+"&action=guildbankhistory"
+        urlGuilda = "https://www.tibia.com/community/?subtopic=guilds&page=activitylog&world=" + guild.world + "&GuildName=" + guild.name.replace(
+            " ", "+") + "&action=guildbankhistory"
         session = requests.Session()
         session.post(url, data=values)
         guilda = session.post(urlGuilda)
         soup = BeautifulSoup(guilda.text, "html5lib")
         table = soup.find('table', attrs={'class': 'TableContent'})
         rows = table.tbody.find_all("tr")
-        datas=[]
+        datas = []
         for row in rows:
             colunas = row.find_all("td")
-            data=[]
+            data = []
             for col in colunas:
                 if (col.string == "Date"):
                     break
-                data.append(col.get_text().replace('\xa0',' '))
+                data.append(col.get_text().replace('\xa0', ' '))
             if (len(data) > 0):
-                if(data[3]=="Deposit" and data[1]!='(deleted)'):
+                if (data[3] == "Deposit" and data[1] != '(deleted)'):
                     format = "%b %d %Y, %H:%M:%S CET"
                     dataDepositoEmMinhaTimeZone = datetime.strptime(data[0], format).astimezone()
                     if (dataDepositoEmMinhaTimeZone.month == mesAtual):
@@ -55,7 +56,7 @@ def getOnlinePlayer(name):
             guild = tibiapy.Guild.from_content(content)
             return guild.online_members
         except Exception as e:
-            #print("Class Tibia.Guild.getOnlinePlayer: "+e.__str__()+" "+name)
+            # print("Class Tibia.Guild.getOnlinePlayer: "+e.__str__()+" "+name)
             return None
 
 
@@ -70,11 +71,12 @@ def getAllPlayer(name):
             guild = tibiapy.Guild.from_content(content)
             return guild.members
         except Exception as e:
-            #print("Class Tibia.Guild.getAllPlayer: " + e.__str__()+" "+name)
+            # print("Class Tibia.Guild.getAllPlayer: " + e.__str__()+" "+name)
             return None
 
+
 def getGuild(name):
-    if(name==""):
+    if (name == ""):
         return None
     else:
         try:
@@ -84,5 +86,5 @@ def getGuild(name):
             guild = tibiapy.Guild.from_content(content)
             return guild
         except Exception as e:
-            #print("Class Tibia.Guild.getGuild: " + e.__str__()+" "+name)
+            # print("Class Tibia.Guild.getGuild: " + e.__str__()+" "+name)
             return None

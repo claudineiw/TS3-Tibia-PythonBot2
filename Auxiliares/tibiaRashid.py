@@ -1,16 +1,20 @@
-from BOT.funcoesBot import *
-from pytz import timezone
 import time
 from datetime import datetime
-def rashidCidade(settings,semaforo):
+
+from pytz import timezone
+
+from BOT.funcoesBot import *
+
+
+def rashidCidade(settings, semaforo):
     while True:
         semaforo.acquire()
         tsconn = botsSecundarios(settings, "Rashid")
         try:
             tz = timezone('Europe/Berlin')
             diaDaSemana = int(datetime.now(tz).isoweekday())
-            ondeFica=""
-            local=""
+            ondeFica = ""
+            local = ""
             hora = int(datetime.now(tz).time().hour)
             minuto = int(datetime.now(tz).time().minute)
             if (hora >= 10):
@@ -36,10 +40,11 @@ def rashidCidade(settings,semaforo):
                     local = "Carlin"
                     ondeFica = "[b]Local[/b]: Nos domingos você pode encontrá-lo no primeiro andar do depot de Carlin"
 
-                nomeCanal = settings["canalRashid"]+" (" + local + ")"
+                nomeCanal = settings["canalRashid"] + " (" + local + ")"
                 nomeAtual = tsconn.channelinfo(cid=pegarIdChannel(tsconn, settings["canalRashid"]))[0]["channel_name"]
                 if nomeCanal != nomeAtual:
-                    tsconn.channeledit(cid=pegarIdChannel(tsconn,settings["canalRashid"]), channel_name=nomeCanal, channel_description=ondeFica)
+                    tsconn.channeledit(cid=pegarIdChannel(tsconn, settings["canalRashid"]), channel_name=nomeCanal,
+                                       channel_description=ondeFica)
 
             tsconn.close()
             semaforo.release()

@@ -4,11 +4,11 @@ import time
 from datetime import datetime
 
 import ts3
+
 import BOT.comandosBot as comandosBot
 from BD.Character import Character
 from BOT.funcoesGerais import diferencaTempo
 from Tibia import Character as charTibia
-from Auxiliares import tempoAFK
 
 
 def botsSecundarios(settings, nome):
@@ -25,16 +25,18 @@ def botsSecundarios(settings, nome):
         print("Bot Secundario" + e.__str__())
         pass
 
+
 def pegaClid(nome, bot):
     try:
         return bot.clientfind(pattern=nome)[0]
     except:
         return None
 
+
 def notificaMorte(character, mensagem, bot, BDcon):
     try:
         if (character[9] == 0 and character[7] != "0"):
-            if(diferencaTempo(character) < 10):
+            if (diferencaTempo(character) < 10):
                 deathPlayer = charTibia.getPlayer(character[1])
                 if ((datetime.now().astimezone() - deathPlayer.deaths[0].time.astimezone()).total_seconds() < 600):
                     if (character[8] == 0):
@@ -56,6 +58,7 @@ def notificaMorte(character, mensagem, bot, BDcon):
         Character.updateNotificacaoMorte(character[0], BDcon)
     except:
         pass
+
 
 def pegaClid(nome, bot):
     try:
@@ -101,10 +104,10 @@ def pegarNomeMainEMaker(mensagemRecebida, con):
 
 
 def pegarNomeEUsuario(mensagemRecebida, bot):
-    clienteTS={}
-   # nomeMain=""
-   # usuarioUID=""
-    #nomeTS=""
+    clienteTS = {}
+    # nomeMain=""
+    # usuarioUID=""
+    # nomeTS=""
     try:
         for cliente in pegarListaClientes(bot):
             if int(cliente["client_type"]) != 1:
@@ -190,20 +193,20 @@ def pokeTodosClientes(msg, bot):
         return None
 
 
-def pokerTodosClientesBoss(settings,msg, bot):
+def pokerTodosClientesBoss(settings, msg, bot):
     try:
         enviouTudo = False
 
-        permBosses=settings["grupoBosses"]
+        permBosses = settings["grupoBosses"]
         for cliente in pegarListaClientes(bot):
             temBoss = 0
-            listaPermissoes=pegarPermissoesCliente(cliente["clid"],bot)
+            listaPermissoes = pegarPermissoesCliente(cliente["clid"], bot)
             for perm in listaPermissoes.split(','):
-                if(int(permBosses)== int(perm)):
-                    temBoss=1
+                if (int(permBosses) == int(perm)):
+                    temBoss = 1
                     break
 
-            if(temBoss):
+            if (temBoss):
                 msgPartida = ""
                 if (len(msg) > 100):
                     for caracter in msg:
@@ -224,21 +227,20 @@ def pokerTodosClientesBoss(settings,msg, bot):
         return None
 
 
-
-def pokerTodosClientesVendas(settings,msg, bot):
+def pokerTodosClientesVendas(settings, msg, bot):
     try:
         enviouTudo = False
 
-        permBosses=settings["grupoVendas"]
+        permBosses = settings["grupoVendas"]
         for cliente in pegarListaClientes(bot):
             temBoss = 0
-            listaPermissoes=pegarPermissoesCliente(cliente["clid"],bot)
+            listaPermissoes = pegarPermissoesCliente(cliente["clid"], bot)
             for perm in listaPermissoes.split(','):
-                if(int(permBosses)== int(perm)):
-                    temBoss=1
+                if (int(permBosses) == int(perm)):
+                    temBoss = 1
                     break
 
-            if(temBoss):
+            if (temBoss):
                 msgPartida = ""
                 if (len(msg) > 100):
                     for caracter in msg:
@@ -273,12 +275,14 @@ def pegarPermissoesCliente(idcliente, bot):
     except:
         return None
 
-def pegarDBIDfromUID(uid,bot):
+
+def pegarDBIDfromUID(uid, bot):
     try:
         return bot.clientgetdbidfromuid(cluid=uid)[0]
     except:
         print("error pegar clid pelo uida")
         return None
+
 
 def canalExiste(nomeCanal, bot):
     try:
@@ -341,8 +345,7 @@ def trataCanaisComEspaco(stringCanais, bot):
             return None, None
 
 
-def botAfk(settings,tempo,semaforo):
-
+def botAfk(settings, tempo, semaforo):
     while True:
         semaforo.acquire()
         tsconn = botsSecundarios(settings, tempo.canalAFK)
@@ -351,15 +354,16 @@ def botAfk(settings,tempo,semaforo):
                 if int(cliente["client_type"]) != 1:
                     if int(pegarIdChannel(tsconn, tempo.canalAFK)) != int(cliente["cid"]):
                         if (tsconn.servergroupsbyclientid(cldbid=cliente['client_database_id'])[0]['name'] != 'Guest'):
-                            if int(tsconn.clientinfo(clid=cliente["clid"])[0]['client_idle_time']) >= int(tempo.tempoAFK) * 60 * 1000:
-                                listaPermissoes=tsconn.servergroupsbyclientid(cldbid=cliente['client_database_id'])
-                                naoMover=True
+                            if int(tsconn.clientinfo(clid=cliente["clid"])[0]['client_idle_time']) >= int(
+                                    tempo.tempoAFK) * 60 * 1000:
+                                listaPermissoes = tsconn.servergroupsbyclientid(cldbid=cliente['client_database_id'])
+                                naoMover = True
                                 for perm in listaPermissoes:
-                                    if(int(settings["grupoNaoMoverAFK"])==int(perm["sgid"])):
-                                        naoMover=False
+                                    if (int(settings["grupoNaoMoverAFK"]) == int(perm["sgid"])):
+                                        naoMover = False
 
-                                if(naoMover):
-                                    tsconn.clientmove(cid=pegarIdChannel(tsconn, tempo.canalAFK),clid=cliente["clid"])
+                                if (naoMover):
+                                    tsconn.clientmove(cid=pegarIdChannel(tsconn, tempo.canalAFK), clid=cliente["clid"])
             tsconn.close()
 
         except Exception as e:
@@ -385,7 +389,7 @@ def enviarMensagemBoasVindas(event, bot):
         return None
 
 
-def recebeComandos(event, bot, settings, con,tempo,listaBossesDreamCourts):
+def recebeComandos(event, bot, settings, con, tempo, listaBossesDreamCourts):
     try:
         mensagemRecebida = event[0]["msg"].lower()
         nomeUsuario = event[0]["invokername"]
@@ -404,32 +408,32 @@ def recebeComandos(event, bot, settings, con,tempo,listaBossesDreamCourts):
                     comandosBot.botHelp(usuarioID, bot, settings)
                     return True
                 elif ("!loot " in mensagemRecebida):
-                    comandosBot.botloot(mensagemRecebida,usuarioID, bot)
+                    comandosBot.botloot(mensagemRecebida, usuarioID, bot)
                     return True
                 elif ("!shared " in mensagemRecebida):
                     comandosBot.botShared(mensagemRecebida, nomeUsuario, usuarioID, bot)
                     return True
 
-                elif("!boss " in mensagemRecebida):
-                    comandosBot.botMassPokeBoss(nomeUsuario,mensagemRecebida, settings)
+                elif ("!boss " in mensagemRecebida):
+                    comandosBot.botMassPokeBoss(nomeUsuario, mensagemRecebida, settings)
                     return True
 
                 elif ("!sell " in mensagemRecebida):
-                    comandosBot.botMassPokeVendas(nomeUsuario,mensagemRecebida,settings)
+                    comandosBot.botMassPokeVendas(nomeUsuario, mensagemRecebida, settings)
                     return True
 
             # <---- FIM COMANDOS TODOS USUARIOS REGISTRADOS ---->
 
             # <---- COMANDOS MOVEDOR ACIMA---->
             if (int(itens) == settings["grupoEditor"] or int(itens) == settings["grupoServerAdmin"] or int(itens) ==
-                    settings["grupoAdmin"] or int(itens) == settings["grupoMovedor"] or int(itens) == settings["grupoMestre"]):
+                    settings["grupoAdmin"] or int(itens) == settings["grupoMovedor"] or int(itens) == settings[
+                        "grupoMestre"]):
                 if ("!mp " in mensagemRecebida):
-                    comandosBot.botMassPoke(nomeUsuario,mensagemRecebida, settings)
+                    comandosBot.botMassPoke(nomeUsuario, mensagemRecebida, settings)
                     return True
                 elif ("!mvch " in mensagemRecebida):
                     comandosBot.botMvCh(mensagemRecebida, usuarioID, bot)
                     return True
-
 
             # <---- FIM COMANDOS MOVEDOR ACIMA---->
 
@@ -457,7 +461,8 @@ def recebeComandos(event, bot, settings, con,tempo,listaBossesDreamCourts):
             # <---- FIM COMANDOS ADMIN ACIMA---->
 
             # <---- COMANDOS SERVER ADMIN ACIMA---->
-            if (int(itens) == settings["grupoEditor"] or int(itens) == settings["grupoServerAdmin"] or int(itens) == settings["grupoMestre"]):
+            if (int(itens) == settings["grupoEditor"] or int(itens) == settings["grupoServerAdmin"] or int(itens) ==
+                    settings["grupoMestre"]):
                 if ("!addfd " in mensagemRecebida):
                     comandosBot.botAddFd(mensagemRecebida, con, usuarioID, bot)
                     return True
@@ -493,11 +498,11 @@ def recebeComandos(event, bot, settings, con,tempo,listaBossesDreamCourts):
                     return True
 
                 elif ("!afk " in mensagemRecebida):
-                    comandosBot.botAfkTrocaTempo(mensagemRecebida,tempo,usuarioID, bot)
+                    comandosBot.botAfkTrocaTempo(mensagemRecebida, tempo, usuarioID, bot)
                     return True
 
                 elif ("!next" in mensagemRecebida):
-                    comandosBot.botBossDreamCourtsNext(usuarioID, bot,listaBossesDreamCourts)
+                    comandosBot.botBossDreamCourtsNext(usuarioID, bot, listaBossesDreamCourts)
                     return True
 
         # <---- FIM COMANDOS SERVER ADMIN ACIMA---->

@@ -1,10 +1,10 @@
 class Vocation:
-    def __init__(self, name,con):
-        self.con=con
-        self.name="None"
-        if(name is None):
-            self.name="None"
-        elif(name == "Elite Knight"):
+    def __init__(self, name, con):
+        self.con = con
+        self.name = "None"
+        if (name is None):
+            self.name = "None"
+        elif (name == "Elite Knight"):
             self.name = "ELITE_KNIGHT"
         elif (name == "Elder Druid"):
             self.name = "ELDER_DRUID"
@@ -24,11 +24,8 @@ class Vocation:
             self.name = name
         self.id = 0
 
-
     def get(self):
         return self.id
-
-
 
     def select(self):
         sqlSelect = "SELECT id FROM Vocations WHERE  nome = '{}'".format(self.name)
@@ -36,11 +33,10 @@ class Vocation:
 
     def insert(self):
         result = self.select()
-        if(len(result) == 0):
-           sqlInsert = "INSERT INTO Vocations (nome) VALUES('{}')".format(self.name)
-           self.id=self.con.insert(sqlInsert)
-           return self.id
-        else:
-            self.id =result[0][0]
+        if (len(result) == 0):
+            sqlInsert = "INSERT INTO Vocations (nome) VALUES('{}')".format(self.name)
+            self.id = self.con.insert(sqlInsert)
             return self.id
-
+        else:
+            self.id = result[0][0]
+            return self.id

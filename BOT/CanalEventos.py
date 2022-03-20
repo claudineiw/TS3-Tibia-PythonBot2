@@ -1,43 +1,46 @@
 from BOT.funcoesBot import *
 from Tibia import Events
+
+
 class canalEventos:
-    def __init__(self,settings,semaforo):
-        self.settings=settings
-        self.semaforo=semaforo
-        self.eventos=Events.eventos()
+    def __init__(self, settings, semaforo):
+        self.settings = settings
+        self.semaforo = semaforo
+        self.eventos = Events.eventos()
         self.tsconn = botsSecundarios(self.settings, "BotEventos")
+
     def iniciar(self):
-            ultimo = 0
-            while(True):
-                try:
-                    self.semaforo.acquire()
-                    if(self.tsconn.is_connected()==False):
-                        self.tsconn = botsSecundarios(self.settings, "BotEventos")
+        ultimo = 0
+        while (True):
+            try:
+                self.semaforo.acquire()
+                if (self.tsconn.is_connected() == False):
+                    self.tsconn = botsSecundarios(self.settings, "BotEventos")
 
-                    self.tsconn.send_keepalive()
-                    tsEvent=self.tsconn.wait_for_event(60)
-                    if("reasonid" in tsEvent[0]):
-                        if(int(tsEvent.parsed[0]["reasonid"])==0):
-                                if(int(tsEvent.parsed[0]["client_type"])==0):
-                                    retorno = self.eventos.getEventsXPRespaw()
-                                    if(not retorno is None):
-                                        pokeCliente(retorno,int(tsEvent.parsed[0]["clid"]),self.tsconn)
-                                        enviarMensagem(retorno,int(tsEvent.parsed[0]["clid"]),self.tsconn)
+                self.tsconn.send_keepalive()
+                tsEvent = self.tsconn.wait_for_event(60)
+                if ("reasonid" in tsEvent[0]):
+                    if (int(tsEvent.parsed[0]["reasonid"]) == 0):
+                        if (int(tsEvent.parsed[0]["client_type"]) == 0):
+                            retorno = self.eventos.getEventsXPRespaw()
+                            if (not retorno is None):
+                                pokeCliente(retorno, int(tsEvent.parsed[0]["clid"]), self.tsconn)
+                                enviarMensagem(retorno, int(tsEvent.parsed[0]["clid"]), self.tsconn)
 
-                    agora = time.time()
-                    if (agora - ultimo > 3600):
-                        self.eventos.atualizaData()
-                        self.AtualizaDescricaoCanal()
-                        ultimo = time.time()
+                agora = time.time()
+                if (agora - ultimo > 3600):
+                    self.eventos.atualizaData()
+                    self.AtualizaDescricaoCanal()
+                    ultimo = time.time()
 
+                self.semaforo.release()
+
+            except Exception as e:
+                if (not "Could not receive data from the server within the timeout" in e.__str__()):
+                    print("Class CanalEventos.iniciar: " + e.__str__())
+                    self.tsconn.close()
                     self.semaforo.release()
-
-                except Exception as e:
-                    if(not "Could not receive data from the server within the timeout" in e.__str__()):
-                        print("Class CanalEventos.iniciar: "+e.__str__())
-                        self.tsconn.close()
-                        self.semaforo.release()
-                    pass
+                pass
 
     def AtualizaDescricaoCanal(self):
         try:
@@ -68,5 +71,3 @@ class canalEventos:
                                         channel_description=novaDescricao)
         except:
             pass
-
-

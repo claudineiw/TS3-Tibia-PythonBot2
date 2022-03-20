@@ -1,9 +1,9 @@
-from BD.Character import Character
 import Tibia.Character as CharacterTibia
 import Tibia.Guild as GuildaTibia
 import Tibia.World as WorldTibia
-from BOT.AmigosEnimigos import AmigosEnimigos
 from Auxiliares import data
+from BD.Character import Character
+from BOT.AmigosEnimigos import AmigosEnimigos
 
 
 class AtualizaOnlineELevel:
@@ -33,12 +33,13 @@ class AtualizaOnlineELevel:
             if (not self.todos is None):
                 self.characterChecados = []
                 guildaChecados = []
-                #self.morteNotificada = 1
+                # self.morteNotificada = 1
                 for player in self.todos:
                     if (player[5] != "None"):
                         guilda = player[5]
                         if (guilda not in guildaChecados):
-                            if (guilda in AmigosEnimigos.selectGuildInimigas(self.con) or guilda in AmigosEnimigos.selectGuildAmigas(self.con)):
+                            if (guilda in AmigosEnimigos.selectGuildInimigas(
+                                    self.con) or guilda in AmigosEnimigos.selectGuildAmigas(self.con)):
                                 guildaOnline = GuildaTibia.getOnlinePlayer(guilda)
                                 if (not guildaOnline is None):
                                     for playerGuilda in self.todos:
@@ -72,25 +73,26 @@ class AtualizaOnlineELevel:
 
 
                                                         else:
-                                                            Character.updatePorPlayer(playerOnline.name, playerOnline.level,
+                                                            Character.updatePorPlayer(playerOnline.name,
+                                                                                      playerOnline.level,
                                                                                       playerOnline.online,
-                                                                                      playerOnline.vocation.name, guilda,
-                                                                                      playerGuilda[6], self.con, playerGuilda[7],
+                                                                                      playerOnline.vocation.name,
+                                                                                      guilda,
+                                                                                      playerGuilda[6], self.con,
+                                                                                      playerGuilda[7],
                                                                                       playerGuilda[8], playerGuilda[9])
                                                         self.characterChecados.append(playerOnline.name)
 
                                 guildaChecados.append(guilda)
         except Exception as e:
-            print("Class AtualizaOnlineeLevel.comGuilda: "+e.__str__())
-            self.todos=None
+            print("Class AtualizaOnlineeLevel.comGuilda: " + e.__str__())
+            self.todos = None
             return None
-
-
 
     def semGuildas(self):
         try:
             if (not self.todos is None):
-                #self.morteNotificada=1
+                # self.morteNotificada=1
                 if (len(self.todos) > 0):
                     world = WorldTibia.getOnlinePlayer(self.todos[0][6])
                     for player in self.todos:
@@ -122,8 +124,10 @@ class AtualizaOnlineELevel:
 
                                                 else:
 
-                                                    Character.updatePorPlayer(playerOnlineWorld.name, playerOnlineWorld.level, True,
-                                                                              playerOnlineWorld.vocation.name, "None", player[6],
+                                                    Character.updatePorPlayer(playerOnlineWorld.name,
+                                                                              playerOnlineWorld.level, True,
+                                                                              playerOnlineWorld.vocation.name, "None",
+                                                                              player[6],
                                                                               self.con, player[7], player[8], player[9])
                                                 self.characterChecados.append(playerOnlineWorld.name)
         except Exception as e:
@@ -136,7 +140,8 @@ class AtualizaOnlineELevel:
             if (not self.todos is None):
                 for player in self.todos:
                     if (player[1] not in self.characterChecados):
-                        Character.updatePorPlayer(player[1], player[2], False, player[4], player[5], player[6], self.con,
+                        Character.updatePorPlayer(player[1], player[2], False, player[4], player[5], player[6],
+                                                  self.con,
                                                   player[7], player[8], player[9])
         except Exception as e:
             print("Class AtualizaOnlineeLevel.offlines: " + e.__str__())

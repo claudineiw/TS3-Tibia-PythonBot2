@@ -1,12 +1,14 @@
 from BD.World import World
+
+
 class GuildInimigos:
-    def __init__(self, name, world,con):
-        self.con=con
-        if(name is None):
-            self.name="None"
+    def __init__(self, name, world, con):
+        self.con = con
+        if (name is None):
+            self.name = "None"
         else:
             self.name = name
-        word = World(world,con)
+        word = World(world, con)
         self.world = word.insert()
         self.id = 0
 
@@ -18,7 +20,6 @@ class GuildInimigos:
         sqlSelectTodosInimigos = "SELECT nome FROM GuildInimiga inner join Guild on guildId = Guild.id"
         return con.select(sqlSelectTodosInimigos)
 
-
     @staticmethod
     def selectId(name, con):
         sqlGuildId = "SELECT id FROM Guild where Guild.nome ILIKE '{}'".format(name)
@@ -28,7 +29,6 @@ class GuildInimigos:
     def delete(guild, con):
         sqldeleteInimigo = "delete FROM GuildInimiga WHERE guildId ={} ".format(guild)
         return con.delete(sqldeleteInimigo)
-
 
     def insert(self):
         sqlInsertGuild = "INSERT INTO Guild (nome,worldId) VALUES('{}',{})".format(self.name, self.world)

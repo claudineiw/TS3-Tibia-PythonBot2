@@ -1,18 +1,21 @@
 import time
+
+from Auxiliares import canalOnline
+from BD.BD import BD
 from BD.Character import Character
 from BD.usuarioTS import usuarioTS
-from BD.BD import BD
 from BOT import funcoesBot
-from Auxiliares import canalOnline
 from Tibia import Guild
+
+
 class AtualizaUsuariosTS:
-    def __init__(self, TScon, bdCon, usuarioTSs, settings, ListaDePermissoes,guildBankMes):
+    def __init__(self, TScon, bdCon, usuarioTSs, settings, ListaDePermissoes, guildBankMes):
         self.TScon = TScon
         self.usuarioTS = usuarioTSs
         self.bdCon = bdCon
         self.selectCharMain()
         self.settings = settings
-        self.guildBankMes=guildBankMes
+        self.guildBankMes = guildBankMes
         try:
             self.dbIdUsuario = self.TScon.clientdbfind(pattern=usuarioTSs[4], uid=True)[0]["cldbid"]
             self.dadosUsuario = self.TScon.clientdbinfo(cldbid=self.dbIdUsuario)[0]
@@ -34,14 +37,14 @@ class AtualizaUsuariosTS:
 
     def guildBankPago(self):
         try:
-            if(self.guildBankMes!=None):
-                if(len(self.guildBankMes)>0):
-                    pagou=0
+            if (self.guildBankMes != None):
+                if (len(self.guildBankMes) > 0):
+                    pagou = 0
                     for user in self.guildBankMes:
                         if (self.nome == user[1]):
-                            pagou=1
+                            pagou = 1
 
-                    if(pagou):
+                    if (pagou):
                         self.adicionarPermissao(int(self.settings["permissaoGuildBankPago"]))
                     else:
                         self.removerPermissao(int(self.settings["permissaoGuildBankPago"]))
@@ -49,36 +52,36 @@ class AtualizaUsuariosTS:
             pass
 
     def darPermissaoRegistrado(self):
-        temMaior=0
+        temMaior = 0
         for itens in self.permissoesUsuario:
-            perm=int(itens["sgid"])
-            if(perm==int(self.settings["grupoConvidado"])
-                    or perm==int(self.settings["grupoMestre"])
-                    or perm==int(self.settings["grupoEditor"])
-                    or perm==int(self.settings["grupoServerAdmin"])
-                    or perm==int(self.settings["grupoAdmin"])
-                    or perm==int(self.settings["grupoMovedor"])
-                    or perm==int(self.settings["grupoLiderAliado"])
+            perm = int(itens["sgid"])
+            if (perm == int(self.settings["grupoConvidado"])
+                    or perm == int(self.settings["grupoMestre"])
+                    or perm == int(self.settings["grupoEditor"])
+                    or perm == int(self.settings["grupoServerAdmin"])
+                    or perm == int(self.settings["grupoAdmin"])
+                    or perm == int(self.settings["grupoMovedor"])
+                    or perm == int(self.settings["grupoLiderAliado"])
             ):
-                temMaior=1
+                temMaior = 1
                 break
 
-        if(temMaior):
+        if (temMaior):
             self.removerPermissao(int(self.settings["grupoUsuario"]))
         else:
             self.adicionarPermissao(int(self.settings["grupoUsuario"]))
 
     def selectCharMain(self):
         char = Character.selectPorID(self.usuarioTS[2], self.bdCon)
-        self.nome=char[0][1]
+        self.nome = char[0][1]
         self.level = char[0][2]
         self.vocacao = char[0][4]
         self.online = char[0][3]
 
-
     def atualizaPermissoesLevel(self):
         for perm in self.ListaDePermissoes:
-            if (int(perm["sgid"]) >= int(self.settings["permissaoLevelInicio"]) and int(perm["sgid"]) <= int(self.settings["permissaoLevelFim"])):
+            if (int(perm["sgid"]) >= int(self.settings["permissaoLevelInicio"]) and int(perm["sgid"]) <= int(
+                    self.settings["permissaoLevelFim"])):
                 if (self.level >= int(perm["name"].replace("+", "")) and int(
                         perm["name"].replace("+", "")) > self.level - 50):
                     self.adicionarPermissao(int(perm["sgid"]))
@@ -136,26 +139,26 @@ class AtualizaUsuariosTS:
     def adicionarPermissao(self, idPermissao):
         try:
             self.TScon.servergroupaddclient(sgid=idPermissao, cldbid=self.dbIdUsuario)
-        except :
+        except:
             pass
 
     def removerPermissao(self, idPermissao):
         try:
             self.TScon.servergroupdelclient(sgid=idPermissao, cldbid=self.dbIdUsuario)
-        except :
+        except:
             pass
 
 
-def atualizaUsuariosTsChamada(settings,semaforo):
+def atualizaUsuariosTsChamada(settings, semaforo):
     Bd = BD(settings, settings["userBDUpdateUserTS"])
     while (True):
         TScon = funcoesBot.botsSecundarios(settings, "Bot-UserTS")
         try:
             semaforo.acquire()
             listaPermissoes = TScon.servergrouplist()
-            guildBankMes=Guild.getGuildBank(settings)
+            guildBankMes = Guild.getGuildBank(settings)
             for usuario in usuarioTS.select(Bd):
-                AtualizaUsuariosTS(TScon, Bd, usuario, settings, listaPermissoes,guildBankMes)
+                AtualizaUsuariosTS(TScon, Bd, usuario, settings, listaPermissoes, guildBankMes)
 
             canalOnline.CanalOnline(TScon, settings, Bd)
             TScon.close()
@@ -165,5 +168,5 @@ def atualizaUsuariosTsChamada(settings,semaforo):
             TScon.close()
             semaforo.release()
             time.sleep(30)
-            print("Error Atualiza Usuarios TS: "+e.__str__())
+            print("Error Atualiza Usuarios TS: " + e.__str__())
             pass

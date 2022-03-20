@@ -1,63 +1,48 @@
 {
-	"name": "Ts3-BoT",
-	"username": "serveradmin",
-	"password": "senha",
-	"host": "127.0.0.1",
-	"port": "10011",
-  	"serverID": 1,
-	"nomeGuilda": "Nome Guilda",
-	"mundo": "Mundo",
-
-
-	"hostBD": "localhost",
-	"database": "Nome do banco",
-	"userPadrao": "postgres",
-	"userBDUPDATE" : "Usuario de update",
-	"userBDMAIN": "usuario principal",
-	"userBDAmigosInimigos": "usuario amigos e inimigos",
-	"userBDUpdateUserTS": "usuario atualizacao usuarios bot",
-	"userBOTYASIR" : "BOTYASIR",
-	"passwordDb": "senha db",
-
-	"canalDefault": "[cspacer743]Aguardem o Registro",
-	"canalInicio": "[cspacer]╔◆●═════◢◤ BOT - TS3 ◥◣═════●◆╗",
-	"onlineTS": "[cspacer]Online",
-  	"canalAmigos": "[cspacer]Amigos",
-	"canalInimigos": "[cspacer]Inimigos",
-	"canalMortes": "[cspacer]Mortes",
-	"canalFinal": "[cspacer122] ╚◆●════════◥◣◆◢◤════════●◆╝",
-	"canalAfk": "AFK",
-	"tempoAFK": 60,
-    "canalBoss":"[cspacer]BOSSES",
-	"canalEventos":"[cspacer]Agenda Eventos",
-	"canalRashid":"╠═● Rashid",
-
-	"permissaoTemMaker": 29,
-	"permissaoMakerOnline": 41,
-    "permissaoOnline": 39,
-	"permissaoOffline": 40,
-
-
-	"permissaoDruid": 14,
-	"permissaoSorcerer":15,
-	"permissaoKnight": 16,
-	"permissaoPaladin":17,
-
-	"permissaoLevelInicio": 50,
-	"permissaoLevelFim": 70,
-
-
-	"grupoEditor": 6,
-	"grupoServerAdmin": 36,
-	"grupoAdmin": 37,
-	"grupoMovedor": 44,
-	"grupoUsuario":7,
-
-
-
-
-
-	"scripts":[
-
-	]
+  "name": "Ts3-BoT",
+  "username": "serveradmin",
+  "password": "senha",
+  "host": "127.0.0.1",
+  "port": "10011",
+  "serverID": 1,
+  "nomeGuilda": "Nome Guilda",
+  "mundo": "Mundo",
+  "hostBD": "localhost",
+  "database": "Nome do banco",
+  "userPadrao": "postgres",
+  "userBDUPDATE": "Usuario de update",
+  "userBDMAIN": "usuario principal",
+  "userBDAmigosInimigos": "usuario amigos e inimigos",
+  "userBDUpdateUserTS": "usuario atualizacao usuarios bot",
+  "userBOTYASIR": "BOTYASIR",
+  "passwordDb": "senha db",
+  "canalDefault": "[cspacer743]Aguardem o Registro",
+  "canalInicio": "[cspacer]╔◆●═════◢◤ BOT - TS3 ◥◣═════●◆╗",
+  "onlineTS": "[cspacer]Online",
+  "canalAmigos": "[cspacer]Amigos",
+  "canalInimigos": "[cspacer]Inimigos",
+  "canalMortes": "[cspacer]Mortes",
+  "canalFinal": "[cspacer122] ╚◆●════════◥◣◆◢◤════════●◆╝",
+  "canalAfk": "AFK",
+  "tempoAFK": 60,
+  "canalBoss": "[cspacer]BOSSES",
+  "canalEventos": "[cspacer]Agenda Eventos",
+  "canalRashid": "╠═● Rashid",
+  "permissaoTemMaker": 29,
+  "permissaoMakerOnline": 41,
+  "permissaoOnline": 39,
+  "permissaoOffline": 40,
+  "permissaoDruid": 14,
+  "permissaoSorcerer": 15,
+  "permissaoKnight": 16,
+  "permissaoPaladin": 17,
+  "permissaoLevelInicio": 50,
+  "permissaoLevelFim": 70,
+  "grupoEditor": 6,
+  "grupoServerAdmin": 36,
+  "grupoAdmin": 37,
+  "grupoMovedor": 44,
+  "grupoUsuario": 7,
+  "scripts": [
+  ]
 }

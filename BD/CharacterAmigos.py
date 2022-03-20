@@ -1,11 +1,13 @@
-from Tibia import Character
-from BD.Character import Character as charBd
 from Auxiliares import data
+from BD.Character import Character as charBd
+from Tibia import Character
+
+
 class CharacterAmigos:
-    def __init__(self, name,con):
-        self.con=con
-        if(name is None):
-            self.name="None"
+    def __init__(self, name, con):
+        self.con = con
+        if (name is None):
+            self.name = "None"
         else:
             self.name = name
         self.id = 0
@@ -40,24 +42,23 @@ class CharacterAmigos:
         return con.select(sqlSelect)
 
     @staticmethod
-    def selectQuantidadeAmigosMenosGuilda(con,guilda):
+    def selectQuantidadeAmigosMenosGuilda(con, guilda):
         sqlSelect = '''SELECT count(Character.id) 
                            FROM Character 
                            inner join world on(character.worldid=world.id)
                            inner join Guild on Character.guildid=Guild.id 
                            inner join vocations on (character.vocationid=vocations.id)
-                           where Character.guildid!={} and Guild.id in (select guildid from guildamiga) or Character.id in (SELECT characterid FROM public.CharacterAmigo )'''.format(guilda)
+                           where Character.guildid!={} and Guild.id in (select guildid from guildamiga) or Character.id in (SELECT characterid FROM public.CharacterAmigo )'''.format(
+            guilda)
         return con.select(sqlSelect)
 
-
-
     @staticmethod
-    def delete(character,con):
+    def delete(character, con):
         sqldeleteAmigos = "delete FROM CharacterAmigo WHERE characterId ={}".format(character)
         return con.delete(sqldeleteAmigos)
 
     def insert(self):
-        resultSelect = charBd.select(self.name,self.con)
+        resultSelect = charBd.select(self.name, self.con)
         if (len(resultSelect) == 0):
             char = Character.getPlayer(self.name)
             if (char is None):

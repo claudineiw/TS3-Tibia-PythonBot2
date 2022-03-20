@@ -1,5 +1,5 @@
-import tibiapy
 import requests
+import tibiapy
 
 
 def getOnlinePlayer(name):
@@ -13,5 +13,5 @@ def getOnlinePlayer(name):
             world = tibiapy.World.from_content(content)
             return world.online_players
         except Exception as e:
-            print("Class Tibia.World.getOnlinePlayer: "+e.__str__())
+            print("Class Tibia.World.getOnlinePlayer: " + e.__str__())
             return None

@@ -1,15 +1,16 @@
 import psycopg2
+
+
 class BD:
-    def __init__(self,settings,user):
+    def __init__(self, settings, user):
         try:
-            self.con = psycopg2.connect(host=settings["hostBD"], database=settings["database"],  user=user, password=settings["passwordDb"])
+            self.con = psycopg2.connect(host=settings["hostBD"], database=settings["database"], user=user,
+                                        password=settings["passwordDb"])
             self.cur = self.con.cursor()
             self.criarTabelas()
 
         except Exception as e:
             print("BD: " + e.__str__())
-
-
 
     def criarTabelas(self):
         self.create("""
@@ -92,7 +93,6 @@ class BD:
                                                 );
                                                 """)
 
-
         self.create("""
                                                 CREATE TABLE IF NOT EXISTS usuarioTS
                                         (
@@ -104,9 +104,8 @@ class BD:
                                             FOREIGN KEY(idCharacterMain) REFERENCES Character(id)
                                         );""")
 
-
-    def insert(self,sql):
-        self.cursor().execute(sql+" RETURNING id")
+    def insert(self, sql):
+        self.cursor().execute(sql + " RETURNING id")
         self.con.commit()
         id = self.cursor().fetchone()
         if (id is None):
@@ -114,25 +113,25 @@ class BD:
         else:
             return id[0]
 
-    def select(self,sql):
+    def select(self, sql):
         self.cursor().execute(sql)
         return self.cursor().fetchall()
 
-    def update(self,sql):
+    def update(self, sql):
         self.cursor().execute(sql)
         self.con.commit()
         return True
 
-    def delete(self,sql):
-        self.cursor().execute(sql+" RETURNING id")
+    def delete(self, sql):
+        self.cursor().execute(sql + " RETURNING id")
         self.con.commit()
-        id=self.cursor().fetchone()
-        if(id is None):
+        id = self.cursor().fetchone()
+        if (id is None):
             return None
         else:
             return id[0]
 
-    def create(self,sql):
+    def create(self, sql):
         self.cursor().execute(sql)
         self.con.commit()
 
