@@ -22,7 +22,7 @@ class AtualizaGuildas:
                 AtualizaOnlineELevel1.iniciar()
                 # self.semaforo.release()
                 time.sleep(30)
-            except Exception:
+            except:
                 pass
 
     def update(self):

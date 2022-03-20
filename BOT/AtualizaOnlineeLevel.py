@@ -25,7 +25,7 @@ class AtualizaOnlineELevel:
             self.comGuilda()
             self.semGuildas()
             self.offlines()
-        except Exception:
+        except:
             self.todos = None
             return None
 
