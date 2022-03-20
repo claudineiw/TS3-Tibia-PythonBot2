@@ -1,4 +1,3 @@
-from BD.Character import Character
 from BD.usuarioTS import usuarioTS
 from BOT.funcoesBot import *
 

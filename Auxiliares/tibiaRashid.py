@@ -1,6 +1,3 @@
-import time
-from datetime import datetime
-
 from pytz import timezone
 
 from BOT.funcoesBot import *
