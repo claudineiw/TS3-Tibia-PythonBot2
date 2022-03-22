@@ -27,7 +27,7 @@ def inimigosOnline(tsconn, settings, tsconMorte, BDcon):
     try:
         tsconn.send_keepalive()
         descricao = tsconn.channelinfo(cid=pegarIdChannel(tsconn, settings["canalInimigos"]))[0]["channel_description"]
-        novaDescricao = "[table][tr][td]Nome[/td][td]Level[/td][/tr]"
+        novaDescricao = "[table][tr][td]Nome[/td][td]Level[/td][td]Vocacao[/td][/tr]"
         resposta = CharacterInimigos.selectTodosInimigos(BDcon)
         totalInimigos = CharacterInimigos.selectQuantidadeInimigos(BDcon)
         if None is not resposta and None is not totalInimigos:
@@ -36,7 +36,12 @@ def inimigosOnline(tsconn, settings, tsconMorte, BDcon):
                 for resp in resposta:
                     notificaMorte(resp, "Inimigo Morreu: ", tsconMorte, BDcon)
                     contInimigosOnline += 1
-                    novaDescricao += "[tr][td]" + resp[1] + "[/td][td]" + str(resp[2]) + "[/td][/tr]"
+                    vocacao=str(resp[4]).replace("_"," ").split()
+                    if(len(vocacao)>1):
+                        vocacao=vocacao[0][0]+""+vocacao[1][0]
+                    else:
+                        vocacao = vocacao[0][0]
+                    novaDescricao += "[tr][td]" + resp[1] + "[/td][td]" + str(resp[2]) + "[/td][td]" + vocacao + "[/td][/tr]"
                 novaDescricao += "[/table]"
                 if descricao != novaDescricao:
                     nomeAtual = (
