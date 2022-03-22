@@ -19,47 +19,47 @@ def lerSettings():
         return json.load(f)
 
 
-def IniciarAtualizaGuildas(con, semaforo):
-    atuali = AtualizaGuildas(con, semaforo)
+def IniciarAtualizaGuildas(con, semaforo_):
+    atuali = AtualizaGuildas(con, semaforo_)
     threading.Thread(name="Atualiza", target=atuali.iniciar).start()
 
 
-def iniciaBotAFK(settings, tempo, semaforo):
+def iniciaBotAFK(settings_, tempo_, semaforo_):
     print("Inicia AFK")
-    threading.Thread(name="BotAFK", target=funcoesBot.botAfk, args=(settings, tempo, semaforo,)).start()
+    threading.Thread(name="BotAFK", target=funcoesBot.botAfk, args=(settings_, tempo_, semaforo_,)).start()
 
 
-def iniciarBotBosses(settings, semaforo):
+def iniciarBotBosses(settings_, semaforo_):
     print("Inicia Tibia Bosses")
-    tibiaBosses = tibiaBossesFromGuildaStats.tibiaBosses(settings, semaforo)
+    tibiaBosses = tibiaBossesFromGuildaStats.tibiaBosses(settings_, semaforo_)
     threading.Thread(name="BOTBosses", target=tibiaBosses.iniciarBotCanalBoss).start()
 
 
-def iniciarRashid(settings, semaforo):
+def iniciarRashid(settings_, semaforo_):
     print("Inicia Tibia Rashid")
-    threading.Thread(name="BOTRashid", target=tibiaRashid.rashidCidade, args=(settings, semaforo,)).start()
+    threading.Thread(name="BOTRashid", target=tibiaRashid.rashidCidade, args=(settings_, semaforo_,)).start()
 
 
-def iniciarDreamCourts(settings, semaforo, listaBoss):
+def iniciarDreamCourts(settings_, semaforo_, listaBoss_):
     print("Inicia Tibia DreamCorts")
-    threading.Thread(name="DreamCorts", target=DC.dreamCourts, args=(settings, semaforo, listaBoss,)).start()
+    threading.Thread(name="DreamCorts", target=DC.dreamCourts, args=(settings_, semaforo_, listaBoss_,)).start()
 
 
-def iniciarEventos(settings, semaforo):
+def iniciarEventos(settings_, semaforo_):
     print("Inicia Tibia Eventos")
-    eventos = CanalEventos.canalEventos(settings, semaforo)
+    eventos = CanalEventos.canalEventos(settings_, semaforo_)
     threading.Thread(name="BOTEventos", target=eventos.iniciar).start()
 
 
-def iniciarCanalInimigoAmigo(settings, semaforo):
+def iniciarCanalInimigoAmigo(settings_, semaforo_):
     print("Inicia Tibia Canal Inimigos")
-    threading.Thread(name="BOTImigigos", target=canalInimigoseAmigos.iniciar, args=(settings, semaforo,)).start()
+    threading.Thread(name="BOTImigigos", target=canalInimigoseAmigos.iniciar, args=(settings_, semaforo_,)).start()
 
 
-def iniciarAtualizaPermissoesUserTS(settings, semaforo):
+def iniciarAtualizaPermissoesUserTS(settings_, semaforo_):
     print("Inicia Atualiza Permissoes")
     threading.Thread(name="BotAtualizaPermissoes", target=AtualizaUsuariosTS.atualizaUsuariosTsChamada,
-                     args=(settings, semaforo,)).start()
+                     args=(settings_, semaforo_,)).start()
 
 
 if __name__ == '__main__':
