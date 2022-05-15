@@ -3,6 +3,7 @@ from __future__ import absolute_import
 import time
 from datetime import datetime
 
+import pytz
 import ts3
 
 import BOT.comandosBot as comandosBot
@@ -25,13 +26,39 @@ def botsSecundarios(settings, nome):
         print("Bot Secundario" + e.__str__())
         pass
 
+def pegaHora(tempo):
+    try:
+        import datetime as dt
+        final = tempo[tempo.find("("):tempo.find("utc") + 4].replace("(", "").replace(")", "")
+        ano = final[:final.find(",")]
+        final = final[(ano + ", ").__len__():]
+        mes = final[:final.find(",")]
+        final = final[(mes + ", ").__len__():]
+        dia = final[:final.find(",")]
+        final = final[(dia + ", ").__len__():]
+        hora = final[:final.find(",")]
+        final = final[(hora + ", ").__len__():]
+        minuto = final[:final.find(",")]
+        final = final[(minuto + ", ").__len__():]
+        segundo = final[:final.find(",")]
+        asa = pytz.timezone("Europe/London")
+        dataEuropa = dt.datetime(int(ano), int(mes), int(dia), int(hora), int(minuto), int(segundo), tzinfo=asa)
+        dataLocal = dataEuropa.astimezone(pytz.timezone("America/Sao_Paulo"))
+        return dataLocal.minute
+    except Exception as e:
+        print("Erro Hora: " + e.__str__())
+        return 10
+
 
 def notificaMorte(character, mensagem, bot, BDcon):
     try:
         if character[9] == 0 and character[7] != "0":
-            if diferencaTempo(character) < 10:
+            print(character[1])
+            if pegaHora(character[7]) < 5:
                 deathPlayer = charTibia.getPlayer(character[1])
+                print(character[1])
                 if (datetime.now().astimezone() - deathPlayer.deaths[0].time.astimezone()).total_seconds() < 600:
+                    print(character[1])
                     if character[8] == 0:
                         morreuPara = "[COLOR=blue]"
                         for players in deathPlayer.deaths[0]["killers"]:
@@ -49,7 +76,8 @@ def notificaMorte(character, mensagem, bot, BDcon):
                     pokeTodosClientes(mensagem + " " + character[1] + " Morto por: " + morreuPara, bot)
 
         Character.updateNotificacaoMorte(character[0], BDcon)
-    except:
+    except Exception as e:
+        print("Notifica Mortes: " + e.__str__())
         pass
 
 

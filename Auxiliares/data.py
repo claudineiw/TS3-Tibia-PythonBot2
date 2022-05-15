@@ -15,5 +15,4 @@ def geHoraAtual(dataMorte):
     # local_timezone = pytz.timezone("America/Sao_Paulo")
     morte = datetime.strptime(dataMorte, "%d/%m/%Y %H:%M:%S")  # your date
     result = int((datetime.now() - morte).total_seconds()) / 60
-
     return result

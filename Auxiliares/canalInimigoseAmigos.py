@@ -34,7 +34,8 @@ def inimigosOnline(tsconn, settings, tsconMorte, BDcon):
             contInimigosOnline = 0
             if resposta:
                 for resp in resposta:
-                    notificaMorte(resp, "Inimigo Morreu: ", tsconMorte, BDcon)
+                    if(resp[9]==0):
+                        notificaMorte(resp, "Inimigo Morreu: ", tsconMorte, BDcon)
                     contInimigosOnline += 1
                     vocacao=str(resp[4]).replace("_"," ").split()
                     if(len(vocacao)>1):
@@ -91,11 +92,13 @@ def amigosOnline(tsconn, settings, tsconMorte, BDcon):
             if resposta:
                 for resp in resposta:
                     if resp[5] != settings["nomeGuilda"]:
-                        notificaMorte(resp, "Amigo Morreu: ", tsconMorte, BDcon)
+                        if(resp[9]==0):
+                            notificaMorte(resp, "Amigo Morreu: ", tsconMorte, BDcon)
                         contInimigosOnline += 1
                         novaDescricao += "[tr][td]" + resp[1] + "[/td][td]" + str(resp[2]) + "[/td][/tr]"
                     else:
-                        notificaMorte(resp, "Membro Guilda Morreu: ", tsconMorte, BDcon)
+                        if (resp[9] == 0):
+                            notificaMorte(resp, "Membro Guilda Morreu: ", tsconMorte, BDcon)
                 novaDescricao += "[/table]"
                 if descricao != novaDescricao:
                     nomeAtual = (

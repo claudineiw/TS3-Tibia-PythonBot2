@@ -1,3 +1,5 @@
+import asyncio
+
 import Tibia.Character as CharacterTibia
 import Tibia.Guild as GuildaTibia
 import Tibia.World as WorldTibia
@@ -42,17 +44,19 @@ class AtualizaOnlineELevel:
                         if guilda not in guildaChecados:
                             if (guilda in AmigosEnimigos.selectGuildInimigas(
                                     self.con) or guilda in AmigosEnimigos.selectGuildAmigas(self.con)):
-                                guildaOnline = GuildaTibia.getOnlinePlayer(guilda)
+                               # guildaOnline = GuildaTibia.getOnlinePlayer(guilda)
+                                guildaOnline = asyncio.run(GuildaTibia.get_character_online(guilda))
                                 if None is not guildaOnline:
                                     for playerGuilda in self.todos:
                                         if playerGuilda[5] == guilda:
                                             for playerOnline in guildaOnline:
                                                 if playerOnline.name == playerGuilda[1]:
-                                                    playerCh = CharacterTibia.getPlayer(playerOnline.name)
+                                                    playerCh = asyncio.run(CharacterTibia.get_character(playerOnline.name))
+                                                    #playerCh = CharacterTibia.getPlayer(playerOnline.name)
                                                     if None is not playerCh:
                                                         if len(playerCh.deaths) > 0:
-                                                            dataMorteAtual = data.utc_to_local(playerCh.deaths[0].time)
-                                                            if dataMorteAtual == playerGuilda[7]:
+                                                            #dataMorteAtual = data.utc_to_local(playerCh.deaths[0].time)
+                                                            if playerCh.deaths[0].__str__().replace("'","") == playerGuilda[7]:
                                                                 Character.updatePorPlayer(playerOnline.name,
                                                                                           playerOnline.level,
                                                                                           playerOnline.online,
@@ -69,7 +73,7 @@ class AtualizaOnlineELevel:
                                                                                           playerOnline.vocation.name,
                                                                                           guilda,
                                                                                           playerGuilda[6], self.con,
-                                                                                          dataMorteAtual,
+                                                                                          playerCh.deaths[0].__str__().replace("'",""),
                                                                                           playerCh.deaths[0].by_player,
                                                                                           0)
 
@@ -84,7 +88,7 @@ class AtualizaOnlineELevel:
                                                                                       playerGuilda[8], playerGuilda[9])
                                                         self.characterChecados.append(playerOnline.name)
 
-                                guildaChecados.append(guilda)
+                                    guildaChecados.append(guilda)
         except Exception as e:
             print("Class AtualizaOnlineeLevel.comGuilda: " + e.__str__())
             self.todos = None
@@ -95,7 +99,8 @@ class AtualizaOnlineELevel:
             if None is not self.todos:
                 # self.morteNotificada=1
                 if len(self.todos) > 0:
-                    world = WorldTibia.getOnlinePlayer(self.todos[0][6])
+                   # world = WorldTibia.getOnlinePlayer(self.todos[0][6])
+                    world = asyncio.run(WorldTibia.get_character_online(self.todos[0][6]))
                     for player in self.todos:
                         if player[1] in AmigosEnimigos.selectCharacterAmigos(self.con) or player[
                             1] in AmigosEnimigos.selectCharacterInimigos(self.con):
@@ -103,11 +108,12 @@ class AtualizaOnlineELevel:
                                 if None is not world:
                                     for playerOnlineWorld in world:
                                         if playerOnlineWorld.name == player[1]:
-                                            playerCh = CharacterTibia.getPlayer(playerOnlineWorld.name)
+                                          #  playerCh = CharacterTibia.getPlayer(playerOnlineWorld.name)
+                                            playerCh = asyncio.run(CharacterTibia.get_character(playerOnlineWorld.name))
                                             if None is not playerCh:
                                                 if len(playerCh.deaths) > 0:
-                                                    dataMorteAtual2 = data.utc_to_local(playerCh.deaths[0].time)
-                                                    if dataMorteAtual2 == player[7] and player[9] == 1:
+                                                   # dataMorteAtual2 = data.utc_to_local(playerCh.deaths[0].time)
+                                                    if playerCh.deaths[0].__str__().replace("'","") == player[7] and player[9] == 1:
                                                         Character.updatePorPlayer(playerOnlineWorld.name,
                                                                                   playerOnlineWorld.level, True,
                                                                                   playerOnlineWorld.vocation.name,
@@ -119,7 +125,7 @@ class AtualizaOnlineELevel:
                                                                                   playerOnlineWorld.level, True,
                                                                                   playerOnlineWorld.vocation.name,
                                                                                   "None", player[6],
-                                                                                  self.con, dataMorteAtual2,
+                                                                                  self.con, playerCh.deaths[0].__str__().replace("'",""),
                                                                                   playerCh.deaths[0].by_player,
                                                                                   0)
 

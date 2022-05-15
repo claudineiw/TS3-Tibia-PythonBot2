@@ -64,16 +64,17 @@ def iniciarAtualizaPermissoesUserTS(settings_, semaforo_):
 
 if __name__ == '__main__':
     settings = lerSettings()
-    Bd = BD(settings, settings["userBDMAIN"])
+
     print("Bot iniciado conectado ao servidor " + settings["host"] + ":" + settings["port"])
-    botPrincipal = funcoesBot.botsSecundarios(settings, "Bot-Ts3")
+
     semaforo = Semaforo.Semaforo()
 
     tempo = tempoAFK.tempoAFK(settings)
-
     iniciaBotAFK(settings, tempo, semaforo)
+
     iniciarBotBosses(settings, semaforo)
     iniciarRashid(settings, semaforo)
+
     listaBoss = DC.ListaDreamCourtsCircular()
     iniciarDreamCourts(settings, semaforo, listaBoss)
 
@@ -82,8 +83,11 @@ if __name__ == '__main__':
     IniciarAtualizaGuildas(BD(settings, settings["userBDUPDATE"]), semaforo)
     iniciarAtualizaPermissoesUserTS(settings, semaforo)
 
+    Bd=None
+    botPrincipal = funcoesBot.botsSecundarios(settings, "Bot-Ts3")
     while True:
         try:
+            Bd = BD(settings, settings["userBDMAIN"])
             botPrincipal.send_keepalive()
             event = botPrincipal.wait_for_event(timeout=30)
             if "msg" in event[0]:
@@ -94,8 +98,15 @@ if __name__ == '__main__':
                 if event[0]['reasonid'] == '0':
                     if event[0]["client_unique_identifier"].strip() != "serveradmin":
                         funcoesBot.enviarMensagemBoasVindas(event, botPrincipal)
+            Bd.close()
 
         except Exception as e:
+            if(not botPrincipal.is_connected()):
+                botPrincipal = funcoesBot.botsSecundarios(settings, "Bot-Ts3")
+
+
+            if(not None is BD):
+                Bd.close()
             if e.__str__() == "Could not receive data from the server within the timeout.":
                 pass
             else:
