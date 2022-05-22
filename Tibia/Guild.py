@@ -1,15 +1,15 @@
+import asyncio
 from datetime import datetime
 
 import aiohttp
-import requests
 import tibiapy
 from bs4 import BeautifulSoup
 
 
-def getGuildBank(settings):
+async def getGuildBank(settings):
     try:
         mesAtual = datetime.now().astimezone().month
-        guild = getGuild(settings["nomeGuilda"])
+        guild = await getGuild(settings["nomeGuilda"])
 
         url = 'https://www.tibia.com/account/'
 
@@ -18,10 +18,20 @@ def getGuildBank(settings):
 
         urlGuilda = "https://www.tibia.com/community/?subtopic=guilds&page=activitylog&world=" + guild.world + "&GuildName=" + guild.name.replace(
             " ", "+") + "&action=guildbankhistory"
-        session = requests.Session()
-        session.post(url, data=values)
-        guilda = session.post(urlGuilda)
-        soup = BeautifulSoup(guilda.text, "html5lib")
+
+       # session = requests.Session()
+       # session.post(url, data=values)
+        # guilda = session.post(urlGuilda)
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, data=values) as resp:
+                content = await resp.text()
+            async with session.post(urlGuilda) as resp:
+                content = await resp.text()
+
+
+
+        soup = BeautifulSoup(content, "html5lib")
         table = soup.find('table', attrs={'class': 'TableContent'})
         rows = table.tbody.find_all("tr")
         datas = []
@@ -47,7 +57,7 @@ def getGuildBank(settings):
         return datas
     except Exception as e:
         print("Class Tibia.Guild.getGuildBank: " + e.__str__())
-        pass
+       # pass
 
 async def get_character_online(name):
     if name == "":
@@ -65,46 +75,35 @@ async def get_character_online(name):
             return None
 
 
-def getOnlinePlayer(name):
+
+async def getAllPlayer(name):
     if name == "":
         return None
     else:
         try:
             url = tibiapy.Guild.get_url(name)
-            r = requests.post(url)
-            content = r.text
-            guild = tibiapy.Guild.from_content(content)
-            return guild.online_members
-        except Exception:
-            # print("Class Tibia.Guild.getOnlinePlayer: "+e.__str__()+" "+name)
-            return None
-
-
-def getAllPlayer(name):
-    if name == "":
-        return None
-    else:
-        try:
-            url = tibiapy.Guild.get_url(name)
-            r = requests.post(url)
-            content = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.post(url) as resp:
+                    content = await resp.text()
             guild = tibiapy.Guild.from_content(content)
             return guild.members
-        except Exception:
-            # print("Class Tibia.Guild.getAllPlayer: " + e.__str__()+" "+name)
+        except Exception as e:
+            print("Class Tibia.Guild.getOnlinePlayer: "+e.__str__()+" "+name)
             return None
 
 
-def getGuild(name):
+async def getGuild(name):
     if name == "":
         return None
     else:
         try:
             url = tibiapy.Guild.get_url(name)
-            r = requests.post(url)
-            content = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.post(url) as resp:
+                    content = await resp.text()
             guild = tibiapy.Guild.from_content(content)
             return guild
-        except Exception:
-            # print("Class Tibia.Guild.getGuild: " + e.__str__()+" "+name)
+        except Exception as e:
+            print("Class Tibia.Guild.getOnlinePlayer: "+e.__str__()+" "+name)
             return None
+

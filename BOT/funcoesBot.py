@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+import asyncio
 import time
 from datetime import datetime
 
@@ -54,7 +55,7 @@ def notificaMorte(character, mensagem, bot, BDcon):
     try:
         if character[9] == 0 and character[7] != "0":
             if pegaHora(character[7]) < 5:
-                    deathPlayer = charTibia.getPlayer(character[1])
+                    deathPlayer = asyncio.run(charTibia.get_character(character[1]))
                     if character[8] == 0:
                         morreuPara = "[COLOR=blue]"
                         for players in deathPlayer.deaths[0]["killers"]:

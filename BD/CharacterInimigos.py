@@ -1,3 +1,5 @@
+import asyncio
+
 from Auxiliares import data
 from BD.Character import Character as charBd
 from Tibia import Character
@@ -51,7 +53,7 @@ class CharacterInimigos:
     def insert(self):
         resultSelect = charBd.select(self.name, self.con)
         if len(resultSelect) == 0:
-            char = Character.getPlayer(self.name)
+            char = asyncio.run(Character.get_character(self.name))
             if char is None:
                 return self.name + " personagem nao encontrado"
             else:

@@ -1,7 +1,9 @@
+import asyncio
+
 from BD.Guild import Guild
 from BD.Vocation import Vocation
 from BD.World import World
-from Tibia.Character import getPlayer
+from Tibia.Character import get_character
 
 
 class Character:
@@ -40,7 +42,7 @@ class Character:
     def insertPersonagem(name, con):
         resultSelect = Character.select(name, con)
         if len(resultSelect) == 0:
-            char = getPlayer(name)
+            char = asyncio.run(get_character(name))
             if char is None:
                 return []
             else:

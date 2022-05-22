@@ -1,3 +1,5 @@
+import asyncio
+
 from BD.Character import Character as charBd
 from Tibia import Character
 
@@ -132,7 +134,7 @@ class usuarioTS:
         sqlSelect = "SELECT id FROM Character WHERE nome ILIKE '{}'".format(self.name)
         resultSelect = self.con.select(sqlSelect)
         if len(resultSelect) == 0:
-            char = Character.getPlayer(self.name)
+            char = asyncio.run(Character.get_character(self.name))
             if char is None:
                 return self.name + " personagem nao encontrado"
             else:

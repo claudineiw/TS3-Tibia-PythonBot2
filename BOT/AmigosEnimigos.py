@@ -1,3 +1,5 @@
+import asyncio
+
 from BD.Character import Character
 from BD.CharacterAmigos import CharacterAmigos
 from BD.CharacterInimigos import CharacterInimigos
@@ -9,7 +11,7 @@ from Tibia import Guild
 class AmigosEnimigos:
     @staticmethod
     def addGuildInimiga(name, con):
-        guild = Guild.getGuild(name)
+        guild = asyncio.run(Guild.getGuild(name))
         if guild is None:
             return name + " Guild nao encontrada"
         else:
@@ -18,7 +20,7 @@ class AmigosEnimigos:
 
     @staticmethod
     def addGuildAmiga(name, con):
-        guild = Guild.getGuild(name)
+        guild = asyncio.run(Guild.getGuild(name))
         if guild is None:
             return name + " Guild nao encontrada"
         else:

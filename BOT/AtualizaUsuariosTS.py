@@ -1,3 +1,4 @@
+import asyncio
 import time
 
 from Auxiliares import canalOnline
@@ -159,7 +160,7 @@ def atualizaUsuariosTsChamada(settings, semaforo):
         try:
             semaforo.acquire()
             listaPermissoes = TScon.servergrouplist()
-            guildBankMes = Guild.getGuildBank(settings)
+            guildBankMes = asyncio.run(Guild.getGuildBank(settings))
             for usuario in usuarioTS.select(Bd):
                 AtualizaUsuariosTS(TScon, Bd, usuario, settings, listaPermissoes, guildBankMes)
 

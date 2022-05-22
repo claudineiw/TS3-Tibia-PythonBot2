@@ -1,3 +1,4 @@
+import asyncio
 import time
 
 import Tibia.Guild as GuildaTibia
@@ -28,9 +29,9 @@ class AtualizaGuildas:
     def update(self):
         try:
             for guilda in AmigosEnimigos.selectGuildInimigas(self.con):
-                guildaDados = GuildaTibia.getGuild(guilda)
+                guildaDados = asyncio.run(GuildaTibia.getGuild(guilda))
                 if None is not guildaDados:
-                    allPlayers = GuildaTibia.getAllPlayer(guilda)
+                    allPlayers = asyncio.run(GuildaTibia.getAllPlayer(guilda))
                     if None is not allPlayers:
                         for player in allPlayers:
                             char = Character(player.name, player.level, player.online, guildaDados.world,
@@ -39,9 +40,9 @@ class AtualizaGuildas:
                             char.insert()
 
             for guilda in AmigosEnimigos.selectGuildAmigas(self.con):
-                guildaDados = GuildaTibia.getGuild(guilda)
+                guildaDados = asyncio.run(GuildaTibia.getGuild(guilda))
                 if None is not guildaDados:
-                    allPlayers = GuildaTibia.getAllPlayer(guilda)
+                    allPlayers = asyncio.run(GuildaTibia.getAllPlayer(guilda))
                     if None is not allPlayers:
                         for player in allPlayers:
                             char = Character(player.name, player.level, player.online, guildaDados.world,
@@ -55,7 +56,7 @@ class AtualizaGuildas:
     def removerPlayersGuilda(self):
         try:
             for guilda in AmigosEnimigos.selectGuildAmigas(self.con):
-                guildaDados = GuildaTibia.getAllPlayer(guilda)
+                guildaDados = asyncio.run(GuildaTibia.getAllPlayer(guilda))
                 if None is not guildaDados:
                     todosDaGuilda = Character.selectAllFromGuild(self.con, guilda)
                     if None is not todosDaGuilda:
@@ -70,7 +71,7 @@ class AtualizaGuildas:
                                                           players[6], self.con, players[7], players[8], players[9])
 
             for guilda in AmigosEnimigos.selectGuildInimigas(self.con):
-                guildaDados = GuildaTibia.getAllPlayer(guilda)
+                guildaDados = asyncio.run(GuildaTibia.getAllPlayer(guilda))
                 if None is not guildaDados:
                     todosDaGuilda = Character.selectAllFromGuild(self.con, guilda)
                     if None is not todosDaGuilda:

@@ -1,7 +1,8 @@
+import asyncio
 import calendar
 import datetime
 
-import requests
+import aiohttp
 import tibiapy
 
 from Auxiliares import agenda
@@ -11,25 +12,30 @@ class eventos:
     def __init__(self):
         self.now = None
         self.pegarDataAtual()
-        self.eventos = self.__getEventos__()
+        self.eventos = asyncio.run(self.__getEventos__())
 
     def atualizaData(self):
         self.pegarDataAtual()
-        self.eventos = self.__getEventos__()
+        self.eventos = asyncio.run(self.__getEventos__())
 
     def pegarDataAtual(self):
         self.now = datetime.datetime.now()
         # self.now = datetime.datetime(year=2021,month=11,day=5) #data teste
 
-    def __getEventos__(self):
+    async def __getEventos__(self):
+        # url = tibiapy.EventSchedule.get_url(month=self.now.month, year=self.now.year)
+        # r = requests.post(url)
+        # content = r.text
         try:
             url = tibiapy.EventSchedule.get_url(month=self.now.month, year=self.now.year)
-            r = requests.post(url)
-            content = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.post(url) as resp:
+                    content = await resp.text()
             return tibiapy.EventSchedule.from_content(content)
         except:
-            pass
-            self.__getEventos__()
+           # pass
+            print("")
+            #self.__getEventos__()
 
     @property
     def getEventsXPRespaw(self):
