@@ -22,7 +22,7 @@ async def get_character_online(name):
     try:
         url = tibiapy.Character.get_url(name)
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as resp:
+            async with session.post(url) as resp:
                 content = await resp.text()
         character = tibiapy.Character.from_content(content)
         return character.other_characters
@@ -35,7 +35,7 @@ async def get_character(name):
     try:
         url = tibiapy.Character.get_url(name)
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as resp:
+            async with session.post(url) as resp:
                 content = await resp.text()
         character = tibiapy.Character.from_content(content)
         return character

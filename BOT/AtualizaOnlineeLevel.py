@@ -56,7 +56,7 @@ class AtualizaOnlineELevel:
                                                     if None is not playerCh:
                                                         if len(playerCh.deaths) > 0:
                                                             #dataMorteAtual = data.utc_to_local(playerCh.deaths[0].time)
-                                                            if playerCh.deaths[0].__str__().replace("'","") == playerGuilda[7]:
+                                                            if playerCh.deaths[0].__str__().replace("'","") == playerGuilda[7] and playerGuilda[9] == 1:
                                                                 Character.updatePorPlayer(playerOnline.name,
                                                                                           playerOnline.level,
                                                                                           playerOnline.online,

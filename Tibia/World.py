@@ -23,7 +23,7 @@ async def get_character_online(name):
     try:
         url = tibiapy.World.get_url(name)
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as resp:
+            async with session.post(url) as resp:
                 content = await resp.text()
         world = tibiapy.World.from_content(content)
         return world.online_players
