@@ -9,7 +9,7 @@ class usuarioTS:
         self.id = None
         self.con = con
         self.nomeTS = nomeTs
-        self.name = name
+        self.name = name.replace("'", "\\'")
         self.uIdUsuario = uidusuario
         self.idChar = 0
 
@@ -131,7 +131,7 @@ class usuarioTS:
                     return maker + " nao esta na lista do main: " + main
 
     def insert(self):
-        sqlSelect = "SELECT id FROM Character WHERE nome ILIKE '{}'".format(self.name)
+        sqlSelect = "SELECT id FROM Character WHERE nome ILIKE E'{}'".format(self.name)
         resultSelect = self.con.select(sqlSelect)
         if len(resultSelect) == 0:
             char = asyncio.run(Character.get_character(self.name))
