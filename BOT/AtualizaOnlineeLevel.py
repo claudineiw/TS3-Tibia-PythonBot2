@@ -136,7 +136,9 @@ class AtualizaOnlineELevel:
                                                                               playerOnlineWorld.vocation.name, "None",
                                                                               player[6],
                                                                               self.con, player[7], player[8], player[9])
-                                                self.characterChecados.append(playerOnlineWorld.name)
+
+
+                                            self.characterChecados.append(playerOnlineWorld.name)
         except Exception as e:
             print("Class AtualizaOnlineeLevel.semGuildas: " + e.__str__())
             self.todos = None

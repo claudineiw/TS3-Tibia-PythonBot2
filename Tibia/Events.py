@@ -27,10 +27,15 @@ class eventos:
         # r = requests.post(url)
         # content = r.text
         try:
+            status=0
             url = tibiapy.EventSchedule.get_url(month=self.now.month, year=self.now.year)
             async with aiohttp.ClientSession() as session:
-                async with session.post(url) as resp:
-                    content = await resp.text()
+                while status != 200:
+                    async with session.post(url) as resp:
+                        status=resp.status
+                        if (resp.status != 200):
+                            continue
+                        content = await resp.text()
             return tibiapy.EventSchedule.from_content(content)
         except:
            # pass
